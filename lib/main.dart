@@ -25,7 +25,7 @@ void main() async {
   checkUserIsLoggedIn();
   await NotifyServer().initNotification();
   runApp(MyApp());
-
+//بسم الله الرحمن الرحيم
   // جدولة الإشعارات كل ساعة للتحقق من التحديثات
   
   await LocalUserData.init();
