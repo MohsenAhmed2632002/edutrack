@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "809267349096",
+    "project_id": "rock-atlas-405800",
+    "storage_bucket": "rock-atlas-405800.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:809267349096:android:9d3734430e8571d0f31ddd",
+        "android_client_info": {
+          "package_name": "com.example.edutrack"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8rOxS9BkruKl5tBVy1znLGjrDO6F1NVU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

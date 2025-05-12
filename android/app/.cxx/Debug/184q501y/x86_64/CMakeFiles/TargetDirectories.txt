@@ -1,0 +1,2 @@
+C:/Users/sphinx_Mohsen/StudioProjects/edutrack/android/app/.cxx/Debug/184q501y/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/sphinx_Mohsen/StudioProjects/edutrack/android/app/.cxx/Debug/184q501y/x86_64/CMakeFiles/rebuild_cache.dir
