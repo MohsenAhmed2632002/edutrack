@@ -1,14 +1,8 @@
-import 'dart:convert';
-
 import 'package:edutrack/core/Theming/Font.dart';
 import 'package:flutter/material.dart';
 import 'package:edutrack/core/Theming/app_colors.dart';
 import 'package:edutrack/core/Theming/image.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:http/http.dart' as http;
-import 'package:location/location.dart';
-import 'package:latlong2/latlong.dart';
 
 class HowToGet extends StatelessWidget {
   const HowToGet({super.key});
