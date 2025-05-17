@@ -146,18 +146,22 @@ class NameHalls extends StatelessWidget {
       AppImages.amaldoor,
     ],
     'معمل 1': [
-      AppImages.photo_gam,
-      AppImages.photo_gam,
-      AppImages.sobhy,
-      AppImages.amaldoor,
+      AppImages.tech11,
+      AppImages.tech12,
+      AppImages.tech13,
     ],
     'معمل 2': [
       AppImages.photo_gam,
-      AppImages.photo_gam,
-      AppImages.sobhy,
-      AppImages.amaldoor,
+      AppImages.tech21,
+      AppImages.tech22,
+      AppImages.tech23,
     ],
-    
+    'معمل تك': [
+      AppImages.photo_gam,
+      AppImages.tech_2_2,
+      AppImages.tech_2,
+      
+    ],
   };
   @override
   Widget build(BuildContext context) {
@@ -277,18 +281,18 @@ class _ImageGalleryPageState extends State<ImageGalleryPage> {
                   onTap: _showNextImage,
                   child: Center(
                     child: Container(
-                      // width: 500,
-                      // height: 50,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(widget.images[currentIndex]),
-                        ),
-                      ),
-                      // child: Image.asset(
-                      //   fit: BoxFit.cover,
-                      //   filterQuality: FilterQuality.high,
-                      //   widget.images[currentIndex],
+                      width: MediaQuery.sizeOf(context).width,
+                      // height: MediaQuery.sizeOf(context).width,
+                      // decoration: BoxDecoration(
+                      // image: DecorationImage(
+                      // image: AssetImage(widget.images[currentIndex]),
                       // ),
+                      // ),
+                      child: Image.asset(
+                        fit: BoxFit.cover,
+                        filterQuality: FilterQuality.high,
+                        widget.images[currentIndex],
+                      ),
                     ),
                   ),
                 ),
@@ -302,3 +306,14 @@ class _ImageGalleryPageState extends State<ImageGalleryPage> {
     );
   }
 }
+// Container(
+//                       width: MediaQuery.sizeOf(context).width,
+//                       height: MediaQuery.sizeOf(context).width,
+//                       decoration: BoxDecoration(
+//                         color: Colors.amber,
+//                         borderRadius: BorderRadius.circular(20),
+//                         image: DecorationImage(
+//                           image: AssetImage(widget.images[currentIndex]),
+//                         ),
+//                       ),
+//                     ),

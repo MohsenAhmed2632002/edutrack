@@ -35,24 +35,20 @@ class AppImages {
   static const String decisions = "${imagepath}decisions.png";
   static const String light_book = "${imagepath}light_book.png";
 
-
-
-
-
   static const String photo_gam = "${imagepath}photogam.jpg";
   static const String sobhy = "${imagepath}sobhy.jpeg";
   static const String sobhy3 = "${imagepath}sobhy3.jpg";
   static const String amaldoor = "${imagepath}amaldoor.jpg";
 
-
-
-
-
   static const String tech11 = "${imagepath}tech1-1.jpg";
-  static const String tech12= "${imagepath}tech1-2.jpeg";
-  static const String tech13 = "${imagepath}tech1-3.jpg";
-  // static const String amaldoor = "${imagepath}amaldoor.jpg";
+  static const String tech12 = "${imagepath}lap1-2.jpg";
+  static const String tech13 = "${imagepath}lap1-3.jpg";
+
+  static const String tech21 = "${imagepath}tech2-1.jpeg";
+  static const String tech22 = "${imagepath}tech2-2.jpg";
+  static const String tech23 = "${imagepath}tech2-3.jpg";
 
 
-
+  static const String tech_2_2 = "${imagepath}tech-2-2.jpeg";
+  static const String tech_2 = "${imagepath}tech-2.jpg";
 }
