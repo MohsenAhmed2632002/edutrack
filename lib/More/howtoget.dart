@@ -151,6 +151,19 @@ class NameHalls extends StatelessWidget {
       AppImages.sobhy,
       AppImages.amaldoor,
     ],
+    'معمل 1': [
+      AppImages.photo_gam,
+      AppImages.photo_gam,
+      AppImages.sobhy,
+      AppImages.amaldoor,
+    ],
+    'معمل 2': [
+      AppImages.photo_gam,
+      AppImages.photo_gam,
+      AppImages.sobhy,
+      AppImages.amaldoor,
+    ],
+    
   };
   @override
   Widget build(BuildContext context) {

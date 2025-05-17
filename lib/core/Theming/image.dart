@@ -1,11 +1,6 @@
 class AppImages {
   static const String imagepath = "assets/images/";
 // MAIN_ICON
-  static const String photo_gam = "${imagepath}photogam.jpg";
-  static const String sobhy = "${imagepath}sobhy.jpeg";
-  static const String sobhy3 = "${imagepath}sobhy3.jpg";
-  static const String amaldoor = "${imagepath}amaldoor.jpg";
-
   static const String main_icon = "${imagepath}MAIN_ICON.png";
 
   static const String lines = "${imagepath}lines.png";
@@ -39,4 +34,25 @@ class AppImages {
   static const String time2 = "${imagepath}time2.png";
   static const String decisions = "${imagepath}decisions.png";
   static const String light_book = "${imagepath}light_book.png";
+
+
+
+
+
+  static const String photo_gam = "${imagepath}photogam.jpg";
+  static const String sobhy = "${imagepath}sobhy.jpeg";
+  static const String sobhy3 = "${imagepath}sobhy3.jpg";
+  static const String amaldoor = "${imagepath}amaldoor.jpg";
+
+
+
+
+
+  static const String tech11 = "${imagepath}tech1-1.jpg";
+  static const String tech12= "${imagepath}tech1-2.jpeg";
+  static const String tech13 = "${imagepath}tech1-3.jpg";
+  // static const String amaldoor = "${imagepath}amaldoor.jpg";
+
+
+
 }
