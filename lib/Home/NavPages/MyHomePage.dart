@@ -14,119 +14,162 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class MyHomePage extends StatelessWidget {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
-      
- static  Future<void> cleanupOldNotifications() async {
-  final pending = await _notificationsPlugin.pendingNotificationRequests();
-  for (var notification in pending) {
-    if (notification.payload == null) continue;
-    try {
-      final payload = jsonDecode(notification.payload!);
-      final day = payload['day'];
-      final time = payload['time'];
-      final classTime = getNextDateTime(day, time);
-      if (classTime.isBefore(DateTime.now())) {
-        await _notificationsPlugin.cancel(notification.id);
+
+  static Future<void> cleanupOldNotifications() async {
+    final pending = await _notificationsPlugin.pendingNotificationRequests();
+    for (var notification in pending) {
+      if (notification.payload == null) continue;
+      try {
+        final payload = jsonDecode(notification.payload!);
+        final day = payload['day'];
+        final time = payload['time'];
+        final classTime = getNextDateTime(day, time);
+        if (classTime.isBefore(DateTime.now())) {
+          await _notificationsPlugin.cancel(notification.id);
+        }
+      } catch (e) {
+        print('خطأ في تنظيف الإشعارات: $e');
       }
-    } catch (e) {
-      print('خطأ في تنظيف الإشعارات: $e');
     }
   }
-}
-static Future<void> showTomorrowNotifications(BuildContext context) async {
-  final pending = await _notificationsPlugin.pendingNotificationRequests();
-  final tomorrowDay = getTomorrowDay();
 
-  final tomorrowNotifications = pending.where((n) {
-    if (n.payload == null) return false;
-    try {
-      final payload = jsonDecode(n.payload!);
-      return payload['day'] == tomorrowDay;
-    } catch (e) {
-      print('خطأ في فك التشفير: ${e.toString()}');
-      return false;
-    }
-  }).toList();
-
-  final lectures = tomorrowNotifications.where((n) {
-    final payload = jsonDecode(n.payload!);
-    return payload['type'] == 'محاضرة';
-  }).toList();
-
-  final sections = tomorrowNotifications.where((n) {
-    final payload = jsonDecode(n.payload!);
-    return payload['type'] == 'سكشن';
-  }).toList();
-
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-    ),
-    builder: (_) => Container(
-      padding: const EdgeInsets.all(20),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Text(
-                'إشعارات اليوم ($tomorrowDay)',
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // المحاضرات
-            if (lectures.isNotEmpty) ...[
-              const Text('📘 المحاضرات:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 10),
-              ...lectures.map((n) {
-                final payload = jsonDecode(n.payload!);
-                return ListTile(
-                  leading: const Icon(Icons.school, color: Colors.green),
-                  title: Text(payload['subject'] ?? 'بدون عنوان'),
-                  subtitle: Text('الوقت: ${payload['time']} \nالمكان: ${payload['location']} \nالدكتور: ${payload['doctor']}'),
-                );
-              }),
-              const Divider(),
-            ],
-
-            // السكاشن
-            if (sections.isNotEmpty) ...[
-              const Text('📗 السكاشن:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 10),
-              ...sections.map((n) {
-                final payload = jsonDecode(n.payload!);
-                return ListTile(
-                  leading: const Icon(Icons.group, color: Colors.orange),
-                  title: Text(payload['subject'] ?? 'بدون عنوان'),
-                  subtitle: Text('الوقت: ${payload['time']} \nالمكان: ${payload['location']} \nالدكتور: ${payload['doctor']}'),
-                );
-              }),
-            ],
-
-            if (lectures.isEmpty && sections.isEmpty)
-              const Center(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  child: Text('لا توجد إشعارات مجدولة'),
-                ),
-              ),
-          ],
+  static Future<void> showTomorrowNotifications(BuildContext context) async {
+    // عرض مؤشر تحميل أثناء جلب البيانات
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(
+        child: CircularProgressIndicator(
+          color: AppColors.myBlue,
         ),
       ),
-    ),
-  );
-}
+    );
+
+    try {
+      final pending = await _notificationsPlugin.pendingNotificationRequests();
+      final tomorrowDay = getTomorrowDay();
+
+      final tomorrowNotifications = pending.where((n) {
+        if (n.payload == null) return false;
+        try {
+          final payload = jsonDecode(n.payload!);
+          return payload['day'] == tomorrowDay;
+        } catch (e) {
+          print('خطأ في فك التشفير: ${e.toString()}');
+          return false;
+        }
+      }).toList();
+
+      final lectures = tomorrowNotifications.where((n) {
+        final payload = jsonDecode(n.payload!);
+        return payload['type'] == 'محاضرة';
+      }).toList();
+
+      final sections = tomorrowNotifications.where((n) {
+        final payload = jsonDecode(n.payload!);
+        return payload['type'] == 'سكشن';
+      }).toList();
+
+      // إغلاق مؤشر التحميل
+      Navigator.of(context).pop();
+
+      // عرض النتائج في BottomSheet
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+        ),
+        builder: (_) => Container(
+          padding: const EdgeInsets.all(20),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Text(
+                    'إشعارات اليوم ($tomorrowDay)',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // المحاضرات
+                if (lectures.isNotEmpty) ...[
+                  const Text('📘 المحاضرات:',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 10),
+                  ...lectures.map((n) {
+                    final payload = jsonDecode(n.payload!);
+                    return ListTile(
+                      leading: const Icon(Icons.school, color: Colors.green),
+                      title: Text(payload['subject'] ?? 'بدون عنوان'),
+                      subtitle: Text(
+                          'الوقت: ${payload['time']} \nالمكان: ${payload['location']} \nالدكتور: ${payload['doctor']}'),
+                    );
+                  }),
+                  const Divider(),
+                ],
+
+                // السكاشن
+                if (sections.isNotEmpty) ...[
+                  const Text('📗 السكاشن:',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 10),
+                  ...sections.map((n) {
+                    final payload = jsonDecode(n.payload!);
+                    return ListTile(
+                      leading: const Icon(Icons.group, color: Colors.orange),
+                      title: Text(payload['subject'] ?? 'بدون عنوان'),
+                      subtitle: Text(
+                          'الوقت: ${payload['time']} \nالمكان: ${payload['location']} \nالدكتور: ${payload['doctor']}'),
+                    );
+                  }),
+                ],
+
+                if (lectures.isEmpty && sections.isEmpty)
+                  const Center(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      child: Text('لا توجد إشعارات مجدولة'),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      );
+    } catch (e) {
+      // إغلاق مؤشر التحميل في حالة الخطأ
+      Navigator.of(context).pop();
+
+      // عرض رسالة خطأ
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('حدث خطأ'),
+          content: Text('تعذر جلب الإشعارات: ${e.toString()}'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('حسناً'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   const MyHomePage({super.key});
 
   @override
