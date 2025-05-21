@@ -66,7 +66,7 @@ class BodyFiekdEducation extends StatelessWidget {
         children: [
           Container(
             height: 550.h,
-            child: SfPdfViewer.asset("assets/file2.pdf"),
+            child: SfPdfViewer.asset("assets/table/file2.pdf"),
           )
         ],
       ),

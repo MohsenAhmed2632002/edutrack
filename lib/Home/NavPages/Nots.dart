@@ -135,24 +135,28 @@ class _NotsState extends State<Nots> {
         children: [
           EduTrackContainer(),
           LinesImage(),
+          HomeRowNameAndImage(
+            myImage: AppImages.open_book,
+            myWidget: FadeInRight(
+              child: Text(
+                "الملاحظات",
+                style: getArabBoldItalicTextStyle(
+                  context: context,
+                  color: AppColors.mywhite,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+          ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.only(
+              top: 150.h, // لإفساح المجال تحت HomeRowNameAndImage
+              right: 16,
+              left: 16,
+              bottom: 16,
+            ),
             child: Column(
               children: [
-                HomeRowNameAndImage(
-                  myImage: AppImages.open_book,
-                  myWidget: FadeInRight(
-                    child: Text(
-                      "الملاحظات",
-                      style: getArabBoldItalicTextStyle(
-                        context: context,
-                        color: AppColors.mywhite,
-                        fontSize: 24,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
                 Expanded(
                   child: tasks.isEmpty
                       ? Center(

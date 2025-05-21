@@ -75,7 +75,6 @@ flutter:
     - assets/images/
     - assets/fonts/Rubik/
     - assets/fonts/
-    - assets/table/file.pdf
     - assets/table/file2.pdf
 
   #   - images/a_dot_ham.jpeg
