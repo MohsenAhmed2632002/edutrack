@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:device_preview/device_preview.dart';
 import 'package:edutrack/core/Models/UserdataModel.dart';
 import 'package:edutrack/core/Server/NotifyServer.dart';
@@ -8,6 +9,7 @@ import 'package:edutrack/core/Theming/image.dart';
 import 'package:edutrack/core/Server/sharedpref.dart';
 import 'package:edutrack/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/Routing/Routes.dart';
@@ -18,27 +20,20 @@ bool userisLoggedin = false;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // تهيئة Firebase فقط إذا كان ليس Windows ولا Web
+  if (!kIsWeb && !(Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
+
   tz_data.initializeTimeZones();
-  checkUserIsLoggedIn();
-  await NotifyServer().initNotification();
-  runApp(MyApp());
-//بسم الله الرحمن الرحيم
-  // جدولة الإشعارات كل ساعة للتحقق من التحديثات
-  
+
   await LocalUserData.init();
-  runApp(
-    // DevicePreview(
-    // enabled: true,
-    // tools: const [
-    // ...DevicePreview.defaultTools,
-    // ],
-    // builder: (context) =>
-    const MyApp(),
-    // ),
-  );
+  await NotifyServer().initNotification();
+  checkUserIsLoggedIn();
+
+  runApp(const MyApp());
 }
 
 Future<bool> checkUserIsLoggedIn() async {
@@ -56,7 +51,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(375, 812),
+      designSize: const Size(375, 812),
       child: MaterialApp(
         theme: getMyTheme(
           ColorScheme.fromSeed(seedColor: AppColors.myBlue),
