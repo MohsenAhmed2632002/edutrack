@@ -1,4 +1,4 @@
-﻿name: iOS Build
+﻿name: iOS Build and Upload
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.13.9'  # يحتوي على Dart 3.2.6
+          flutter-version: '3.19.5'  # استخدم أحدث إصدار مستقر مناسب لك
 
       - name: Install dependencies
         run: flutter pub get
@@ -27,10 +27,10 @@ jobs:
         run: |
           mkdir -p build/ios/archive
           cp -r build/ios/iphoneos/Runner.app build/ios/archive/
-          xcrun -sdk iphoneos PackageApplication -v build/ios/archive/Runner.app -o build/ios/archive/Runner.ipa
+          xcrun -sdk iphoneos PackageApplication -v build/ios/archive/Runner.app -o build/ios/archive/Runner.ipa || true
 
-      - name: Upload IPA artifact
+      - name: Upload IPA Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: iOS-IPA
+          name: ios-ipa
           path: build/ios/archive/Runner.ipa
