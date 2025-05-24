@@ -152,15 +152,16 @@ class NameHalls extends StatelessWidget {
     ],
     'معمل 2': [
       AppImages.photo_gam,
+      AppImages.sobhy,
       AppImages.tech21,
       AppImages.tech22,
       AppImages.tech23,
     ],
     'معمل تك': [
       AppImages.photo_gam,
-      AppImages.tech_2_2,
+      AppImages.sobhy,
+      AppImages.tech21,
       AppImages.tech_2,
-      
     ],
   };
   @override
@@ -306,14 +307,3 @@ class _ImageGalleryPageState extends State<ImageGalleryPage> {
     );
   }
 }
-// Container(
-//                       width: MediaQuery.sizeOf(context).width,
-//                       height: MediaQuery.sizeOf(context).width,
-//                       decoration: BoxDecoration(
-//                         color: Colors.amber,
-//                         borderRadius: BorderRadius.circular(20),
-//                         image: DecorationImage(
-//                           image: AssetImage(widget.images[currentIndex]),
-//                         ),
-//                       ),
-//                     ),
