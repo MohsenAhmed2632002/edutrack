@@ -30,7 +30,7 @@ jobs:
           xcrun -sdk iphoneos PackageApplication -v build/ios/archive/Runner.app -o build/ios/archive/Runner.ipa || true
 
       - name: Upload IPA Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v1
         with:
           name: ios-ipa
           path: build/ios/archive/Runner.ipa
