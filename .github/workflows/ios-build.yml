@@ -14,7 +14,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.10.5' # عدل حسب نسخة Flutter اللي تستخدمها
+          flutter-version: '3.13.9' # عدل حسب نسخة Flutter اللي تستخدمها
       - name: Install dependencies
         run: flutter pub get
       - name: Build iOS IPA
