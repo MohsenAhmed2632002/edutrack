@@ -15,7 +15,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.5'  # استخدم أحدث إصدار مستقر مناسب لك
+          flutter-version: "3.19.5" # استخدم أحدث إصدار مستقر مناسب لك
 
       - name: Install dependencies
         run: flutter pub get
@@ -30,7 +30,7 @@ jobs:
           xcrun -sdk iphoneos PackageApplication -v build/ios/archive/Runner.app -o build/ios/archive/Runner.ipa || true
 
       - name: Upload IPA Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@main
         with:
           name: ios-ipa
           path: build/ios/archive/Runner.ipa
