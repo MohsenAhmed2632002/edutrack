@@ -11,16 +11,26 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.13.9' # عدل حسب نسخة Flutter اللي تستخدمها
+          flutter-version: '3.13.9'  # يحتوي على Dart 3.2.6
+
       - name: Install dependencies
         run: flutter pub get
+
       - name: Build iOS IPA
         run: flutter build ios --release --no-codesign
+
       - name: Archive IPA
         run: |
           mkdir -p build/ios/archive
           cp -r build/ios/iphoneos/Runner.app build/ios/archive/
           xcrun -sdk iphoneos PackageApplication -v build/ios/archive/Runner.app -o build/ios/archive/Runner.ipa
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: iOS-IPA
+          path: build/ios/archive/Runner.ipa
