@@ -85,4 +85,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'rock-atlas-405800.firebasestorage.app',
     measurementId: 'G-VSWL46MVVX',
   );
+
 }

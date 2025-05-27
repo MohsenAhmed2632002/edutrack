@@ -134,30 +134,30 @@ class CenterImage extends StatelessWidget {
 class NameHalls extends StatelessWidget {
   NameHalls({super.key});
   final halls = {
-    'سيد صبحي': [
+    'مدرج سيد صبحي': [
       AppImages.photo_gam,
       AppImages.sobhy,
       AppImages.sobhy3,
     ],
-    'آمال صادق': [
+    'مدرج آمال صادق': [
       AppImages.photo_gam,
       AppImages.photo_gam,
       AppImages.sobhy,
       AppImages.amaldoor,
     ],
-    'معمل 1': [
+    'معمل حاسب 1': [
       AppImages.tech11,
       AppImages.tech12,
       AppImages.tech13,
     ],
-    'معمل 2': [
+    'معمل حاسب 2': [
       AppImages.photo_gam,
       AppImages.sobhy,
       AppImages.tech21,
       AppImages.tech22,
       AppImages.tech23,
     ],
-    'معمل تك': [
+    'معمل تكنولوجيا': [
       AppImages.photo_gam,
       AppImages.sobhy,
       AppImages.tech21,
