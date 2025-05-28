@@ -1,14 +1,11 @@
 //finished
 import 'dart:io' show Platform;
 
-import 'package:device_preview/device_preview.dart';
 import 'package:edutrack/core/Models/UserdataModel.dart';
 import 'package:edutrack/core/Server/NotifyServer.dart';
 import 'package:edutrack/core/Server/localuserdata.dart';
 import 'package:edutrack/core/Theming/theming.dart';
 import 'package:edutrack/core/Theming/app_colors.dart';
-import 'package:edutrack/core/Theming/image.dart';
-import 'package:edutrack/core/Server/sharedpref.dart';
 import 'package:edutrack/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -23,11 +20,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // تهيئة Firebase فقط إذا كان ليس Windows ولا Web
-  if (!kIsWeb && !(Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
+  // if (!kIsWeb && !(Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-  }
+  // }
 
   tz_data.initializeTimeZones();
 
