@@ -16,7 +16,9 @@ class AskedQuestions extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+
         elevation: 0,
+
         leading: IconButton(
           color: AppColors.mywhite,
           onPressed: () {
@@ -35,8 +37,9 @@ class AskedQuestions extends StatelessWidget {
             children: [
               EduTrackContainer(),
               LinesImage(),
-              WhiteContainer(),
               frequentlyImage(),
+
+              WhiteContainer(),
             ],
           ),
         ],
@@ -53,56 +56,52 @@ class frequentlyImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: 0,
-      right: 0,
-      bottom: 650,
-      child: Container(
-        // color: Colors.red,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Hero(
-              tag: "frequently",
-              child: Image.asset(
-                height: 100.h,
-                width: 100.w,
-                AppImages.frequently,
-                fit: BoxFit.cover,
-                frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                  if (wasSynchronouslyLoaded) return child;
-                  return AnimatedOpacity(
-                    child: child,
-                    opacity: frame == null ? 0 : 1,
-                    duration: const Duration(seconds: 1),
-                    curve: Curves.easeOut,
-                  );
-                },
+      top: 20,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+        children: [
+          Hero(
+            tag: "frequently",
+            child: Image.asset(
+              height: 100.h,
+              width: 100.w,
+              AppImages.frequently,
+              fit: BoxFit.cover,
+              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                if (wasSynchronouslyLoaded) return child;
+                return AnimatedOpacity(
+                  child: child,
+                  opacity: frame == null ? 0 : 1,
+                  duration: const Duration(seconds: 1),
+                  curve: Curves.easeOut,
+                );
+              },
+            ),
+          ),
+          Column(
+            children: [
+              Text(
+                textAlign: TextAlign.center,
+                "الاسئلة",
+                style: getArabBoldItalicTextStyle(
+                  context: context,
+                  fontSize: 20,
+                  color: AppColors.myBrightTurquoise,
+                ),
               ),
-            ),
-            Column(
-              children: [
-                Text(
-                  textAlign: TextAlign.center,
-                  "الاسئلة",
-                  style: getArabBoldItalicTextStyle(
-                    context: context,
-                    fontSize: 20,
-                    color: AppColors.myBrightTurquoise,
-                  ),
+              Text(
+                textAlign: TextAlign.center,
+                "الشائعة",
+                style: getArabBoldItalicTextStyle(
+                  context: context,
+                  fontSize: 20,
+                  color: AppColors.myBrightTurquoise,
                 ),
-                Text(
-                  textAlign: TextAlign.center,
-                  "الشائعة",
-                  style: getArabBoldItalicTextStyle(
-                    context: context,
-                    fontSize: 20,
-                    color: AppColors.myBrightTurquoise,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

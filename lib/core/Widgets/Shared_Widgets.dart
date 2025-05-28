@@ -140,9 +140,9 @@ class HomeRowNameAndImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: 0,
+      top:  0,
       right: 0,
-      bottom: 550,
+      // bottom: 550,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -238,7 +238,7 @@ class SimpleMore extends StatelessWidget {
             // left: 10,
             // right: 10,
             bottom: 10,
-            height: 150.h,
+            height: 120.h,
             width: 150.w,
 
             child: Image.asset(

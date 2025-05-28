@@ -59,6 +59,7 @@ class MyApp extends StatelessWidget {
           ColorScheme.fromSeed(seedColor: AppColors.myBlue),
           context,
         ),
+
         themeMode: ThemeMode.light,
         onGenerateRoute: RoutesGenerator.getRoutes,
         initialRoute: Routes.splashRoute,
