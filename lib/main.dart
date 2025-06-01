@@ -1,6 +1,3 @@
-//finished
-import 'dart:io' show Platform;
-
 import 'package:edutrack/core/Models/UserdataModel.dart';
 import 'package:edutrack/core/Server/NotifyServer.dart';
 import 'package:edutrack/core/Server/localuserdata.dart';
@@ -8,29 +5,28 @@ import 'package:edutrack/core/Theming/theming.dart';
 import 'package:edutrack/core/Theming/app_colors.dart';
 import 'package:edutrack/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/Routing/Routes.dart';
 import "package:timezone/data/latest.dart" as tz_data;
+import 'package:flutter/services.dart';
 
 bool userisLoggedin = false;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // تهيئة Firebase فقط إذا كان ليس Windows ولا Web
-  // if (!kIsWeb && !(Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-  // }
+  runApp(MyApp());
+  // ✅ نهيئ Firebase على كل المنصات (بما فيها Windows)
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   tz_data.initializeTimeZones();
 
   await LocalUserData.init();
   await NotifyServer().initNotification();
-  checkUserIsLoggedIn();
+  userisLoggedin = await checkUserIsLoggedIn();
 
   runApp(const MyApp());
 }
