@@ -123,7 +123,7 @@ class _LectureSchedulePageState extends State<LectureSchedulePage> {
           Positioned(
             left: 0,
             right: 0,
-            bottom: 450.h,
+            bottom: 470.h,
             child: TextField(
               onChanged: (value) {
                 setState(() {
@@ -149,7 +149,7 @@ class _LectureSchedulePageState extends State<LectureSchedulePage> {
           Positioned(
             left: 0,
             right: 0,
-            bottom: -120.h,
+            bottom: -100.h,
             child: SizedBox(
               height: 600.h,
               child: FutureBuilder<QuerySnapshot>(
@@ -236,7 +236,7 @@ class _LectureSchedulePageState extends State<LectureSchedulePage> {
           Positioned(
             left: 0,
             right: 0,
-            bottom: 400.h,
+            bottom: 430.h,
             child: SizedBox(
               height: 50,
               child: ListView.builder(

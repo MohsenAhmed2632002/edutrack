@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/Routing/Routes.dart';
 import "package:timezone/data/latest.dart" as tz_data;
-import 'package:flutter/services.dart';
 
 bool userisLoggedin = false;
 
