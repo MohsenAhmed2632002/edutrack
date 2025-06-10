@@ -119,37 +119,11 @@ class _LectureSchedulePageState extends State<LectureSchedulePage> {
         children: [
           EduTrackContainer(),
           const LinesImage(),
-          // حقل البحث
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 470.h,
-            child: TextField(
-              onChanged: (value) {
-                setState(() {
-                  searchText = value.trim();
-                  _futureLectures =
-                      fetchLecturesForDay(selectedDay, search: searchText);
-                });
-              },
-              decoration: InputDecoration(
-                hintText: 'ابحث عن المحاضرة',
-                hintStyle: const TextStyle(color: Colors.grey),
-                filled: true,
-                fillColor: Colors.white,
-                suffixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
           // جدول المحاضرات
           Positioned(
             left: 0,
             right: 0,
-            bottom: -100.h,
+            bottom: -70.h,
             child: SizedBox(
               height: 600.h,
               child: FutureBuilder<QuerySnapshot>(
@@ -191,10 +165,10 @@ class _LectureSchedulePageState extends State<LectureSchedulePage> {
                             data['المادة'] ?? 'محاضرة',
                             style: getArabLightTextStyle12(
                               context: context,
-                              color: Colors.white,
+                              color: AppColors.myBlue,
                             ),
                           ),
-                          collapsedBackgroundColor: AppColors.myBlue,
+                          collapsedBackgroundColor: AppColors.mywhite,
                           children: [
                             ListTile(
                               trailing: Text(
@@ -236,7 +210,7 @@ class _LectureSchedulePageState extends State<LectureSchedulePage> {
           Positioned(
             left: 0,
             right: 0,
-            bottom: 430.h,
+            bottom: 450.h,
             child: SizedBox(
               height: 50,
               child: ListView.builder(
@@ -272,6 +246,33 @@ class _LectureSchedulePageState extends State<LectureSchedulePage> {
 
           // صورة في المنتصف
           CenterImage(nameImage: AppImages.time2),
+
+          // حقل البحث
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 500.h,
+            child: TextField(
+              onChanged: (value) {
+                setState(() {
+                  searchText = value.trim();
+                  _futureLectures =
+                      fetchLecturesForDay(selectedDay, search: searchText);
+                });
+              },
+              decoration: InputDecoration(
+                hintText: 'ابحث عن المحاضرة',
+                hintStyle: const TextStyle(color: Colors.grey),
+                filled: true,
+                fillColor: Colors.white,
+                suffixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

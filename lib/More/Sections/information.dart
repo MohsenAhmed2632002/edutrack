@@ -103,7 +103,6 @@ class BodyGraduation extends StatelessWidget {
                   ),
                   TextSpan(
                     text: 'ولكن كانت النظرة له نظرة ضيقة ومحدودة ',
-                    style: TextStyle(fontStyle: FontStyle.italic),
                   ),
                   TextSpan(
                     text:
@@ -112,7 +111,6 @@ class BodyGraduation extends StatelessWidget {
                   TextSpan(
                     text:
                         'مع التطور السريع والهائل في عصر المعلوماتية والاتصالات، ',
-                    style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                   TextSpan(
                     text:
@@ -120,7 +118,6 @@ class BodyGraduation extends StatelessWidget {
                   ),
                   TextSpan(
                     text: 'تطور معها مفهوم تكنولوجيا التعليم.\n\n',
-                    style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                   TextSpan(
                     text: 'تعريف تكنولوجيا التعليم:\n',
@@ -140,7 +137,6 @@ class BodyGraduation extends StatelessWidget {
                   TextSpan(
                     text:
                         'التطبيق المنهجي المنظم للأبحاث والنظريات التجريبية الخاصة بعمليات التعليم والتعلم ومصادر التعلم، ',
-                    style: TextStyle(fontWeight: FontWeight.w500),
                   ),
                   TextSpan(
                     text:
@@ -149,7 +145,6 @@ class BodyGraduation extends StatelessWidget {
                   TextSpan(
                     text:
                         'بهدف تحسين كفاءة التعليم وزيادة فاعليته وتحقيق التعلم المطلوب.\n\n',
-                    style: TextStyle(fontWeight: FontWeight.w500),
                   ),
                   TextSpan(
                     text: 'أهداف القسم:\n',

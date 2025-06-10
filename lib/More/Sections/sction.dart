@@ -119,37 +119,11 @@ class _SectionSchedulePageState extends State<SectionSchedulePage> {
         children: [
           EduTrackContainer(),
           const LinesImage(),
-          // حقل البحث
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 450.h,
-            child: TextField(
-              onChanged: (value) {
-                setState(() {
-                  searchText = value.trim();
-                  _futureSections =
-                      fetchSectionsForDay(selectedDay, search: searchText);
-                });
-              },
-              decoration: InputDecoration(
-                hintText: 'ابحث عن السكشن',
-                hintStyle: const TextStyle(color: Colors.grey),
-                filled: true,
-                fillColor: Colors.white,
-                suffixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
           // جدول السكاشن
           Positioned(
             left: 0,
             right: 0,
-            bottom: -120.h,
+            bottom: -70.h,
             child: SizedBox(
               height: 600.h,
               child: FutureBuilder<QuerySnapshot>(
@@ -236,7 +210,7 @@ class _SectionSchedulePageState extends State<SectionSchedulePage> {
           Positioned(
             left: 0,
             right: 0,
-            bottom: 400.h,
+            bottom: 450.h,
             child: SizedBox(
               height: 50,
               child: ListView.builder(
@@ -274,6 +248,32 @@ class _SectionSchedulePageState extends State<SectionSchedulePage> {
 
           // صورة في المنتصف
           CenterImage(nameImage: AppImages.time2),
+          // حقل البحث
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 500.h,
+            child: TextField(
+              onChanged: (value) {
+                setState(() {
+                  searchText = value.trim();
+                  _futureSections =
+                      fetchSectionsForDay(selectedDay, search: searchText);
+                });
+              },
+              decoration: InputDecoration(
+                hintText: 'ابحث عن السكشن',
+                hintStyle: const TextStyle(color: Colors.grey),
+                filled: true,
+                fillColor: Colors.white,
+                suffixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

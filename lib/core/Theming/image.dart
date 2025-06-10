@@ -48,7 +48,24 @@ class AppImages {
   static const String tech22 = "${imagepath}tech2-2.jpg";
   static const String tech23 = "${imagepath}tech2-3.jpg";
 
-
   static const String tech_2_2 = "${imagepath}tech-2-2.jpeg";
   static const String tech_2 = "${imagepath}tech-2.jpg";
+
+
+
+  
+  static const String ebtsam = "${imagepath}ebtsam.png";
+  static const String toqa = "${imagepath}toqa.png";
+  static const String hager = "${imagepath}hager.png";
+  static const String nada = "${imagepath}nada.png";
+  static const String mai = "${imagepath}mai.png";
+  static const String mona = "${imagepath}mona.png";
+  static const String manar = "${imagepath}manar.png";
+  static const String farid = "${imagepath}farid.png";
+  static const String shahd = "${imagepath}shahd.png";
+  static const String shams = "${imagepath}shams.png";
+  static const String sondos = "${imagepath}sondos.png";
+  static const String zainab = "${imagepath}zainab.png";
+  static const String rawan = "${imagepath}rawan.png";
+  
 }
