@@ -36,6 +36,9 @@ class _TasksState extends State<Tasks> {
     _loadNotifications();
   }
 
+  // ... (Keep your existing _saveNotifications, _loadNotifications,
+  // _rescheduleAllNotifications methods unchanged) ...
+
   Future<void> _saveNotifications() async {
     final prefs = await SharedPreferences.getInstance();
     final List<String> notificationsJson = notifications.map((notif) {
@@ -114,34 +117,7 @@ class _TasksState extends State<Tasks> {
     _showSuccessSnackBar("تم تحديد اليوم والساعة");
   }
 
-  void _updateDateTime(DateTime date, TimeOfDay time) {
-    setState(() {
-      selectDate = date;
-      selectTime = time;
-    });
-  }
-
-  Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: selectTime,
-    );
-    if (picked != null) {
-      _updateDateTime(selectDate, picked);
-    }
-  }
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectDate,
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(days: 365)),
-    );
-    if (picked != null) {
-      _updateDateTime(picked, selectTime);
-    }
-  }
+  // ... (Keep your existing _showErrorSnackBar and _showSuccessSnackBar methods) ...
 
   void _showErrorSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -218,6 +194,7 @@ class _TasksState extends State<Tasks> {
                             padding: const EdgeInsets.all(10),
                             child: Column(
                               children: [
+                                // ... (Keep your existing notification item UI) ...
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
@@ -326,119 +303,184 @@ class _TasksState extends State<Tasks> {
           ),
           SpeedDialChild(
             backgroundColor: AppColors.myBlue,
-            child: const Icon(Icons.details_outlined, color: Colors.white),
-            label: "ثالثا البيانات",
+            child: const Icon(Icons.add_task, color: Colors.white),
+            label: "إضافة مهمة جديدة",
             labelStyle: getArabLightTextStyle(
               context: context,
               color: AppColors.myBlue,
               fontSize: 12,
             ),
             onTap: () {
-              showBottomSheet(
-                context: context,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-                ),
-                builder: (context) {
-                  return Form(
-                    key: _formKey,
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      height: 350.h,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            "اختر العنوان و المهمة",
-                            style: getArabLightTextStyle(
-                              context: context,
-                              color: AppColors.myBlue,
-                              fontSize: 20,
-                            ),
-                          ),
-                          TextFormField(
-                            controller: _bodyController,
-                            textAlign: TextAlign.right,
-                            validator: (value) => (value == null ||
-                                    value.isEmpty ||
-                                    value.length <= 5)
-                                ? "برجاء ادخال عنوان المهمة بشكل سليم"
-                                : null,
-                            decoration: const InputDecoration(
-                              hintText: "اسم عنوان المهمة",
-                              labelText: ".....برجاء ادخال عنوان المهمة",
-                            ),
-                          ),
-                          TextFormField(
-                            controller: _titleController,
-                            textAlign: TextAlign.right,
-                            validator: (value) => (value == null ||
-                                    value.isEmpty ||
-                                    value.length <= 5)
-                                ? "برجاء ادخال المهمة بشكل سليم"
-                                : null,
-                            decoration: const InputDecoration(
-                              hintText: "اسم المهمة",
-                              labelText: ".....برجاء ادخال اسم المهمة",
-                            ),
-                          ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.myBlue,
-                            ),
-                            onPressed: () async {
-                              if (_formKey.currentState!.validate()) {
-                                await _scheduleNotification(
-                                  title: _bodyController.text,
-                                  body: _titleController.text,
-                                );
-                                Navigator.pop(context);
-                              }
-                            },
-                            child: Text(
-                              "اضافة مهمة جديدة",
-                              style: getArabLightTextStyle(
-                                context: context,
-                                color: AppColors.mywhite,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              );
-            },
-          ),
-          SpeedDialChild(
-            backgroundColor: AppColors.myBlue,
-            child: const Icon(Icons.date_range, color: Colors.white),
-            label: "ثانيا التاريخ",
-            labelStyle: getArabLightTextStyle(
-              context: context,
-              color: AppColors.myBlue,
-              fontSize: 12,
-            ),
-            onTap: () {
-              _selectDate(context);
-            },
-          ),
-          SpeedDialChild(
-            backgroundColor: AppColors.myBlue,
-            child: const Icon(Icons.timer, color: Colors.white),
-            label: "اولا الوقت",
-            labelStyle: getArabLightTextStyle(
-              context: context,
-              color: AppColors.myBlue,
-              fontSize: 12,
-            ),
-            onTap: () {
-              _selectTime(context);
+              _showTaskCreationSheet(context);
             },
           ),
         ],
       ),
+    );
+  }
+
+  void _showTaskCreationSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+      ),
+      builder: (context) {
+        return Container(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            left: 20,
+            right: 20,
+            top: 20,
+          ),
+          height: 500.h,
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "إضافة مهمة جديدة",
+                    style: getArabLightTextStyle(
+                      context: context,
+                      color: AppColors.myBlue,
+                      fontSize: 20,
+                    ),
+                  ),
+                  SizedBox(height: 20.h),
+                  TextFormField(
+                    controller: _titleController,
+                    textAlign: TextAlign.right,
+                    decoration: const InputDecoration(
+                      labelText: "عنوان المهمة",
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "الرجاء إدخال عنوان المهمة";
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 15.h),
+                  TextFormField(
+                    controller: _bodyController,
+                    textAlign: TextAlign.right,
+                    maxLines: 3,
+                    decoration: const InputDecoration(
+                      labelText: "تفاصيل المهمة",
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "الرجاء إدخال تفاصيل المهمة";
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 20.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.myBlue,
+                          ),
+                          onPressed: () async {
+                            final DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: selectDate,
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(2100),
+                            );
+                            if (pickedDate != null) {
+                              setState(() => selectDate = pickedDate);
+                            }
+                          },
+                          child: Text(
+                            "اختر التاريخ",
+                            style: getArabLightTextStyle(
+                              context: context,
+                              color: AppColors.mywhite,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10.w),
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.myBlue,
+                          ),
+                          onPressed: () async {
+                            final TimeOfDay? pickedTime = await showTimePicker(
+                              context: context,
+                              initialTime: selectTime,
+                            );
+                            if (pickedTime != null) {
+                              setState(() => selectTime = pickedTime);
+                            }
+                          },
+                          child: Text(
+                            "اختر الوقت",
+                            style: getArabLightTextStyle(
+                              context: context,
+                              color: AppColors.mywhite,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 15.h),
+                  Text(
+                    "التاريخ المحدد: ${DateFormat('yyyy-MM-dd').format(selectDate)}",
+                    style: getArabLightTextStyle(
+                      context: context,
+                      color: AppColors.myBlue,
+                    ),
+                  ),
+                  Text(
+                    "الوقت المحدد: ${selectTime.format(context)}",
+                    style: getArabLightTextStyle(
+                      context: context,
+                      color: AppColors.myBlue,
+                    ),
+                  ),
+                  SizedBox(height: 20.h),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.myBlue,
+                      minimumSize: Size(double.infinity, 50.h),
+                    ),
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await _scheduleNotification(
+                          title: _titleController.text,
+                          body: _bodyController.text,
+                        );
+                        Navigator.pop(context);
+                        _titleController.clear();
+                        _bodyController.clear();
+                      }
+                    },
+                    child: Text(
+                      "حفظ المهمة",
+                      style: getArabLightTextStyle(
+                        context: context,
+                        color: AppColors.mywhite,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
