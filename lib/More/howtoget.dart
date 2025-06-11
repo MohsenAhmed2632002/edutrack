@@ -239,9 +239,19 @@ class _ImageGalleryPageState extends State<ImageGalleryPage> {
   int currentIndex = 0;
 
   void _showNextImage() {
-    setState(() {
-      currentIndex = (currentIndex + 1) % widget.images.length;
-    });
+    if (currentIndex < widget.images.length - 1) {
+      setState(() {
+        currentIndex++;
+      });
+    }
+  }
+
+  void _showPreviousImage() {
+    if (currentIndex > 0) {
+      setState(() {
+        currentIndex--;
+      });
+    }
   }
 
   @override
@@ -265,9 +275,7 @@ class _ImageGalleryPageState extends State<ImageGalleryPage> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
-            Icons.arrow_back_ios_new_rounded,
-          ),
+          icon: const Icon(Icons.arrow_back_ios_new_rounded),
         ),
       ),
       body: Column(
@@ -278,24 +286,51 @@ class _ImageGalleryPageState extends State<ImageGalleryPage> {
             children: [
               EduTrackContainer(),
               WhiteContainer(
-                myWidget: GestureDetector(
-                  onTap: _showNextImage,
-                  child: Center(
-                    child: Container(
-                      width: MediaQuery.sizeOf(context).width,
-                      // height: MediaQuery.sizeOf(context).width,
-                      // decoration: BoxDecoration(
-                      // image: DecorationImage(
-                      // image: AssetImage(widget.images[currentIndex]),
-                      // ),
-                      // ),
-                      child: Image.asset(
-                        fit: BoxFit.cover,
-                        filterQuality: FilterQuality.high,
-                        widget.images[currentIndex],
+                myWidget: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Center(
+                        child: Image.asset(
+                          widget.images[currentIndex],
+                          fit: BoxFit.cover,
+                          filterQuality: FilterQuality.high,
+                        ),
                       ),
                     ),
-                  ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: _showPreviousImage,
+                          label: Text(
+                            "السابق",
+                            style: getArabLightTextStyle(
+                              context: context,
+                              color: AppColors.mywhite,
+                            ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.myBlue,
+                          ),
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: _showNextImage,
+                          label: Text(
+                            "التالي",
+                            style: getArabLightTextStyle(
+                              context: context,
+                              color: AppColors.mywhite,
+                            ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.myBlue,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                  ],
                 ),
               ),
               LinesImage(),

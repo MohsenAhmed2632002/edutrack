@@ -46,16 +46,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
-      child: MaterialApp(
-        theme: getMyTheme(
-          ColorScheme.fromSeed(seedColor: AppColors.myBlue),
-          context,
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: MaterialApp(
+          theme: getMyTheme(
+            ColorScheme.fromSeed(seedColor: AppColors.myBlue),
+            context,
+          ),
+        
+          themeMode: ThemeMode.light,
+          onGenerateRoute: RoutesGenerator.getRoutes,
+          initialRoute: Routes.splashRoute,
+          debugShowCheckedModeBanner: false,
         ),
-
-        themeMode: ThemeMode.light,
-        onGenerateRoute: RoutesGenerator.getRoutes,
-        initialRoute: Routes.splashRoute,
-        debugShowCheckedModeBanner: false,
       ),
     );
   }

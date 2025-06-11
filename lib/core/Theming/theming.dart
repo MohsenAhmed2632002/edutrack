@@ -1,5 +1,4 @@
 import 'package:edutrack/core/Theming/Font.dart';
-import 'package:edutrack/core/Theming/app_colors.dart';
 import 'package:flutter/material.dart';
 
 ThemeData getMyTheme(

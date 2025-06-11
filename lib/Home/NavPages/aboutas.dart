@@ -1,8 +1,6 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:edutrack/core/Routing/Routes.dart';
 import 'package:edutrack/core/Theming/Font.dart';
 import 'package:edutrack/core/Theming/app_colors.dart';
-import 'package:edutrack/core/Theming/app_string.dart';
 import 'package:edutrack/core/Theming/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -57,21 +55,23 @@ class AboutAs extends StatelessWidget {
       'image': AppImages.hager,
     },
     {
+      'name': 'ابتسام احمد عبدالسلام',
+      'image': AppImages.ebtsam,
+    },
+    {
       'name': 'فريد ايمن محمد',
       'image': AppImages.farid,
     },
   ];
 
   final List<String> supervisoryBoard = const [
-    "سهام عبدالحافظ",
-    "محمود نصرالدين",
-    "محمد عنتر ",
+    "ا. م. د. سهام عبدالحافظ",
+    "د.محمود نصرالدين",
+    "د.محمد عنتر ",
+    "م. م.ايه بسيوني ",
+    "م.احمد مكاوي",
   ];
 
-  final List<String> auxiliaryMembers = const [
-    "ايه بسيوني ",
-    "احمد مكاوي",
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,7 +149,7 @@ class AboutAs extends StatelessWidget {
                             text: 'يهدف تطبيقنا إلى:\n',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.blue[700],
+                              color: AppColors.myBlue,
                             ),
                           ),
                           TextSpan(text: '• إدارة المناهج الدراسية بفعالية\n'),
@@ -163,7 +163,7 @@ class AboutAs extends StatelessWidget {
                             text: 'مميزات التطبيق:\n',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.blue[700],
+                              color: AppColors.myBlue,
                             ),
                           ),
                           TextSpan(text: '✓ متابعة المحاضرات\n'),
@@ -257,10 +257,10 @@ class AboutAs extends StatelessWidget {
 
                     const SizedBox(height: 16),
 
-                    // عنوان قسم المشاركين|
+                    // عنوان قسم الاشراف|
                     Center(
                       child: Text(
-                        "فريق الاشراف",
+                        "تحت اشراف",
                         style: getArabBoldTextStyle(
                           context: context,
                           color: AppColors.myBlue,
@@ -275,46 +275,6 @@ class AboutAs extends StatelessWidget {
 
                     // قائمة المشاركين
                     ...supervisoryBoard
-                        .map(
-                          (supervisoryBoard) => Card(
-                            elevation: 5,
-                            margin: const EdgeInsets.symmetric(
-                              vertical: 8,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: ListTile(
-                              title: Text(
-                                supervisoryBoard,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.right,
-                              ),
-                            ),
-                          ),
-                        )
-                        .toList(),
-
-                    const SizedBox(height: 16),
-                    // عنوان قسم المشاركين|
-                    Center(
-                      child: Text(
-                        "الاعضاء المعاونة",
-                        style: getArabBoldTextStyle(
-                          context: context,
-                          color: AppColors.myBlue,
-                          fontSize: 20.sp,
-                        ),
-                        textAlign: TextAlign.right,
-                        textDirection: TextDirection.rtl,
-                      ),
-                    ),
-
-                    // قائمة المشاركين
-                    ...auxiliaryMembers
                         .map(
                           (supervisoryBoard) => Card(
                             elevation: 5,

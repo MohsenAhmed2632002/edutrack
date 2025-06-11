@@ -123,7 +123,7 @@ class _LectureSchedulePageState extends State<LectureSchedulePage> {
           Positioned(
             left: 0,
             right: 0,
-            bottom: -70.h,
+            bottom: -20.h,
             child: SizedBox(
               height: 600.h,
               child: FutureBuilder<QuerySnapshot>(
@@ -152,65 +152,71 @@ class _LectureSchedulePageState extends State<LectureSchedulePage> {
                     );
                   }
 
-                  return ListView.builder(
-                    itemCount: lectures.length,
-                    itemBuilder: (context, index) {
-                      final data =
-                          lectures[index].data() as Map<String, dynamic>;
-                      return Card(
-                        elevation: 6,
-                        child: ExpansionTile(
-                          textColor: AppColors.myBlue,
-                          title: Text(
-                            data['المادة'] ?? 'محاضرة',
-                            style: getArabLightTextStyle12(
-                              context: context,
-                              color: AppColors.myBlue,
+                  return Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: ListView.builder(
+                      itemCount: lectures.length,
+                      itemBuilder: (context, index) {
+                        final data =
+                            lectures[index].data() as Map<String, dynamic>;
+                        return Card(
+                          elevation: 6,
+                          child: ExpansionTile(
+                            textColor: AppColors.myBlue,
+                            title: Text(
+                              data['المادة'] ?? 'محاضرة',
+                              style: getArabLightTextStyle12(
+                                context: context,
+                                color: AppColors.myBlue,
+                              ),
                             ),
+                            collapsedBackgroundColor: AppColors.mywhite,
+                            children: [
+                              ListTile(
+                                trailing: Text(
+                                  'الوقت: ${data['من'] ?? ''} - ${data['إلى'] ?? ''}\nالتاريخ: ${data['date'] ?? ''}',
+                                  style:
+                                      const TextStyle(color: AppColors.myBlue),
+                                ),
+                                title: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'المحاضر: ${data['الدكتور'] ?? 'غير محدد'}',
+                                      style: const TextStyle(
+                                          color: AppColors.myBlue),
+                                    ),
+                                    Text(
+                                      'المادة: ${data['المادة'] ?? 'غير محددة'}',
+                                      style: const TextStyle(
+                                          color: AppColors.myBlue),
+                                    ),
+                                    Text(
+                                      'المكان: ${data['المكان'] ?? 'غير محدد'}',
+                                      style: const TextStyle(
+                                          color: AppColors.myBlue),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                          collapsedBackgroundColor: AppColors.mywhite,
-                          children: [
-                            ListTile(
-                              trailing: Text(
-                                'الوقت: ${data['من'] ?? ''} - ${data['إلى'] ?? ''}\nالتاريخ: ${data['date'] ?? ''}',
-                                style: const TextStyle(color: AppColors.myBlue),
-                              ),
-                              title: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'المحاضر: ${data['الدكتور'] ?? 'غير محدد'}',
-                                    style: const TextStyle(
-                                        color: AppColors.myBlue),
-                                  ),
-                                  Text(
-                                    'المادة: ${data['المادة'] ?? 'غير محددة'}',
-                                    style: const TextStyle(
-                                        color: AppColors.myBlue),
-                                  ),
-                                  Text(
-                                    'المكان: ${data['المكان'] ?? 'غير محدد'}',
-                                    style: const TextStyle(
-                                        color: AppColors.myBlue),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   );
                 },
               ),
             ),
           ),
+          // صورة في المنتصف
+          CenterImage(nameImage: AppImages.time2),
 
           // أزرار الأيام
           Positioned(
             left: 0,
             right: 0,
-            bottom: 450.h,
+            bottom: 500.h,
             child: SizedBox(
               height: 50,
               child: ListView.builder(
@@ -244,14 +250,11 @@ class _LectureSchedulePageState extends State<LectureSchedulePage> {
             ),
           ),
 
-          // صورة في المنتصف
-          CenterImage(nameImage: AppImages.time2),
-
           // حقل البحث
           Positioned(
             left: 0,
             right: 0,
-            bottom: 500.h,
+            bottom: 550.h,
             child: TextField(
               onChanged: (value) {
                 setState(() {

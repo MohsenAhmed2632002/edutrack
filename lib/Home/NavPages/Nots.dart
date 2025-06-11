@@ -1,11 +1,9 @@
-import 'dart:convert';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/Theming/app_colors.dart';
-import '../../core/Theming/app_string.dart';
 import '../../core/Theming/font.dart';
 import '../../core/Theming/image.dart';
 import '../../core/Widgets/Shared_Widgets.dart';

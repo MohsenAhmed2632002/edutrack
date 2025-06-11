@@ -1,4 +1,3 @@
-import 'package:edutrack/Home/CourseOverviewPage.dart';
 import 'package:edutrack/Home/HomePage.dart';
 import 'package:edutrack/Home/ProfileScreen.dart';
 import 'package:edutrack/Login/Ui/LoginPage.dart';

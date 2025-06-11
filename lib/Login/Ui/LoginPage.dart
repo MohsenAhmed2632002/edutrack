@@ -141,9 +141,9 @@ class _MyPageState extends State<MyPage> {
                   },
                   decoration: InputDecoration(
                     hintText: "اسم المستخدم ",
-                    label: Text(
-                      ".....برجاء ادخال اسم المستخدم ",
-                    ),
+                    // label: Text(
+                    // ".....برجاء ادخال اسم المستخدم ",
+                    // ),
                   ),
                 ),
               ),
@@ -151,6 +151,7 @@ class _MyPageState extends State<MyPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   controller: widget.emailController,
+                  textDirection: TextDirection.rtl, // يجعل اتجاه النص من اليمين
                   textAlign: TextAlign.right,
                   validator: (value) {
                     // usernameController.text == "admin"
@@ -160,9 +161,6 @@ class _MyPageState extends State<MyPage> {
                   },
                   decoration: InputDecoration(
                     hintText: "الايميل",
-                    label: Text(
-                      ".....برجاء ادخال الايميل",
-                    ),
                   ),
                 ),
               ),
@@ -181,13 +179,6 @@ class _MyPageState extends State<MyPage> {
                   },
                   decoration: InputDecoration(
                     hintText: "كلمة المرور ",
-                    label: Text(
-                      ".....برجاء ادخال كلمة المرور",
-                      style: getArabLightTextStyle(
-                        context: context,
-                        fontSize: 12,
-                      ),
-                    ),
                   ),
                 ),
               ),

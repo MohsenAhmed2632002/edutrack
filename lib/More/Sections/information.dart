@@ -1,8 +1,6 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:edutrack/core/Theming/Font.dart';
 import 'package:edutrack/core/Theming/app_colors.dart';
-import 'package:edutrack/core/Theming/app_string.dart';
 import 'package:edutrack/core/Theming/image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edutrack/core/Widgets/Shared_Widgets.dart';
@@ -94,7 +92,6 @@ class BodyGraduation extends StatelessWidget {
                 style: getArabLightTextStyle(
                   context: context,
                   color: Colors.black,
-                  fontSize: 18.sp,
                 ),
                 children: [
                   TextSpan(

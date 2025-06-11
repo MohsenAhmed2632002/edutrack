@@ -16,9 +16,7 @@ class AskedQuestions extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-
         elevation: 0,
-
         leading: IconButton(
           color: AppColors.mywhite,
           onPressed: () {
@@ -38,7 +36,6 @@ class AskedQuestions extends StatelessWidget {
               EduTrackContainer(),
               LinesImage(),
               frequentlyImage(),
-
               WhiteContainer(),
             ],
           ),
@@ -59,7 +56,6 @@ class frequentlyImage extends StatelessWidget {
       top: 20,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-
         children: [
           Hero(
             tag: "frequently",
@@ -131,14 +127,14 @@ class WhiteContainer extends StatelessWidget {
                 style: getArabLightTextStyle12(
                   color: AppColors.myBlue,
                   context: context,
-                  fontSize: 10.sp,
+                  fontSize: 11.sp,
                 ),
               ),
               content: Text(
                 textAlign: TextAlign.end,
                 "كأخصائي تكنولوجيا التعليم في المدارس\nفي شركات التعليم الالكتروني \n instructioal designer\nمصمم تعليمي و مطور محتوي\nفي بعض الجهات كمدرب أو مسؤول منصات تعليمية",
                 style: getArabLightTextStyle12(
-                  color: AppColors.myBlue,
+                  color: Colors.black,
                   context: context,
                   fontSize: 12.sp,
                 ),
@@ -162,7 +158,7 @@ class WhiteContainer extends StatelessWidget {
                 textAlign: TextAlign.end,
                 "مش شرط تكون محترف من البداية ولكن لازم تكون حابب المجال و مستعد تتعلم برامج زي\nالفوتوشوب\nالباوربوينت\nبرامج المونتاج\nادوات التصميم التعليمي مثل\nCanva & Articuate Storyline\nو بعض برامج التصميم و البرمجة",
                 style: getArabLightTextStyle12(
-                  color: AppColors.myBlue,
+                  color: Colors.black,
                   context: context,
                 ),
               ),
@@ -185,7 +181,7 @@ class WhiteContainer extends StatelessWidget {
                 textAlign: TextAlign.end,
                 "في شغل كتير و خصوصا بعد انتشار التعليم الالكتروني و مجالاته كتير \nولكن لازم الطالب يتعلم ادوات سوق العمل و يشتغل علي نفسه",
                 style: getArabLightTextStyle12(
-                  color: AppColors.myBlue,
+                  color: Colors.black,
                   context: context,
                 ),
               ),
@@ -208,7 +204,7 @@ class WhiteContainer extends StatelessWidget {
                 textAlign: TextAlign.end,
                 "قسم تكنولوجيا التعليم بيركز على توظيف التكنولوجيا في العملية التعليمية أما الحاسب الآلي فبيركز على البرمجة وأنظمة التشغيل أكتر",
                 style: getArabLightTextStyle12(
-                  color: AppColors.myBlue,
+                  color: Colors.black,
                   context: context,
                 ),
               ),
@@ -231,7 +227,7 @@ class WhiteContainer extends StatelessWidget {
                 textAlign: TextAlign.end,
                 "تصميم تعليمي\nوسائل تعليمية\nإنتاج الوسائل التكنولوجيةتصميم برامج تعليمية\nإنتاج الفيديو التعليمي\nتطبيقات الحاسب في التعليم\n",
                 style: getArabLightTextStyle12(
-                  color: AppColors.myBlue,
+                  color: Colors.black,
                   context: context,
                 ),
               ),
@@ -254,7 +250,7 @@ class WhiteContainer extends StatelessWidget {
                 textAlign: TextAlign.end,
                 "ينفع تكمل ماجستير ودكتوراه في تكنولوجيا التعليم، أو تعليم إلكتروني، أو تصميم تعليمي.",
                 style: getArabLightTextStyle12(
-                  color: AppColors.myBlue,
+                  color: Colors.black,
                   context: context,
                 ),
               ),
@@ -277,7 +273,7 @@ class WhiteContainer extends StatelessWidget {
                 textAlign: TextAlign.end,
                 "فيه جزء من الدراسة بيكون عملي سواء في المعامل أو في المدارس خلال التربية العملية",
                 style: getArabLightTextStyle12(
-                  color: AppColors.myBlue,
+                  color: Colors.black,
                   context: context,
                 ),
               ),
@@ -302,7 +298,7 @@ class WhiteContainer extends StatelessWidget {
 
                 // "أولاً: المعلمالدور:* مسؤول عن شرح الدروس، تصحيح الواجبات، وضع امتحانات، تقييم الطلاب.الوظيفة:* معلم فصل أو معلم مادة* ليه جدول حصص ومقرر تعليمي بيشرحهثانيًا: الأخصائي (زي أخصائي تكنولوجيا التعليم)الدور:* بيساعد المعلمين في استخدام الوسائل التعليمية والتكنولوجيا* بيصمم أنشطة ووسائل تعليمية تناسب المناهج* بيشغّل المعامل وأجهزة الكمبيوتر، ويشرف على الصيانة والتنظيم* بيساعد في إنتاج فيديوهات تعليمية أو عروض تقديمية للمدرسين والطلبةالوظيفة:* مش بيشرح منهج، لكنه بيساعد في تطوير طرق الشرح* بيشتغل أكتر خلف الكواليس في دعم العملية التعليم",
                 style: getArabLightTextStyle12(
-                  color: AppColors.myBlue,
+                  color: Colors.black,
                   context: context,
                 ),
               ),

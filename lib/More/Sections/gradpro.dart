@@ -336,19 +336,22 @@ class _BodyGraduationState extends State<BodyGraduation>
 
   Widget _buildTextField(
       TextEditingController controller, String label, String validatorText) {
-    return TextFormField(
-      controller: controller,
-      textAlign: TextAlign.right,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return validatorText;
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        labelText: label,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: TextFormField(
+        controller: controller,
+        textAlign: TextAlign.right,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return validatorText;
+          }
+          return null;
+        },
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
         ),
       ),
     );

@@ -31,34 +31,22 @@ class MaterialRecording extends StatelessWidget {
                       textDirection: TextDirection.rtl,
                       text: TextSpan(
                         style: getArabLightTextStyle(
-                            context: context,
-                            color: Colors.black,
-                            fontSize: 18,),
+                          context: context,
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
                         children: [
                           // متطلبات الجامعة
                           TextSpan(
                             text: 'متطلبات الجامعة:\n',
                             style: getArabLightTextStyle(
                                 context: context,
-                                color:Colors.blue,
+                                color: AppColors.myBlue,
                                 fontSize: 18),
                           ),
 
-                          // العنوان الرئيسي
-                          TextSpan(
-                              text: 'اللغة الإنجليزية\n',
-                              style: getArabLightTextStyle(
-                                context: context,
-                                color: Colors.black,
-                              )),
                           // // متطلبات الكلية
-                          TextSpan(
-                            text: 'مقررات متطلبات الكلية:\n',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
+
                           TextSpan(
                             text: 'مقررات التخصص الاجبارية:\n',
                             style: getArabLightTextStyle(
@@ -66,6 +54,13 @@ class MaterialRecording extends StatelessWidget {
                                 color: Colors.black,
                                 fontSize: 18),
                           ),
+                          // العنوان الرئيسي
+                          TextSpan(
+                              text: '• اللغة الإنجليزية\n',
+                              style: getArabLightTextStyle(
+                                context: context,
+                                color: Colors.black,
+                              )),
                           TextSpan(
                               text: '• مدخل إلى العلوم التربوية\n',
                               style: getArabLightTextStyle(
@@ -73,7 +68,7 @@ class MaterialRecording extends StatelessWidget {
                                 color: Colors.black,
                               )),
                           TextSpan(
-                              text: '• المناهج وتنظيماتها\n\n',
+                              text: '• المناهج وتنظيماتها\n',
                               style: getArabLightTextStyle(
                                 context: context,
                                 color: Colors.black,
@@ -113,12 +108,12 @@ class MaterialRecording extends StatelessWidget {
                             text: 'مقررات التخصص الاختيارية:\n',
                             style: getArabLightTextStyle(
                                 context: context,
-                                color: Colors.blue,
+                                color: AppColors.myBlue,
                                 fontSize: 18),
                           ),
                           TextSpan(
-                            text: '(يختار الطالب مقررين منها)\n',
-                            style: TextStyle(fontStyle: FontStyle.italic),
+                            text: 'يختار الطالب مقررين منها\n',
+                            style: getArabLightTextStyle(context: context),
                           ),
                           TextSpan(
                               text: '• تطبيقات الحاسب المكتبية\n',
@@ -140,7 +135,7 @@ class MaterialRecording extends StatelessWidget {
                                 color: Colors.black,
                               )),
                           TextSpan(
-                              text: '• تكنولوجيا الوسائط المتعددة والفائقة\n\n',
+                              text: '• تكنولوجيا الوسائط المتعددة والفائقة\n',
                               style: getArabLightTextStyle(
                                 context: context,
                                 color: Colors.black,
@@ -151,7 +146,7 @@ class MaterialRecording extends StatelessWidget {
                     Text(
                       textAlign: TextAlign.right,
                       textDirection: TextDirection.rtl,
-                      "متطلبات المواد للفرقة الاولي الترم الاول و الثاني",
+                      "متطلبات المواد للفرقة الاولي الترم الاول و الثاني\n\n",
                       style: getArabRegulerTextStyle(
                         context: context,
                         fontSize: 14,
@@ -167,34 +162,32 @@ class MaterialRecording extends StatelessWidget {
                             text: 'متطلبات الكلية:\n',
                             style: getArabLightTextStyle(
                                 context: context,
-                                color: Colors.blueAccent,
+                                color: AppColors.myBlue,
                                 fontSize: 18),
                           ),
 
                           // العنوان الرئيسي
                           TextSpan(
-                              text: 'مدخل الي علوم نفسية\n',
+                              text: '• مدخل الي علوم نفسية\n',
                               style: getArabLightTextStyle(
                                 context: context,
                                 color: Colors.black,
                               )),
                           TextSpan(
-                              text: 'طرق تدريس عامة\n',
-                              style: getArabLightTextStyle(
-                                context: context,
-                                color: Colors.black,
-                              )),
+                            text: '• طرق تدريس عامة\n\n',
+                            style: getArabLightTextStyle(
+                              context: context,
+                              color: Colors.black,
+                            ),
+                          ),
                           TextSpan(
                             text: 'مقررات التخصص الاجبارية:\n',
                             style: getArabLightTextStyle(
                                 context: context,
-                                color: Colors.blue,
+                                color: AppColors.myBlue,
                                 fontSize: 18),
                           ),
-                          TextSpan(
-                            text: '\n',
-                            style: TextStyle(fontStyle: FontStyle.italic),
-                          ),
+
                           TextSpan(
                               text: '• المتاحف و المعارض \n',
                               style: getArabLightTextStyle(
@@ -228,44 +221,46 @@ class MaterialRecording extends StatelessWidget {
 
                           // التخصص الاختياري
                           TextSpan(
-                            text: 'مقررات التخصص الاختيارية:\n',
+                            text: 'مقررات التخصص الاختيارية:',
                             style: getArabLightTextStyle(
-                                context: context,
-                                color: Colors.blue,
-                                fontSize: 18),
+                              context: context,
+                              color: AppColors.myBlue,
+                              fontSize: 18,
+                            ),
                           ),
                           TextSpan(
                             text: '(يختار الطالب مقررين منها)\n',
                             style: TextStyle(fontStyle: FontStyle.italic),
                           ),
+
                           TextSpan(
-                            text: '\n',
-                            style: TextStyle(fontStyle: FontStyle.italic),
+                            text: '• تطبيقات الحاسب المكتبية \n',
+                            style: getArabLightTextStyle(
+                              context: context,
+                              color: Colors.black,
+                            ),
                           ),
                           TextSpan(
-                              text: '• تطبيقات الحاسب المكتبية \n',
-                              style: getArabLightTextStyle(
-                                context: context,
-                                color: Colors.black,
-                              )),
+                            text: '• تقنيات النماذج و العينات التعليمية\n',
+                            style: getArabLightTextStyle(
+                              context: context,
+                              color: Colors.black,
+                            ),
+                          ),
                           TextSpan(
-                              text: '• تقنيات النماذج و العينات التعليمية\n',
-                              style: getArabLightTextStyle(
-                                context: context,
-                                color: Colors.black,
-                              )),
+                            text: '• تصميم المعلومات البصرية و انتاجها  \n',
+                            style: getArabLightTextStyle(
+                              context: context,
+                              color: Colors.black,
+                            ),
+                          ),
                           TextSpan(
-                              text: '• تصميم المعلومات البصرية و انتاجها  \n',
-                              style: getArabLightTextStyle(
-                                context: context,
-                                color: Colors.black,
-                              )),
-                          TextSpan(
-                              text: '•تكنولوجيا الوسائط المتعددة و الفائقة\n',
-                              style: getArabLightTextStyle(
-                                context: context,
-                                color: Colors.black,
-                              )),
+                            text: '•تكنولوجيا الوسائط المتعددة و الفائقة\n',
+                            style: getArabLightTextStyle(
+                              context: context,
+                              color: Colors.black,
+                            ),
+                          ),
                         ],
                       ),
                     ),

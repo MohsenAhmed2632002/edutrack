@@ -1,15 +1,11 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:edutrack/core/Models/UserdataModel.dart';
-import 'package:edutrack/core/Routing/Routes.dart';
 import 'package:edutrack/core/Routing/app_regex.dart';
-import 'package:edutrack/core/Server/NotifyServer.dart';
 import 'package:edutrack/core/repo/fire_base_auth.dart';
 import 'package:edutrack/core/Theming/Font.dart';
 import 'package:edutrack/core/Widgets/Shared_Widgets.dart';
 import 'package:edutrack/core/Theming/app_colors.dart';
-import 'package:edutrack/core/Theming/app_string.dart';
 import 'package:edutrack/core/Theming/image.dart';
-import 'package:edutrack/core/Server/sharedpref.dart';
 import 'package:edutrack/sginup/cubit/sginup_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -130,9 +126,6 @@ class _MyPageState extends State<MyPage> {
               },
               decoration: InputDecoration(
                 hintText: "اسم المستخدم ",
-                label: Text(
-                  ".....برجاء ادخال اسم المستخدم ",
-                ),
               ),
             ),
             TextFormField(
@@ -146,9 +139,6 @@ class _MyPageState extends State<MyPage> {
               },
               decoration: InputDecoration(
                 hintText: "الايميل ",
-                label: Text(
-                  ".....برجاء ادخال الايميل ",
-                ),
               ),
             ),
             TextFormField(
@@ -164,9 +154,6 @@ class _MyPageState extends State<MyPage> {
               },
               decoration: InputDecoration(
                 hintText: "اسم كلمة المرور  ",
-                label: Text(
-                  ".....برجاء ادخال كلمة المرور  ",
-                ),
               ),
             ),
             DropdownSearch<String>(

@@ -1,7 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:edutrack/core/Theming/Font.dart';
 import 'package:edutrack/core/Theming/app_colors.dart';
-import 'package:edutrack/core/Theming/app_string.dart';
 import 'package:edutrack/core/Theming/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -60,34 +59,34 @@ class LinesImage extends StatelessWidget {
   }
 }
 
-  class CenterImage extends StatelessWidget {
-    final String nameImage;
-    const CenterImage({
-      required this.nameImage,
-      super.key,
-    });
+class CenterImage extends StatelessWidget {
+  final String nameImage;
+  const CenterImage({
+    required this.nameImage,
+    super.key,
+  });
 
-    @override
-    Widget build(BuildContext context) {
-      return Positioned(
-        left: 0,
-        right: 0,
-        bottom: 550,
-        child: Image.asset(
-          nameImage,
-          frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-            if (wasSynchronouslyLoaded) return child;
-            return AnimatedOpacity(
-              child: child,
-              opacity: frame == null ? 0 : 1,
-              duration: const Duration(seconds: 1),
-              curve: Curves.easeOut,
-            );
-          },
-        ),
-      );
-    }
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      left: 0,
+      right: 0,
+      bottom: 550,
+      child: Image.asset(
+        nameImage,
+        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+          if (wasSynchronouslyLoaded) return child;
+          return AnimatedOpacity(
+            child: child,
+            opacity: frame == null ? 0 : 1,
+            duration: const Duration(seconds: 1),
+            curve: Curves.easeOut,
+          );
+        },
+      ),
+    );
   }
+}
 
 class RowNameAndImage extends StatelessWidget {
   final String myImage;
@@ -140,8 +139,8 @@ class HomeRowNameAndImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top:  0,
-      right: 0,
+      top: 0,
+      // right: 0,
       // bottom: 550,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -237,7 +236,7 @@ class SimpleMore extends StatelessWidget {
           Positioned(
             // left: 10,
             // right: 10,
-            bottom: 10,
+            top: 10,
             height: 120.h,
             width: 150.w,
 
