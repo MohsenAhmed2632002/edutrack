@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:edutrack/core/Routing/Routes.dart';
 import 'package:edutrack/core/Server/localuserdata.dart';
 import 'package:edutrack/core/Server/notification_scheduler.dart';
@@ -7,13 +8,14 @@ import 'package:edutrack/core/Widgets/Shared_Widgets.dart';
 import 'package:edutrack/core/Theming/app_colors.dart';
 import 'package:edutrack/core/Theming/app_string.dart';
 import 'package:edutrack/core/Theming/image.dart';
+import 'package:edutrack/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyHomePage extends StatelessWidget {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+      notificationsPlugin; // من main.dart
 
   static Future<void> cleanupOldNotifications() async {
     final pending = await _notificationsPlugin.pendingNotificationRequests();
@@ -80,71 +82,74 @@ class MyHomePage extends StatelessWidget {
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
         ),
-        builder: (_) => Container(
-          padding: const EdgeInsets.all(20),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Text(
-                    'إشعارات اليوم ($tomorrowDay)',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
+        builder: (_) => Directionality(
+          textDirection: TextDirection.rtl,
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Text(
+                      'إشعارات اليوم ($tomorrowDay)',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-                // المحاضرات
-                if (lectures.isNotEmpty) ...[
-                  const Text('📘 المحاضرات:',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 10),
-                  ...lectures.map((n) {
-                    final payload = jsonDecode(n.payload!);
-                    return ListTile(
-                      leading: const Icon(Icons.school, color: Colors.green),
-                      title: Text(payload['subject'] ?? 'بدون عنوان'),
-                      subtitle: Text(
-                          'الوقت: ${payload['time']} \nالمكان: ${payload['location']} \nالدكتور: ${payload['doctor']}'),
-                    );
-                  }),
-                  const Divider(),
-                ],
+                  // المحاضرات
+                  if (lectures.isNotEmpty) ...[
+                    const Text('📘 المحاضرات:',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 10),
+                    ...lectures.map((n) {
+                      final payload = jsonDecode(n.payload!);
+                      return ListTile(
+                        leading: const Icon(Icons.school, color: Colors.green),
+                        title: Text(payload['subject'] ?? 'بدون عنوان'),
+                        subtitle: Text(
+                            'الوقت: ${payload['time']} \nالمكان: ${payload['location']} \nالدكتور: ${payload['doctor']}'),
+                      );
+                    }),
+                    const Divider(),
+                  ],
 
-                // السكاشن
-                if (sections.isNotEmpty) ...[
-                  const Text('📗 السكاشن:',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 10),
-                  ...sections.map((n) {
-                    final payload = jsonDecode(n.payload!);
-                    return ListTile(
-                      leading: const Icon(Icons.group, color: Colors.orange),
-                      title: Text(payload['subject'] ?? 'بدون عنوان'),
-                      subtitle: Text(
-                          'الوقت: ${payload['time']} \nالمكان: ${payload['location']} \nالدكتور: ${payload['doctor']}'),
-                    );
-                  }),
-                ],
+                  // السكاشن
+                  if (sections.isNotEmpty) ...[
+                    const Text('📗 السكاشن:',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 10),
+                    ...sections.map((n) {
+                      final payload = jsonDecode(n.payload!);
+                      return ListTile(
+                        leading: const Icon(Icons.group, color: Colors.orange),
+                        title: Text(payload['subject'] ?? 'بدون عنوان'),
+                        subtitle: Text(
+                            'الوقت: ${payload['time']} \nالمكان: ${payload['location']} \nالدكتور: ${payload['doctor']}'),
+                      );
+                    }),
+                  ],
 
-                if (lectures.isEmpty && sections.isEmpty)
-                  const Center(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 20),
-                      child: Text('لا توجد إشعارات مجدولة'),
+                  if (lectures.isEmpty && sections.isEmpty)
+                    const Center(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        child: Text('لا توجد إشعارات مجدولة'),
+                      ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -590,13 +595,10 @@ class HorizontalContainer extends StatelessWidget {
                           Routes.RegulationsRoute,
                         );
                       },
-                      child: Hero(
-                        tag: "regulations",
-                        child: SimpleMore(
-                          myImage: AppImages.regulations,
-                          text: "اللائحة ",
-                          backGroundColor: AppColors.myBlue,
-                        ),
+                      child: SimpleMore(
+                        myImage: AppImages.regulations,
+                        text: "اللائحة ",
+                        backGroundColor: AppColors.myBlue,
                       ),
                     );
 
@@ -626,7 +628,7 @@ class HorizontalContainer extends StatelessWidget {
                 );
               },
               child: Hero(
-                tag: "frequently",
+                tag: "Asked",
                 child: SimpleMore(
                   myImage: AppImages.frequently,
                   text: "أسئلة شائعة",
@@ -642,35 +644,35 @@ class HorizontalContainer extends StatelessWidget {
   }
 }
 
-class TheTextFormField extends StatelessWidget {
-  const TheTextFormField({
-    super.key,
-  });
+// class TheTextFormField extends StatelessWidget {
+//   const TheTextFormField({
+//     super.key,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: TextFormField(
-        textAlign: TextAlign.right,
-        // validator: (value) {},
-        decoration: InputDecoration(
-          prefixIcon: Icon(
-            Icons.search,
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(
-                50,
-              ),
-            ),
-          ),
-          label: Text(
-            "بحث ",
-          ),
-          hintText: "بحث",
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.all(10.0),
+//       child: TextFormField(
+//         textAlign: TextAlign.right,
+//         // validator: (value) {},
+//         decoration: InputDecoration(
+//           prefixIcon: Icon(
+//             Icons.search,
+//           ),
+//           border: OutlineInputBorder(
+//             borderRadius: BorderRadius.all(
+//               Radius.circular(
+//                 50,
+//               ),
+//             ),
+//           ),
+//           label: Text(
+//             "بحث ",
+//           ),
+//           hintText: "بحث",
+//         ),
+//       ),
+//     );
+//   }
+// }

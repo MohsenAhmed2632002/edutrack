@@ -21,7 +21,6 @@ class LoginCubit extends Cubit<LoginState> {
     required String email,
     required String password,
     required String name,
-    
     required String study_Group,
     required String specialization,
     required BuildContext context,
@@ -43,10 +42,6 @@ class LoginCubit extends Cubit<LoginState> {
         return;
       }
 
-
-
-
-    
       // إنشاء نموذج المستخدم
       final userModel = UserModel(
         name: name,
@@ -58,9 +53,8 @@ class LoginCubit extends Cubit<LoginState> {
       );
 
       // تنفيذ العمليات بشكل متوازي حيث ممكن
- _fireSoterUser.updateUserInFireStore(userModel);
- _localUserData.setUserData(userModel);
-
+      _fireSoterUser.updateUserInFireStore(userModel);
+      _localUserData.setUserData(userModel);
 
       _showSuccessSnackBar(context, name);
 
@@ -74,7 +68,9 @@ class LoginCubit extends Cubit<LoginState> {
     } on FirebaseAuthException catch (e) {
       // معالجة أخطاء Firebase المحددة
       final errorMessage = _mapAuthErrorToMessage(e);
-      emit(LoginFailed(error: "فشل تسجيل الدخول: في اول مره يجب تشغيل الانترنت {$errorMessage}"));
+      emit(LoginFailed(
+          error:
+              "فشل تسجيل الدخول: في اول مره يجب تشغيل الانترنت {$errorMessage}"));
     } on Exception catch (e) {
       // معالجة الأخطاء العامة
       print("Login error: ${e.toString()}");

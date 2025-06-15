@@ -24,19 +24,6 @@ class SginUpPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => SginupCubit(),
       child: Scaffold(
-        // appBar: AppBar(
-        //   backgroundColor: Colors.transparent,
-        //   elevation: 0,
-        //   leading: IconButton(
-        //     color: AppColors.mywhite,
-        //     onPressed: () {
-        //       Navigator.pop(context);
-        //     },
-        //     icon: Icon(
-        //       Icons.arrow_back_ios_new_rounded,
-        //     ),
-        //   ),
-        // ),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -113,104 +100,81 @@ class _MyPageState extends State<MyPage> {
                 color: AppColors.mywhite,
               ),
             ),
-            TextFormField(
-              controller: widget.usernameController,
-              textAlign: TextAlign.right,
-              validator: (value) {
-                // usernameController.text == "admin"
-                if (value == null ||
-                    value.isEmpty ||
-                    AppRegex.hasMinLength(value)) {
-                  return "برجاء ادخال الاسم بشكل سليم ";
-                }
-              },
-              decoration: InputDecoration(
-                hintText: "اسم المستخدم ",
-              ),
-            ),
-            TextFormField(
-              controller: widget.userEmailController,
-              textAlign: TextAlign.right,
-              validator: (value) {
-                // usernameController.text == "admin"
-                if (value == null || value.isEmpty) {
-                  return "برجاء ادخال الايميل بشكل صحيح ";
-                }
-              },
-              decoration: InputDecoration(
-                hintText: "الايميل ",
-              ),
-            ),
-            TextFormField(
-              controller: widget.userPassWordController,
-              textAlign: TextAlign.right,
-              validator: (value) {
-                // usernameController.text == "admin"
-                if (value == null ||
-                    value.isEmpty ||
-                    AppRegex.isPasswordValid(value)) {
-                  return "برجاء ادخال كلمة المرور بشكل صحيح";
-                }
-              },
-              decoration: InputDecoration(
-                hintText: "اسم كلمة المرور  ",
-              ),
-            ),
-            DropdownSearch<String>(
-              // mode: Mode.form,
-              key: dropDownKey,
-              selectedItem: selectedGrade,
-              items: (filter, infiniteScrollProps) => [
-                "الفرقة الأولى",
-                "الفرقة الثانية",
-                "الفرقة الثالثة",
-                "الفرقة الرابعة",
-              ],
-              decoratorProps: DropDownDecoratorProps(
-                decoration: InputDecoration(
-                  labelText: 'اختر الفرقة',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(
-                        30,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              popupProps: PopupProps.menu(
-                constraints: BoxConstraints.tightFor(height: 270.h),
-                showSelectedItems: true,
-                showSearchBox: true,
-                searchFieldProps: TextFieldProps(
-                  decoration: InputDecoration(
-                    hintText: "ابحث عن الفرقة",
-                    prefixIcon: Icon(Icons.search),
-                  ),
-                ),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  selectedGrade = value!;
-                  // نمسح الاختيار السابق إذا تغيرت الفرقة
-                  if (value != "الفرقة الثالثة" && value != "الفرقة الرابعة") {
-                    selectedSpecialization = "اختر التخصص";
+            Directionality(
+              textDirection: TextDirection.rtl,
+              child: TextFormField(
+                controller: widget.usernameController,
+                textAlign: TextAlign.right,
+                validator: (value) {
+                  // usernameController.text == "admin"
+                  if (value == null ||
+                      value.isEmpty ||
+                      AppRegex.hasMinLength(value)) {
+                    return "برجاء ادخال الاسم بشكل سليم ";
                   }
-                });
-              },
-            ), // نمسح الاختيار السابق إذا تغيرت الفرقة
-            if (selectedGrade == "الفرقة الثالثة" ||
-                selectedGrade == "الفرقة الرابعة")
-              DropdownSearch<String>(
-                // mode: Mode.dialog,
-                selectedItem: selectedSpecialization,
-                items: (filter, loadProps) => [
-                  "معلم ",
-                  " أخصائي",
+                },
+                decoration: InputDecoration(
+                  hintText: "اسم المستخدم ",
+                  label: Text(
+                    "برجاء ادخال اسم المستخدم ",
+                  ),
+                ),
+              ),
+            ),
+            Directionality(
+              textDirection: TextDirection.rtl,
+              child: TextFormField(
+                controller: widget.userEmailController,
+                textAlign: TextAlign.right,
+                validator: (value) {
+                  // usernameController.text == "admin"
+                  if (value == null || value.isEmpty) {
+                    return "برجاء ادخال الايميل بشكل صحيح ";
+                  }
+                },
+                decoration: InputDecoration(
+                  hintText: "الايميل",
+                  labelText: "برجاء ادخال الايميل ",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+              ),
+            ),
+            Directionality(
+              textDirection: TextDirection.rtl,
+              child: TextFormField(
+                controller: widget.userPassWordController,
+                textAlign: TextAlign.right,
+                validator: (value) {
+                  // usernameController.text == "admin"
+                  if (value == null ||
+                      value.isEmpty ||
+                      AppRegex.isPasswordValid(value)) {
+                    return "برجاء ادخال كلمة المرور بشكل صحيح";
+                  }
+                },
+                decoration: InputDecoration(
+                  hintText: "كلمة المرور ",
+                  labelText: "برجاء ادخال كلمة المرور ",
+                ),
+              ),
+            ),
+            Directionality(
+              textDirection: TextDirection.rtl,
+              child: DropdownSearch<String>(
+                // mode: Mode.form,
+                key: dropDownKey,
+                selectedItem: selectedGrade,
+                items: (filter, infiniteScrollProps) => [
+                  "الفرقة الأولى",
+                  "الفرقة الثانية",
+                  "الفرقة الثالثة",
+                  "الفرقة الرابعة",
                 ],
                 decoratorProps: DropDownDecoratorProps(
                   decoration: InputDecoration(
-                    labelText: 'اختر التخصص',
+                    labelText: 'اختر الفرقة',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(
@@ -221,21 +185,68 @@ class _MyPageState extends State<MyPage> {
                   ),
                 ),
                 popupProps: PopupProps.menu(
-                  constraints: BoxConstraints.tightFor(height: 200.h),
+                  constraints: BoxConstraints.tightFor(height: 270.h),
                   showSelectedItems: true,
                   showSearchBox: true,
                   searchFieldProps: TextFieldProps(
                     decoration: InputDecoration(
-                      hintText: "ابحث عن التخصص",
+                      hintText: "ابحث عن الفرقة",
                       prefixIcon: Icon(Icons.search),
                     ),
                   ),
                 ),
                 onChanged: (value) {
                   setState(() {
-                    selectedSpecialization = value!;
+                    selectedGrade = value!;
+                    // نمسح الاختيار السابق إذا تغيرت الفرقة
+                    if (value != "الفرقة الثالثة" &&
+                        value != "الفرقة الرابعة") {
+                      selectedSpecialization = "اختر التخصص";
+                    }
                   });
                 },
+              ),
+            ), // نمسح الاختيار السابق إذا تغيرت الفرقة
+            if (selectedGrade == "الفرقة الثالثة" ||
+                selectedGrade == "الفرقة الرابعة")
+              Directionality(
+                textDirection: TextDirection.rtl,
+                child: DropdownSearch<String>(
+                  // mode: Mode.dialog,
+                  selectedItem: selectedSpecialization,
+                  items: (filter, loadProps) => [
+                    "معلم ",
+                    " أخصائي",
+                  ],
+                  decoratorProps: DropDownDecoratorProps(
+                    decoration: InputDecoration(
+                      labelText: 'اختر التخصص',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            30,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  popupProps: PopupProps.menu(
+                    constraints: BoxConstraints.tightFor(height: 200.h),
+                    showSelectedItems: true,
+                    showSearchBox: true,
+                    searchFieldProps: TextFieldProps(
+                      decoration: InputDecoration(
+                        hintText: "ابحث عن التخصص",
+                        prefixIcon: Icon(Icons.search),
+                      ),
+                    ),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedSpecialization = value!;
+                    });
+                  },
+                ),
               ),
             BlocBuilder<SginupCubit, SginupState>(
               builder: (context, state) {

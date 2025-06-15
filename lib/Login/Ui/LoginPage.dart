@@ -86,6 +86,41 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> {
+  void showStyledError(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.red.shade600,
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.all(16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      duration: const Duration(seconds: 3),
+      content: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Row(
+          children: [
+            const Icon(Icons.warning_amber_rounded, color: Colors.white),
+            const SizedBox.shrink(),
+            Expanded(
+              child: Text(
+                message,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(snackBar);
+  }
+
   final dropDownKey = GlobalKey<DropdownSearchState>();
   String selectedGrade = "";
   String selectedSpecialization = "";
@@ -128,122 +163,94 @@ class _MyPageState extends State<MyPage> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  controller: widget.usernameController,
-                  textAlign: TextAlign.right,
-                  validator: (value) {
-                    // usernameController.text == "admin"
-                    if (value == null ||
-                        value.isEmpty ||
-                        AppRegex.hasMinLength(value)) {
-                      return "برجاء ادخال الاسم بشكل سليم ";
-                    }
-                  },
-                  decoration: InputDecoration(
-                    hintText: "اسم المستخدم ",
-                    // label: Text(
-                    // ".....برجاء ادخال اسم المستخدم ",
-                    // ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  controller: widget.emailController,
-                  textDirection: TextDirection.rtl, // يجعل اتجاه النص من اليمين
-                  textAlign: TextAlign.right,
-                  validator: (value) {
-                    // usernameController.text == "admin"
-                    if (value == null || value.isEmpty) {
-                      return "برجاء ادخال الايميل بشكل صحيح";
-                    }
-                  },
-                  decoration: InputDecoration(
-                    hintText: "الايميل",
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  controller: widget.passWordController,
-                  textAlign: TextAlign.right,
-                  validator: (value) {
-                    // usernameController.text == "admin"
-                    if (value == null ||
-                        value.isEmpty ||
-                        AppRegex.isPasswordValid(value)) {
-                      return "برجاء ادخال كلمة المرور بشكل صحيح";
-                    }
-                  },
-                  decoration: InputDecoration(
-                    hintText: "كلمة المرور ",
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DropdownSearch<String>(
-                  // mode: Mode.form,
-                  key: dropDownKey,
-                  selectedItem: selectedGrade,
-                  items: (filter, infiniteScrollProps) => [
-                    "الفرقة الأولى",
-                    "الفرقة الثانية",
-                    "الفرقة الثالثة",
-                    "الفرقة الرابعة",
-                  ],
-                  decoratorProps: DropDownDecoratorProps(
-                    decoration: InputDecoration(
-                      labelText: 'اختر الفرقة',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            30,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  popupProps: PopupProps.menu(
-                    constraints: BoxConstraints.tightFor(height: 270.h),
-                    showSelectedItems: true,
-                    showSearchBox: true,
-                    searchFieldProps: TextFieldProps(
-                      decoration: InputDecoration(
-                        hintText: "ابحث عن الفرقة",
-                        prefixIcon: Icon(Icons.search),
-                      ),
-                    ),
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedGrade = value!;
-                      // نمسح الاختيار السابق إذا تغيرت الفرقة
-                      if (value != "الفرقة الثالثة" &&
-                          value != "الفرقة الرابعة") {
-                        selectedSpecialization = "اختر التخصص";
+                child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: TextFormField(
+                    controller: widget.usernameController,
+                    textAlign: TextAlign.right,
+                    validator: (value) {
+                      // usernameController.text == "admin"
+                      if (value == null ||
+                          value.isEmpty ||
+                          AppRegex.hasMinLength(
+                            value,
+                          )) {
+                        return "برجاء ادخال الاسم بشكل سليم ";
                       }
-                    });
-                  },
+                    },
+                    decoration: InputDecoration(
+                      hintText: "اسم المستخدم ",
+                      label: Text(
+                        "برجاء ادخال اسم المستخدم ",
+                      ),
+                    ),
+                  ),
                 ),
               ),
-              // نمسح الاختيار السابق إذا تغيرت الفرقة
-              if (selectedGrade == "الفرقة الثالثة" ||
-                  selectedGrade == "الفرقة الرابعة")
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: TextFormField(
+                    controller: widget.emailController,
+                    textDirection:
+                        TextDirection.rtl, // يجعل اتجاه النص من اليمين
+                    textAlign: TextAlign.right,
+                    validator: (value) {
+                      // usernameController.text == "admin"
+                      if (value == null || value.isEmpty) {
+                        return "برجاء ادخال الايميل بشكل صحيح";
+                      }
+                    },
+                    decoration: InputDecoration(
+                      hintText: "الايميل",
+                      labelText: "برجاء ادخال الايميل ",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: TextFormField(
+                    controller: widget.passWordController,
+                    textAlign: TextAlign.right,
+                    validator: (value) {
+                      // usernameController.text == "admin"
+                      if (value == null ||
+                          value.isEmpty ||
+                          AppRegex.isPasswordValid(value)) {
+                        return "برجاء ادخال كلمة المرور بشكل صحيح";
+                      }
+                    },
+                    decoration: InputDecoration(
+                      hintText: "كلمة المرور ",
+                      labelText: "برجاء ادخال كلمة المرور ",
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Directionality(
+                  textDirection: TextDirection.rtl,
                   child: DropdownSearch<String>(
-                    // mode: Mode.dialog,
-                    selectedItem: selectedSpecialization,
-                    items: (filter, loadProps) => [
-                      "معلم ",
-                      " أخصائي",
+                    // mode: Mode.form,
+                    key: dropDownKey,
+                    selectedItem: selectedGrade,
+                    items: (filter, infiniteScrollProps) => [
+                      "الفرقة الأولى",
+                      "الفرقة الثانية",
+                      "الفرقة الثالثة",
+                      "الفرقة الرابعة",
                     ],
                     decoratorProps: DropDownDecoratorProps(
                       decoration: InputDecoration(
-                        labelText: 'اختر التخصص',
+                        labelText: 'اختر الفرقة',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(
@@ -254,21 +261,72 @@ class _MyPageState extends State<MyPage> {
                       ),
                     ),
                     popupProps: PopupProps.menu(
-                      constraints: BoxConstraints.tightFor(height: 200.h),
+                      constraints: BoxConstraints.tightFor(height: 270.h),
                       showSelectedItems: true,
                       showSearchBox: true,
                       searchFieldProps: TextFieldProps(
                         decoration: InputDecoration(
-                          hintText: "ابحث عن التخصص",
+                          hintText: "ابحث عن الفرقة",
                           prefixIcon: Icon(Icons.search),
                         ),
                       ),
                     ),
                     onChanged: (value) {
                       setState(() {
-                        selectedSpecialization = value!;
+                        selectedGrade = value!;
+                        // نمسح الاختيار السابق إذا تغيرت الفرقة
+                        if (value != "الفرقة الثالثة" &&
+                            value != "الفرقة الرابعة") {
+                          selectedSpecialization = "اختر التخصص";
+                        }
                       });
                     },
+                  ),
+                ),
+              ),
+              // نمسح الاختيار السابق إذا تغيرت الفرقة
+              if (selectedGrade == "الفرقة الثالثة" ||
+                  selectedGrade == "الفرقة الرابعة")
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: DropdownSearch<String>(
+                      // mode: Mode.dialog,
+                      selectedItem: selectedSpecialization,
+                      items: (filter, loadProps) => [
+                        "معلم ",
+                        " أخصائي",
+                      ],
+                      decoratorProps: DropDownDecoratorProps(
+                        decoration: InputDecoration(
+                          labelText: 'اختر التخصص',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(
+                                30,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      popupProps: PopupProps.menu(
+                        constraints: BoxConstraints.tightFor(height: 200.h),
+                        showSelectedItems: true,
+                        showSearchBox: true,
+                        searchFieldProps: TextFieldProps(
+                          decoration: InputDecoration(
+                            hintText: "ابحث عن التخصص",
+                            prefixIcon: Icon(Icons.search),
+                          ),
+                        ),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedSpecialization = value!;
+                        });
+                      },
+                    ),
                   ),
                 ),
               BlocBuilder<LoginCubit, LoginState>(
@@ -279,6 +337,18 @@ class _MyPageState extends State<MyPage> {
                     ),
                     onPressed: () {
                       if (widget.formKey.currentState!.validate()) {
+                        // 1) تأكد من اختيار الفرقة
+                        if (selectedGrade.isEmpty) {
+                          showStyledError(context, 'رجاءً اختر الفرقة');
+                          return;
+                        }
+                        // 2) إذا كانت 3 أو 4، تأكد من اختيار التخصص
+                        if ((selectedGrade == "الفرقة الثالثة" ||
+                                selectedGrade == "الفرقة الرابعة") &&
+                            selectedSpecialization.isEmpty) {
+                          showStyledError(context, 'رجاءً اختر التخصص');
+                          return;
+                        }
                         try {
                           //TODO
                           context.read<LoginCubit>().loginUser(

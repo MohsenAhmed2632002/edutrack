@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'package:animate_do/animate_do.dart';
-import 'package:edutrack/core/Routing/Routes.dart';
 import 'package:edutrack/core/Server/NotifyServer.dart';
 import 'package:edutrack/core/Theming/Font.dart';
 import 'package:edutrack/core/Theming/app_colors.dart';
-import 'package:edutrack/core/Theming/app_string.dart';
 import 'package:edutrack/core/Theming/image.dart';
 import 'package:edutrack/core/Widgets/Shared_Widgets.dart';
 import 'package:flutter/material.dart';
@@ -223,14 +221,6 @@ class _TasksState extends State<Tasks> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      ":موعد الإشعار\n${DateFormat('yyyy-MM-dd\nHH:mm').format(notification['date'])}",
-                                      style: getArabLightTextStyle(
-                                        context: context,
-                                        color: AppColors.myBlue,
-                                        fontSize: 14,
-                                      ),
-                                    ),
                                     OutlinedButton(
                                       onPressed: () async {
                                         await _notifyServer.cancelNotification(
@@ -247,6 +237,14 @@ class _TasksState extends State<Tasks> {
                                           fontSize: 14,
                                           color: AppColors.myBlue,
                                         ),
+                                      ),
+                                    ),
+                                    Text(
+                                      ":موعد الإشعار\n${DateFormat('yyyy-MM-dd\nHH:mm').format(notification['date'])}",
+                                      style: getArabLightTextStyle(
+                                        context: context,
+                                        color: AppColors.myBlue,
+                                        fontSize: 14,
                                       ),
                                     ),
                                   ],

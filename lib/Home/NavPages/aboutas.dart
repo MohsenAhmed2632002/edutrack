@@ -123,7 +123,6 @@ class AboutAs extends StatelessWidget {
                                 'نحن مجموعة من طلاب قسم تكنولوجيا التعليم بكلية التربية النوعية – جامعة عين شمس ',
                             style: getArabLightTextStyle(
                               context: context,
-                              color: AppColors.myBlue,
                               fontSize: 16.sp,
                             ),
                           ),
@@ -132,7 +131,6 @@ class AboutAs extends StatelessWidget {
                                 'جمعنا الشغف بالتقنية الحديثة وحب تطوير العملية التعليمية، ',
                             style: getArabLightTextStyle(
                               context: context,
-                              color: AppColors.myBlue,
                               fontSize: 16.sp,
                             ),
                           ),
@@ -141,7 +139,6 @@ class AboutAs extends StatelessWidget {
                                 'فأنشأنا هذا التطبيق كجزء من مشروع تخرجنا.\n\n',
                             style: getArabLightTextStyle(
                               context: context,
-                              color: AppColors.myBlue,
                               fontSize: 16.sp,
                             ),
                           ),

@@ -95,6 +95,9 @@ class _SectionSchedulePageState extends State<SectionSchedulePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset:
+          false, // ✅ هذا يمنع رفع الشاشة عند ظهور الكيبورد
+
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -257,23 +260,26 @@ class _SectionSchedulePageState extends State<SectionSchedulePage> {
             left: 0,
             right: 0,
             bottom: 550.h,
-            child: TextField(
-              onChanged: (value) {
-                setState(() {
-                  searchText = value.trim();
-                  _futureSections =
-                      fetchSectionsForDay(selectedDay, search: searchText);
-                });
-              },
-              decoration: InputDecoration(
-                hintText: 'ابحث عن السكشن',
-                hintStyle: const TextStyle(color: Colors.grey),
-                filled: true,
-                fillColor: Colors.white,
-                suffixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
+            child: Directionality(
+              textDirection: TextDirection.rtl,
+              child: TextFormField(
+                onChanged: (value) {
+                  setState(() {
+                    searchText = value.trim();
+                    _futureSections =
+                        fetchSectionsForDay(selectedDay, search: searchText);
+                  });
+                },
+                decoration: InputDecoration(
+                  hintText: 'ابحث عن السكشن',
+                  hintStyle: const TextStyle(color: Colors.grey),
+                  filled: true,
+                  fillColor: Colors.white,
+                  suffixIcon: const Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
               ),
             ),

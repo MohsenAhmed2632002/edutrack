@@ -6,11 +6,14 @@ import 'package:edutrack/core/Theming/app_colors.dart';
 import 'package:edutrack/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/Routing/Routes.dart';
 import "package:timezone/data/latest.dart" as tz_data;
 
 bool userisLoggedin = false;
+   final FlutterLocalNotificationsPlugin notificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

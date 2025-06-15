@@ -16,38 +16,46 @@ class HowToGet extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           color: AppColors.mywhite,
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back_ios_new_rounded,
-          ),
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.arrow_back_ios_new_rounded),
         ),
       ),
-      body: Column(
-        children: [
-          Stack(
-            alignment: AlignmentDirectional.bottomCenter,
-            clipBehavior: Clip.none,
-            children: [
-              EduTrackContainer(),
-              WhiteContainer(
-                myWidget: NameHalls(),
-              ),
-              LinesImage(),
-              CenterImage(nameImage: AppImages.map),
-            ],
-          ),
-        ],
+      body: MainLayout(
+        child: NameHalls(),
       ),
     );
   }
 }
 
-class EduTrackContainer extends StatelessWidget {
-  EduTrackContainer({
+class MainLayout extends StatelessWidget {
+  final Widget child;
+
+  const MainLayout({
     super.key,
+    required this.child,
   });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Stack(
+          alignment: AlignmentDirectional.bottomCenter,
+          clipBehavior: Clip.none,
+          children: [
+            const EduTrackContainer(),
+            WhiteContainer(child: child),
+            const LinesImage(),
+            const CenterImage(nameImage: AppImages.map),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class EduTrackContainer extends StatelessWidget {
+  const EduTrackContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,14 +63,12 @@ class EduTrackContainer extends StatelessWidget {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(30),
           bottomRight: Radius.circular(30),
         ),
         image: DecorationImage(
-          image: AssetImage(
-            AppImages.edu_track,
-          ),
+          image: AssetImage(AppImages.edu_track),
           fit: BoxFit.fill,
         ),
       ),
@@ -71,10 +77,11 @@ class EduTrackContainer extends StatelessWidget {
 }
 
 class WhiteContainer extends StatelessWidget {
-  final Widget myWidget;
+  final Widget child;
+
   const WhiteContainer({
     super.key,
-    required this.myWidget,
+    required this.child,
   });
 
   @override
@@ -84,19 +91,15 @@ class WhiteContainer extends StatelessWidget {
       right: 0,
       height: 600.h,
       child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.mywhite,
-        ),
-        child: myWidget,
+        decoration: const BoxDecoration(color: AppColors.mywhite),
+        child: child,
       ),
     );
   }
 }
 
 class LinesImage extends StatelessWidget {
-  const LinesImage({
-    super.key,
-  });
+  const LinesImage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -104,17 +107,14 @@ class LinesImage extends StatelessWidget {
       left: 0,
       right: 0,
       bottom: 550,
-      child: const Image(
-        image: AssetImage(
-          AppImages.lines,
-        ),
-      ),
+      child: const Image(image: AssetImage(AppImages.lines)),
     );
   }
 }
 
 class CenterImage extends StatelessWidget {
   final String nameImage;
+
   const CenterImage({
     required this.nameImage,
     super.key,
@@ -126,131 +126,160 @@ class CenterImage extends StatelessWidget {
       left: 0,
       right: 0,
       bottom: 550,
-      child: Image.asset(nameImage),
+      child: Hero(
+        tag: "How",
+        child: Image.asset(nameImage),
+      ),
     );
   }
 }
 
 class NameHalls extends StatelessWidget {
   NameHalls({super.key});
-  final halls = {
-    'مدرج سيد صبحي': [
-      AppImages.photo_gam,
-      AppImages.sobhy,
-      AppImages.sobhy3,
-    ],
-    'مدرج آمال صادق': [
-      AppImages.photo_gam,
-      AppImages.photo_gam,
-      AppImages.sobhy,
-      AppImages.amaldoor,
-    ],
-    'معمل حاسب 1': [
-      AppImages.tech11,
-      AppImages.tech12,
-      AppImages.tech13,
-    ],
-    'معمل حاسب 2': [
-      AppImages.photo_gam,
-      AppImages.sobhy,
-      AppImages.tech21,
-      AppImages.tech22,
-      AppImages.tech23,
-    ],
-    'معمل تكنولوجيا': [
-      AppImages.photo_gam,
-      AppImages.sobhy,
-      AppImages.tech21,
-      AppImages.tech_2,
-    ],
+
+  final Map<String, HallInfo> halls = {
+    'مدرج سيد صبحي': HallInfo(
+      images: [
+        AppImages.photo_gam,
+        AppImages.sobhy,
+        AppImages.sobhy3,
+      ],
+      instructions: [
+        'اذهب للساحه',
+        'النزول من السلم الأيمن',
+        'اتجه نحو اليسار ستجد المدرج في الناحيه اليمني',
+      ],
+    ),
+    'مدرج آمال صادق': HallInfo(
+      images: [
+        AppImages.photo_gam,
+        AppImages.sobhy,
+        AppImages.amaldoor,
+      ],
+      instructions: [
+        'اذهب للساحه',
+        'النزول من السلم الأيمن',
+        'ستجد المدرج في الناحيه اليمني',
+      ],
+    ),
+    'معمل حاسب 1': HallInfo(
+      images: [
+        AppImages.tech11,
+        AppImages.tech12,
+        AppImages.tech13,
+      ],
+      instructions: [
+        'اتجه نحو القصر من الناحيه الاماميه',
+        'اتجه نحو اليمين ، ستجد المعمل في الناحيه اليسار',
+        'الصعود من السل ستجد المعمل في الناحيه اليمني',
+      ],
+    ),
+    'معمل حاسب 2': HallInfo(
+      images: [
+        AppImages.photo_gam,
+        AppImages.sobhy,
+        AppImages.tech21,
+        AppImages.tech22,
+        AppImages.tech23
+      ],
+      instructions: [
+        'اذهب للساحه',
+        'النزول من السلم الأيمن',
+        'الصعود من السلم الأمامي الي الدور التاني',
+        'امشي للأمام ثم اتجه نحو اليمين',
+        'ستجد المعمل في الناحيه اليمني',
+      ],
+    ),
+    'قاعة تكنولوجيا': HallInfo(
+      images: [
+        AppImages.photo_gam,
+        AppImages.sobhy,
+        AppImages.tech21,
+        AppImages.tech_2
+      ],
+      instructions: [
+        'اذهب للساحه',
+        'النزول من السلم الأيمن',
+        'الصعود من السلم الأمامي إلي الدور الأخير التوجه نحو آخر الطرقه ثم اتجه نحو اليسار',
+        'ستجد المعمل في الناحيه اليمني',
+      ],
+    ),
   };
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          color: AppColors.mywhite,
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back_ios_new_rounded,
-          ),
-        ),
-      ),
-      body: ListView.builder(
-        itemCount: halls.keys.length,
-        shrinkWrap: true, // في حالة وجوده داخل ScrollView
-        physics: NeverScrollableScrollPhysics(), // منع التمرير الداخلي
-        itemBuilder: (context, index) {
-          final hallName = halls.keys.elementAt(index);
-          final images = halls[hallName]!;
+    return ListView.builder(
+      itemCount: halls.length,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        final hallName = halls.keys.elementAt(index);
+        final hallInfo = halls[hallName]!;
 
-          return Card(
-            color: AppColors.myBlue,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+        return Card(
+          color: AppColors.myBlue,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+          elevation: 3,
+          child: ListTile(
+            title: Text(
+              hallName,
+              textAlign: TextAlign.center,
+              style: getArabBoldTextStyle(
+                context: context,
+                fontSize: 20.sp,
+                color: AppColors.mywhite,
+              ),
             ),
-            margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-            elevation: 3,
-            child: ListTile(
-              title: Text(
-                hallName,
-                textAlign: TextAlign.center,
-                style: getArabBoldTextStyle(
-                  context: context,
-                  fontSize: 20.sp,
-                  color: AppColors.mywhite,
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => ImageGalleryPage(
+                  hallName: hallName,
+                  hallInfo: hallInfo,
                 ),
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => ImageGalleryPage(
-                      hallName: hallName,
-                      images: images,
-                    ),
-                  ),
-                );
-              },
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
 
+class HallInfo {
+  final List<String> images;
+  final List<String> instructions;
+
+  HallInfo({required this.images, required this.instructions});
+}
+
 class ImageGalleryPage extends StatefulWidget {
   final String hallName;
-  final List<String> images;
+  final HallInfo hallInfo;
 
-  ImageGalleryPage({required this.hallName, required this.images});
+  const ImageGalleryPage({
+    super.key,
+    required this.hallName,
+    required this.hallInfo,
+  });
 
   @override
-  _ImageGalleryPageState createState() => _ImageGalleryPageState();
+  State<ImageGalleryPage> createState() => _ImageGalleryPageState();
 }
 
 class _ImageGalleryPageState extends State<ImageGalleryPage> {
   int currentIndex = 0;
 
-  void _showNextImage() {
-    if (currentIndex < widget.images.length - 1) {
-      setState(() {
-        currentIndex++;
-      });
+  void _showNext() {
+    if (currentIndex < widget.hallInfo.images.length - 1) {
+      setState(() => currentIndex++);
     }
   }
 
-  void _showPreviousImage() {
+  void _showPrevious() {
     if (currentIndex > 0) {
-      setState(() {
-        currentIndex--;
-      });
+      setState(() => currentIndex--);
     }
   }
 
@@ -272,72 +301,116 @@ class _ImageGalleryPageState extends State<ImageGalleryPage> {
         elevation: 0,
         leading: IconButton(
           color: AppColors.mywhite,
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
         ),
       ),
-      body: Column(
-        children: [
-          Stack(
-            alignment: AlignmentDirectional.bottomCenter,
-            clipBehavior: Clip.none,
-            children: [
-              EduTrackContainer(),
-              WhiteContainer(
-                myWidget: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Image.asset(
-                          widget.images[currentIndex],
-                          fit: BoxFit.cover,
-                          filterQuality: FilterQuality.high,
+      body: MainLayout(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Image.asset(
+                widget.hallInfo.images[currentIndex],
+                fit: BoxFit.contain,
+                filterQuality: FilterQuality.high,
+              ),
+            ),
+
+            // إظهار خطوات الوصول
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+              child: Card(
+                color: AppColors.mywhite,
+                child: Padding(
+                  padding: EdgeInsets.all(16.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        'خطوات الوصول:',
+                        style: getArabBoldTextStyle(
+                          context: context,
+                          fontSize: 18.sp,
+                          color: AppColors.myBlue,
                         ),
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton.icon(
-                          onPressed: _showPreviousImage,
-                          label: Text(
-                            "السابق",
-                            style: getArabLightTextStyle(
-                              context: context,
-                              color: AppColors.mywhite,
-                            ),
+                      SizedBox(height: 8.h),
+                      ...widget.hallInfo.instructions
+                          .asMap()
+                          .entries
+                          .map((entry) {
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 4.h),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            textDirection: TextDirection.rtl,
+                            children: [
+                              Text(
+                                '${entry.key + 1}.',
+                                style: getArabLightTextStyle(
+                                  context: context,
+                                  fontSize: 16.sp,
+                                  color: AppColors.myBlue,
+                                ),
+                              ),
+                              SizedBox(width: 8.w),
+                              Expanded(
+                                child: Text(
+                                  entry.value,
+                                  textAlign: TextAlign.right,
+                                  style: getArabLightTextStyle(
+                                    context: context,
+                                    fontSize: 16.sp,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.myBlue,
-                          ),
-                        ),
-                        ElevatedButton.icon(
-                          onPressed: _showNextImage,
-                          label: Text(
-                            "التالي",
-                            style: getArabLightTextStyle(
-                              context: context,
-                              color: AppColors.mywhite,
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.myBlue,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                  ],
+                        );
+                      }).toList(),
+                    ],
+                  ),
                 ),
               ),
-              LinesImage(),
-              CenterImage(nameImage: AppImages.map),
-            ],
-          ),
-        ],
+            ),
+
+            // أزرار التنقل
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: _showPrevious,
+                  label: Text(
+                    "السابق",
+                    style: getArabLightTextStyle(
+                      context: context,
+                      color: AppColors.mywhite,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.myBlue,
+                  ),
+                ),
+                ElevatedButton.icon(
+                  onPressed: _showNext,
+                  label: Text(
+                    "التالي",
+                    style: getArabLightTextStyle(
+                      context: context,
+                      color: AppColors.mywhite,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.myBlue,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20.h),
+          ],
+        ),
       ),
     );
   }
