@@ -143,15 +143,15 @@ class MaterialRecording extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Text(
-                      textAlign: TextAlign.right,
-                      textDirection: TextDirection.rtl,
-                      "متطلبات المواد للفرقة الاولي الترم الاول و الثاني\n\n",
-                      style: getArabRegulerTextStyle(
-                        context: context,
-                        fontSize: 14,
-                      ),
-                    ),
+                    // Text(
+                    //   textAlign: TextAlign.right,
+                    //   textDirection: TextDirection.rtl,
+                    //   "متطلبات المواد للفرقة الاولي الترم الاول و الثاني\n\n",
+                    //   style: getArabRegulerTextStyle(
+                    //     context: context,
+                    //     fontSize: 14,
+                    //   ),
+                    // ),
                     RichText(
                       textAlign: TextAlign.right,
                       textDirection: TextDirection.rtl,

@@ -1,4 +1,8 @@
 import 'package:edutrack/core/Models/UserdataModel.dart';
+import 'package:device_preview/device_preview.dart';
+
+import 'package:edutrack/core/Models/lecture_model.dart';
+import 'package:edutrack/core/Models/section_model.dart';
 import 'package:edutrack/core/Server/NotifyServer.dart';
 import 'package:edutrack/core/Server/localuserdata.dart';
 import 'package:edutrack/core/Theming/theming.dart';
@@ -8,31 +12,42 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'core/Routing/Routes.dart';
 import "package:timezone/data/latest.dart" as tz_data;
 
 bool userisLoggedin = false;
-   final FlutterLocalNotificationsPlugin notificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin notificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(MyApp());
-  // ✅ نهيئ Firebase على كل المنصات (بما فيها Windows)
+  // ✅ تهيئة Hive هنا
+  await Hive.initFlutter();
+
+  Hive.registerAdapter(LectureModelAdapter());
+  Hive.registerAdapter(SectionModelAdapter());
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   tz_data.initializeTimeZones();
-
   await LocalUserData.init();
   await NotifyServer().initNotification();
-  userisLoggedin = await checkUserIsLoggedIn();
 
-  runApp(const MyApp());
+  userisLoggedin = await checkUserIsLoggedIn();
+  runApp(
+    // DevicePreview(
+    // enabled: true,
+    // builder: (context) =>
+    const MyApp(),
+    // ),
+  );
 }
 
+// sphinx2632002@gmail.com
 Future<bool> checkUserIsLoggedIn() async {
   try {
     UserModel? userData = await LocalUserData().getUserData();
@@ -56,7 +71,6 @@ class MyApp extends StatelessWidget {
             ColorScheme.fromSeed(seedColor: AppColors.myBlue),
             context,
           ),
-        
           themeMode: ThemeMode.light,
           onGenerateRoute: RoutesGenerator.getRoutes,
           initialRoute: Routes.splashRoute,

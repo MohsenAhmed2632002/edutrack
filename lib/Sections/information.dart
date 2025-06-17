@@ -96,14 +96,14 @@ class BodyGraduation extends StatelessWidget {
                 children: [
                   TextSpan(
                     text:
-                        'يعد قسم تكنولوجيا التعليم من أهم الأقسام بكليات التربية والتربية النوعية، ',
+                        'يعد قسم تكنولوجيا التعليم من أهم الأقسام بكليات التربية والتربية النوعية، \n',
                   ),
                   TextSpan(
-                    text: 'ولكن كانت النظرة له نظرة ضيقة ومحدودة ',
+                    text: 'ولكن كانت النظرة له نظرة ضيقة ومحدودة \n',
                   ),
                   TextSpan(
                     text:
-                        'فكان البعض ينظر لتكنولوجيا التعليم بأنه مجرد أجهزة ومعدات ووسائل تعليمية.\n\n',
+                        'فكان البعض ينظر لتكنولوجيا التعليم بأنه مجرد أجهزة ومعدات ووسائل تعليمية.',
                   ),
                   TextSpan(
                     text:
@@ -111,7 +111,7 @@ class BodyGraduation extends StatelessWidget {
                   ),
                   TextSpan(
                     text:
-                        'وما يشهده العصر من تقنيات وتطبيقات أثرت في كافة نواحي الحياة، ',
+                        'وما يشهده العصر من تقنيات وتطبيقات أثرت في كافة نواحي الحياة،\n ',
                   ),
                   TextSpan(
                     text: 'تطور معها مفهوم تكنولوجيا التعليم.\n\n',
@@ -126,14 +126,14 @@ class BodyGraduation extends StatelessWidget {
                   ),
                   TextSpan(
                     text:
-                        'التكنولوجيا عامة تعني تطبيق المعرفة العلمية لحل المشكلات العلمية، ',
+                        'التكنولوجيا عامة تعني تطبيق المعرفة العلمية لحل المشكلات العلمية، \n',
                   ),
                   TextSpan(
                     text: 'فمن ثم تعني تكنولوجيا التعليم:\n',
                   ),
                   TextSpan(
                     text:
-                        'التطبيق المنهجي المنظم للأبحاث والنظريات التجريبية الخاصة بعمليات التعليم والتعلم ومصادر التعلم، ',
+                        'التطبيق المنهجي المنظم للأبحاث والنظريات التجريبية الخاصة بعمليات التعليم والتعلم\n ومصادر التعلم، ',
                   ),
                   TextSpan(
                     text:
@@ -162,10 +162,11 @@ class BodyGraduation extends StatelessWidget {
                           Expanded(
                             child: Text(
                               style: getArabLightTextStyle(
-                                  context: context,
-                                  color: Colors.black,
-                                  fontSize: 14),
-                              'إعداد أجيال متخصصة من المصممين التعليميين المشهود لهم بالكفاءة في أداء مهامهم وبصورة تتسم بالتميز والفاعلية',
+                                fontSize: 15,
+                                context: context,
+                                color: Colors.black,
+                              ),
+                              'إعداد أجيال متخصصة من المصممين التعليميين المشهود لهم بالكفاءة \nفي أداء مهامهم وبصورة تتسم بالتميز والفاعلية',
                               textDirection: TextDirection.rtl,
                             ),
                           ),
@@ -184,9 +185,10 @@ class BodyGraduation extends StatelessWidget {
                           Expanded(
                             child: Text(
                               style: getArabLightTextStyle(
-                                  context: context,
-                                  color: Colors.black,
-                                  fontSize: 14),
+                                context: context,
+                                fontSize: 15,
+                                color: Colors.black,
+                              ),
                               'المشاركة في تطوير المعرفة البحثية المرتبطة بمجال تكنولوجيا التعليم',
                               textDirection: TextDirection.rtl,
                             ),
@@ -202,13 +204,19 @@ class BodyGraduation extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         textDirection: TextDirection.rtl,
                         children: [
-                          Text('• ', style: TextStyle(color: Colors.red[800])),
+                          Text(
+                            '• ',
+                            style: TextStyle(
+                              color: Colors.red[800],
+                            ),
+                          ),
                           Expanded(
                             child: Text(
                               style: getArabLightTextStyle(
-                                  context: context,
-                                  color: Colors.black,
-                                  fontSize: 14),
+                                fontSize: 15,
+                                context: context,
+                                color: Colors.black,
+                              ),
                               'الانفتاح على المؤسسات والهيئات الرسمية والأهلية من خلال التعاون معها لخدمة المجتمع محلياً وإقليمياً',
                               textDirection: TextDirection.rtl,
                             ),

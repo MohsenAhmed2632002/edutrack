@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:edutrack/core/Server/localuserdata.dart';
 import 'package:edutrack/core/Theming/Font.dart';
 import 'package:flutter/material.dart';
 import 'package:edutrack/core/Theming/app_colors.dart';
 import 'package:edutrack/core/Theming/image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DecisionsPage extends StatelessWidget {
   const DecisionsPage({super.key});
@@ -50,7 +54,7 @@ class DecisionsPage extends StatelessWidget {
                 ),
               ),
               LinesImage(),
-              CenterImage(nameImage: AppImages.decisions),
+              CenterImageDecisions(nameImage: AppImages.decisions),
             ],
           ),
         ],
@@ -172,44 +176,62 @@ class _BodyGraduationState extends State<BodyGraduation> {
         break;
       case 'الفرقة الثالثة':
       case 'الفرقة الرابعة':
-        yearLabel =
-            '${user.study_Group.trim()} - ${user.specialization.trim()}';
+        yearLabel = '${user.study_Group.trim()} - ${user.specialization.trim()}';
         break;
       default:
-        yearLabel = 'الفرقة الأولى'; // fallback قيمة افتراضية
+        yearLabel = 'الفرقة الأولى'; // fallback
     }
 
-    print(
-        'study_Group: [${user.study_Group.trim()}] specialization: [${user.specialization.trim()}]');
+    print('study_Group: [${user.study_Group.trim()}] specialization: [${user.specialization.trim()}]');
     print('Final yearLabel used for fetch: [$yearLabel]');
     print('yearLabel length: ${yearLabel.length}');
 
     setState(() {
-      _futureSubjects = fetchSubjects();
+      _futureSubjects = fetchSubjectsWithFallback();
       isLoading = false;
     });
   }
 
-  Future<List<String>> fetchSubjects() async {
-    if (yearLabel.isEmpty) {
-      throw Exception("yearLabel is not initialized yet!");
+  Future<List<String>> fetchSubjectsFromFirestore() async {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('مواد')
+        .doc(yearLabel)
+        .collection('المواد')
+        .get();
+
+    final subjects = snapshot.docs.map((doc) => doc['name'].toString()).toList();
+
+    // ✅ حفظ البيانات في SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('subjects_$yearLabel', jsonEncode(subjects));
+
+    return subjects;
+  }
+
+  Future<List<String>> getSubjectsFromCache() async {
+    final prefs = await SharedPreferences.getInstance();
+    final cachedData = prefs.getString('subjects_$yearLabel');
+    if (cachedData != null) {
+      return List<String>.from(jsonDecode(cachedData));
     }
+    return [];
+  }
 
-    try {
-      final snapshot = await FirebaseFirestore.instance
-          .collection('مواد')
-          .doc(yearLabel)
-          .collection('المواد')
-          .get();
-
-      if (snapshot.docs.isEmpty) {
-        print("No subjects found for $yearLabel");
+  Future<List<String>> fetchSubjectsWithFallback() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      // 📴 بدون إنترنت
+      print("🚫 No internet. Loading from cache...");
+      return await getSubjectsFromCache();
+    } else {
+      // 🌐 مع إنترنت
+      print("✅ Connected to internet. Fetching from Firestore...");
+      try {
+        return await fetchSubjectsFromFirestore();
+      } catch (e) {
+        print("❌ Error fetching from Firestore: $e");
+        return await getSubjectsFromCache(); // fallback to cache
       }
-
-      return snapshot.docs.map((doc) => doc['name'].toString()).toList();
-    } catch (e) {
-      print('Error fetching subjects: $e');
-      return []; // في حالة الخطأ رجع ليست فاضية عشان التطبيق يكمل
     }
   }
 
@@ -225,10 +247,7 @@ class _BodyGraduationState extends State<BodyGraduation> {
             child: FutureBuilder<List<String>>(
               future: _futureSubjects,
               builder: (context, snapshot) {
-                if (isLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if (snapshot.connectionState == ConnectionState.waiting) {
+                if (isLoading || snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
 
@@ -264,7 +283,9 @@ class _BodyGraduationState extends State<BodyGraduation> {
                         trailing: Text(
                           subjects[index],
                           style: getArabLightTextStyle12(
-                              context: context, color: AppColors.mywhite),
+                            context: context,
+                            color: AppColors.mywhite,
+                          ),
                         ),
                       ),
                     );
@@ -278,7 +299,6 @@ class _BodyGraduationState extends State<BodyGraduation> {
     );
   }
 }
-
 class LinesImage extends StatelessWidget {
   const LinesImage({
     super.key,
@@ -300,9 +320,9 @@ class LinesImage extends StatelessWidget {
   }
 }
 
-class CenterImage extends StatelessWidget {
+class CenterImageDecisions extends StatelessWidget {
   final String nameImage;
-  const CenterImage({
+  const CenterImageDecisions({
     required this.nameImage,
     super.key,
   });
@@ -312,17 +332,19 @@ class CenterImage extends StatelessWidget {
     return Positioned(
       left: 0,
       right: 0,
-      bottom: 550,
-      child: Image.asset(nameImage),
+      bottom: 575,
+      child: Image.asset(
+        nameImage,
+        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+          if (wasSynchronouslyLoaded) return child;
+          return AnimatedOpacity(
+            child: child,
+            opacity: frame == null ? 0 : 1,
+            duration: const Duration(seconds: 1),
+            curve: Curves.easeOut,
+          );
+        },
+      ),
     );
   }
 }
-// الفرقة الاولي 
-// المتاحف و المعارض التعليمية 
-// تقنيات الرسومات التعليمية
-// نظم تشغيل الحاسب 
-// مقدمة في البرمجة
-// نظم تشغيل الحاسب
-// التصميم الجرافيكي
-// تطبيقات الحاسب المكتبية
-// الاذاعة و التسجيلات الصوتية 

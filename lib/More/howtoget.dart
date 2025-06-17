@@ -89,7 +89,7 @@ class WhiteContainer extends StatelessWidget {
     return Positioned(
       left: 0,
       right: 0,
-      height: 600.h,
+      height: 580.h,
       child: Container(
         decoration: const BoxDecoration(color: AppColors.mywhite),
         child: child,
@@ -125,7 +125,7 @@ class CenterImage extends StatelessWidget {
     return Positioned(
       left: 0,
       right: 0,
-      bottom: 550,
+      bottom: 580,
       child: Hero(
         tag: "How",
         child: Image.asset(nameImage),
@@ -220,7 +220,7 @@ class NameHalls extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-          elevation: 3,
+          elevation: 10,
           child: ListTile(
             title: Text(
               hallName,

@@ -2,15 +2,14 @@ import 'package:edutrack/Home/HomePage.dart';
 import 'package:edutrack/Home/ProfileScreen.dart';
 import 'package:edutrack/Login/Ui/LoginPage.dart';
 import 'package:edutrack/More/AskedQuestions.dart';
-import 'package:edutrack/More/Regulations.dart';
 import 'package:edutrack/More/website.dart';
-import 'package:edutrack/More/Sections/Lecture.dart';
-import 'package:edutrack/More/Sections/decisions.dart';
-import 'package:edutrack/More/Sections/fieldEducation.dart';
-import 'package:edutrack/More/Sections/gradpro.dart';
+import 'package:edutrack/Sections/Lecture.dart';
+import 'package:edutrack/Sections/decisions.dart';
+import 'package:edutrack/Sections/fieldEducation.dart';
+import 'package:edutrack/Sections/gradpro.dart';
 import 'package:edutrack/More/howtoget.dart';
-import 'package:edutrack/More/Sections/information.dart';
-import 'package:edutrack/More/Sections/sction.dart';
+import 'package:edutrack/Sections/information.dart';
+import 'package:edutrack/Sections/sction.dart';
 import 'package:edutrack/sginup/UI/sginup.dart';
 import 'package:flutter/material.dart';
 
@@ -77,10 +76,10 @@ class RoutesGenerator {
         return MaterialPageRoute(
           builder: (context) => Website(),
         );
-      case Routes.RegulationsRoute:
-        return MaterialPageRoute(
-          builder: (context) => Regulations(),
-        );
+      // case Routes.RegulationsRoute:
+      //   return MaterialPageRoute(
+      //     builder: (context) => Regulations(),
+      //   );
       case Routes.GraduationProjectRoute:
         return MaterialPageRoute(
           builder: (context) => GraduationProject(),

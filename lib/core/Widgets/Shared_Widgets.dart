@@ -71,7 +71,7 @@ class CenterImage extends StatelessWidget {
     return Positioned(
       left: 0,
       right: 0,
-      bottom: 550,
+      bottom: 575,
       child: Image.asset(
         nameImage,
         frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
