@@ -86,7 +86,7 @@ class CenterImageFieldeducation extends StatelessWidget {
     return Positioned(
       left: 0,
       right: 0,
-      bottom: 575,
+      bottom: 500.h,
       child: Image.asset(
         nameImage,
         frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {

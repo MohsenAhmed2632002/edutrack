@@ -176,13 +176,15 @@ class _BodyGraduationState extends State<BodyGraduation> {
         break;
       case 'الفرقة الثالثة':
       case 'الفرقة الرابعة':
-        yearLabel = '${user.study_Group.trim()} - ${user.specialization.trim()}';
+        yearLabel =
+            '${user.study_Group.trim()} - ${user.specialization.trim()}';
         break;
       default:
         yearLabel = 'الفرقة الأولى'; // fallback
     }
 
-    print('study_Group: [${user.study_Group.trim()}] specialization: [${user.specialization.trim()}]');
+    print(
+        'study_Group: [${user.study_Group.trim()}] specialization: [${user.specialization.trim()}]');
     print('Final yearLabel used for fetch: [$yearLabel]');
     print('yearLabel length: ${yearLabel.length}');
 
@@ -199,7 +201,8 @@ class _BodyGraduationState extends State<BodyGraduation> {
         .collection('المواد')
         .get();
 
-    final subjects = snapshot.docs.map((doc) => doc['name'].toString()).toList();
+    final subjects =
+        snapshot.docs.map((doc) => doc['name'].toString()).toList();
 
     // ✅ حفظ البيانات في SharedPreferences
     final prefs = await SharedPreferences.getInstance();
@@ -247,7 +250,8 @@ class _BodyGraduationState extends State<BodyGraduation> {
             child: FutureBuilder<List<String>>(
               future: _futureSubjects,
               builder: (context, snapshot) {
-                if (isLoading || snapshot.connectionState == ConnectionState.waiting) {
+                if (isLoading ||
+                    snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
 
@@ -299,6 +303,7 @@ class _BodyGraduationState extends State<BodyGraduation> {
     );
   }
 }
+
 class LinesImage extends StatelessWidget {
   const LinesImage({
     super.key,
@@ -332,7 +337,7 @@ class CenterImageDecisions extends StatelessWidget {
     return Positioned(
       left: 0,
       right: 0,
-      bottom: 575,
+      bottom: 500.h,
       child: Image.asset(
         nameImage,
         frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
