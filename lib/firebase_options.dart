@@ -64,7 +64,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '809267349096',
     projectId: 'rock-atlas-405800',
     storageBucket: 'rock-atlas-405800.firebasestorage.app',
-    iosBundleId: 'com.example.edutrack',
+    iosBundleId: 'com.abdelmohsen.edutrack',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(

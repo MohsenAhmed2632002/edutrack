@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:809267349096:android:9d3734430e8571d0f31ddd",
         "android_client_info": {
-          "package_name": "com.example.edutrack"
+          "package_name": "com.abdelmohsen.edutrack"
         }
       },
       "oauth_client": [],

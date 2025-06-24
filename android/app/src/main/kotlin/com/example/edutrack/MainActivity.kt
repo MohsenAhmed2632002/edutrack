@@ -1,4 +1,4 @@
-package com.example.edutrack
+package com.abdelmohsen.edutrack
 
 import io.flutter.embedding.android.FlutterActivity
 
