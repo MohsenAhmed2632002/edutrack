@@ -84,21 +84,6 @@ class AboutAs extends StatelessWidget {
           EduTrackContainer(),
           LinesImage(),
 
-          // العنوان في الأعلى
-          HomeRowNameAndImage(
-            myImage: AppImages.about_as2,
-            myWidget: FadeInRight(
-              child: Text(
-                "من نحن ؟",
-                style: getArabBoldItalicTextStyle(
-                  context: context,
-                  color: AppColors.mywhite,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-          ),
-
           // المحتوى الرئيسي
           WhiteContainer(
             myWidget: SingleChildScrollView(
@@ -295,6 +280,21 @@ class AboutAs extends StatelessWidget {
                         )
                         .toList(),
                   ],
+                ),
+              ),
+            ),
+          ),
+
+          // العنوان في الأعلى
+          HomeRowNameAndImage(
+            myImage: AppImages.about_as2,
+            myWidget: FadeInRight(
+              child: Text(
+                "من نحن ؟",
+                style: getArabBoldItalicTextStyle(
+                  context: context,
+                  color: AppColors.mywhite,
+                  fontSize: 20,
                 ),
               ),
             ),

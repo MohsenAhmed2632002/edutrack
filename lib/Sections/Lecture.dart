@@ -179,21 +179,17 @@ class _LectureSchedulePageState extends State<LectureSchedulePage> {
           Positioned(
             left: 0,
             right: 0,
-            bottom: -20.h,
+            top: 250.h,
             child: SizedBox(
               height: 600.h,
               child: _buildMainContent(),
             ),
           ),
-
-          // صورة في المنتصف
-          CenterImageLecture(nameImage: AppImages.time2),
-
           // أزرار الأيام
           Positioned(
             left: 0,
             right: 0,
-            bottom: 500.h,
+            top: 250.h,
             child: SizedBox(
               height: 50,
               child: ListView.builder(
@@ -226,11 +222,11 @@ class _LectureSchedulePageState extends State<LectureSchedulePage> {
             ),
           ),
 
-          // حقل البحث
+          //     حقل البحث
           Positioned(
             left: 0,
             right: 0,
-            bottom: 550.h,
+            top: 200.h,
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: TextFormField(
@@ -254,17 +250,6 @@ class _LectureSchedulePageState extends State<LectureSchedulePage> {
           ),
         ],
       ),
-      floatingActionButton: !hasInternet
-          ? FloatingActionButton.extended(
-              onPressed: () async {
-                setState(() => isLoading = true);
-                await fetchLecturesForDay(selectedDay);
-              },
-              icon: Icon(Icons.refresh),
-              label: Text('إعادة المحاولة'),
-              backgroundColor: Colors.red,
-            )
-          : null,
     );
   }
 
@@ -373,7 +358,7 @@ class CenterImageLecture extends StatelessWidget {
     return Positioned(
       left: 0,
       right: 0,
-      bottom: 500.h,
+      top: MediaQuery.sizeOf(context).height * .1,
       child: Image.asset(
         nameImage,
         frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {

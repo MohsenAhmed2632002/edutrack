@@ -37,11 +37,11 @@ class Fieldeducation extends StatelessWidget {
               children: [
                 EduTrackContainer(),
                 LinesImage(),
-                WhiteContainer(
-                  myWidget: BodyFiekdEducation(),
-                ),
                 CenterImageFieldeducation(
                   nameImage: AppImages.light_book,
+                ),
+                WhiteContainer(
+                  myWidget: BodyFiekdEducation(),
                 ),
               ],
             ),
@@ -86,7 +86,7 @@ class CenterImageFieldeducation extends StatelessWidget {
     return Positioned(
       left: 0,
       right: 0,
-      bottom: 500.h,
+      top: 0.h,
       child: Image.asset(
         nameImage,
         frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {

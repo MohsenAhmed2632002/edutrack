@@ -27,6 +27,6 @@ class AppRegex {
   }
 
   static bool hasMinLength(String password) {
-    return password.length <= 4;
+    return password.length >= 4;
   }
 }

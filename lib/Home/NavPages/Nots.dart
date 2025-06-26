@@ -162,7 +162,7 @@ class _NotsState extends State<Nots> {
                             "لا توجد ملاحظات",
                             style: getArabLightTextStyle(
                               context: context,
-                              color: AppColors.myBlue,
+                              color: AppColors.mywhite,
                               fontSize: 16,
                             ),
                           ),

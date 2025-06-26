@@ -202,7 +202,7 @@ class _SectionSchedulePageState extends State<SectionSchedulePage> {
           Positioned(
             left: 0,
             right: 0,
-            bottom: -20.h,
+            top: 250.h,
             child: SizedBox(
               height: 600.h,
               child: _buildMainContent(),
@@ -213,7 +213,7 @@ class _SectionSchedulePageState extends State<SectionSchedulePage> {
           Positioned(
             left: 0,
             right: 0,
-            bottom: 500.h,
+            top: 250.h,
             child: SizedBox(
               height: 50,
               child: ListView.builder(
@@ -250,7 +250,7 @@ class _SectionSchedulePageState extends State<SectionSchedulePage> {
           Positioned(
             left: 0,
             right: 0,
-            bottom: 550.h,
+            top: 200.h,
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: TextFormField(
@@ -382,7 +382,7 @@ class CenterImageSection extends StatelessWidget {
     return Positioned(
       left: 0,
       right: 0,
-      bottom: 500.h,
+      top: MediaQuery.sizeOf(context).height * .1,
       child: Image.asset(
         nameImage,
         frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {

@@ -44,8 +44,8 @@ class MainLayout extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             const EduTrackContainer(),
-            WhiteContainer(child: child),
             const LinesImage(),
+            WhiteContainer(child: child),
             const CenterImage(nameImage: AppImages.map),
           ],
         ),
@@ -106,7 +106,7 @@ class LinesImage extends StatelessWidget {
     return Positioned(
       left: 0,
       right: 0,
-      bottom: 550,
+      top: 0.h,
       child: const Image(image: AssetImage(AppImages.lines)),
     );
   }
@@ -125,7 +125,7 @@ class CenterImage extends StatelessWidget {
     return Positioned(
       left: 0,
       right: 0,
-      bottom: 580,
+      top: 0.h,
       child: Hero(
         tag: "How",
         child: Image.asset(nameImage),
@@ -289,14 +289,14 @@ class _ImageGalleryPageState extends State<ImageGalleryPage> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          widget.hallName,
-          style: getArabBoldTextStyle(
-            context: context,
-            fontSize: 20.sp,
-            color: AppColors.mywhite,
-          ),
-        ),
+        // title: Text(
+        //   widget.hallName,
+        //   style: getArabBoldTextStyle(
+        //     context: context,
+        //     fontSize: 20.sp,
+        //     color: AppColors.myBlue,
+        //   ),
+        // ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
@@ -309,6 +309,14 @@ class _ImageGalleryPageState extends State<ImageGalleryPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+              widget.hallName,
+              style: getArabBoldTextStyle(
+                context: context,
+                fontSize: 20.sp,
+                color: AppColors.myBlue,
+              ),
+            ),
             Expanded(
               child: Image.asset(
                 widget.hallInfo.images[currentIndex],

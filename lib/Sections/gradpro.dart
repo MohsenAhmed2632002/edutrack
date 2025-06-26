@@ -52,7 +52,7 @@ class GraduationProject extends StatelessWidget {
                 Positioned(
                   left: 0,
                   right: 0,
-                  bottom: 500.h,
+                  top: 25.h,
                   child: Image.asset(
                     AppImages.grad,
                     frameBuilder:

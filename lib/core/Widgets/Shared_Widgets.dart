@@ -42,7 +42,7 @@ class LinesImage extends StatelessWidget {
     return Positioned(
       left: 0,
       right: 0,
-      bottom: 500,
+      top: 25.h,
       child: Image.asset(
         AppImages.lines,
         frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
@@ -71,7 +71,7 @@ class CenterImage extends StatelessWidget {
     return Positioned(
       left: 0,
       right: 0,
-      bottom: 575,
+      top: 0.h,
       child: Image.asset(
         nameImage,
         frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
@@ -140,7 +140,8 @@ class HomeRowNameAndImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
       top: 0,
-      // right: 0,
+      right: 0,
+      left: 0,
       // bottom: 550,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

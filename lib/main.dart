@@ -1,6 +1,5 @@
 import 'package:edutrack/core/Models/UserdataModel.dart';
-import 'package:device_preview/device_preview.dart';
-
+import 'package:connectivity_plus/connectivity_plus.dart'; // أضف هذا
 import 'package:edutrack/core/Models/lecture_model.dart';
 import 'package:edutrack/core/Models/section_model.dart';
 import 'package:edutrack/core/Server/NotifyServer.dart';
@@ -35,19 +34,18 @@ void main() async {
 
   tz_data.initializeTimeZones();
   await LocalUserData.init();
+  
+  // تهيئة الإشعارات أولاً
   await NotifyServer().initNotification();
 
   userisLoggedin = await checkUserIsLoggedIn();
-  runApp(
-    // DevicePreview(
-    // enabled: true,
-    // builder: (context) =>
-    const MyApp(),
-    // ),
-  );
+  
+  // تهيئة connectivity
+  Connectivity().checkConnectivity();
+
+  runApp(const MyApp());
 }
 
-// sphinx2632002@gmail.com
 Future<bool> checkUserIsLoggedIn() async {
   try {
     UserModel? userData = await LocalUserData().getUserData();
@@ -63,7 +61,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(375, 812),
+      designSize: const Size(375, 812),
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: MaterialApp(
