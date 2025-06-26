@@ -1,324 +1,356 @@
+// ✅ SginUpPage محسّنة مثل LoginPage
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:edutrack/sginup/cubit/sginup_cubit.dart';
 import 'package:edutrack/core/Models/UserdataModel.dart';
 import 'package:edutrack/core/Routing/app_regex.dart';
-import 'package:edutrack/core/repo/fire_base_auth.dart';
 import 'package:edutrack/core/Theming/Font.dart';
-import 'package:edutrack/core/Widgets/Shared_Widgets.dart';
 import 'package:edutrack/core/Theming/app_colors.dart';
 import 'package:edutrack/core/Theming/image.dart';
-import 'package:edutrack/sginup/cubit/sginup_cubit.dart';
+import 'package:edutrack/core/Widgets/Shared_Widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SginUpPage extends StatelessWidget {
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _userEmailController = TextEditingController();
-  final TextEditingController _userPassWordController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  SginUpPage({super.key});
+class SginUpPage extends StatefulWidget {
+  const SginUpPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SginupCubit(),
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
+  State<SginUpPage> createState() => _SginUpPageState();
+}
+
+class _SginUpPageState extends State<SginUpPage> {
+  final _formKey = GlobalKey<FormState>();
+  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  String? selectedGrade;
+  String? selectedSpecialization;
+  bool _obscurePassword = true;
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Row(
             children: [
-              Stack(
-                alignment: AlignmentDirectional.bottomCenter,
-                clipBehavior: Clip.none,
-                children: [
-                  EduTrackContainer(),
-                  LinesImage(),
-                  BlocConsumer<SginupCubit, SginupState>(
-                    listener: (context, state) {
-                      // TODO: implement listener
-                    },
-                    builder: (context, state) {
-                      return WhiteContainer(
-                        myWidget: MyPage(
-                          usernameController: _usernameController,
-                          userEmailController: _userEmailController,
-                          userPassWordController: _userPassWordController,
-                          formKey: _formKey,
-                        ),
-                      );
-                    },
-                  ),
-                  CenterImage(nameImage: AppImages.hand),
-                ],
+              const Icon(Icons.warning_amber_rounded, color: Colors.white),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  message,
+                  style: const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
               ),
             ],
           ),
         ),
+        backgroundColor: Colors.red,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        duration: const Duration(seconds: 3),
       ),
     );
   }
-}
 
-class MyPage extends StatefulWidget {
-  MyPage({
-    super.key,
-    required this.formKey,
-    required this.usernameController,
-    required this.userEmailController,
-    required this.userPassWordController,
-  });
-  final GlobalKey<FormState> formKey;
-
-  final TextEditingController usernameController;
-  final TextEditingController userEmailController;
-  final TextEditingController userPassWordController;
-
-  @override
-  State<MyPage> createState() => _MyPageState();
-}
-
-class _MyPageState extends State<MyPage> {
-  final dropDownKey = GlobalKey<DropdownSearchState>();
-  String selectedGrade = "";
-  String selectedSpecialization = "";
-  final _auth = FireBaseAuth();
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: widget.formKey,
-      child: Padding(
-        padding: const EdgeInsets.all(15),
+    return Scaffold(
+      body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            CircleAvatar(
-              backgroundColor: AppColors.myBlue,
-              radius: 50,
-              child: Icon(
-                Icons.person,
-                size: 75,
-                color: AppColors.mywhite,
-              ),
-            ),
-            Directionality(
-              textDirection: TextDirection.rtl,
-              child: TextFormField(
-                controller: widget.usernameController,
-                textAlign: TextAlign.right,
-                validator: (value) {
-                  // usernameController.text == "admin"
-                  if (value == null ||
-                      value.isEmpty ||
-                      AppRegex.hasMinLength(value)) {
-                    return "برجاء ادخال الاسم بشكل سليم ";
-                  }
-                },
-                decoration: InputDecoration(
-                  hintText: "اسم المستخدم ",
-                  label: Text(
-                    "برجاء ادخال اسم المستخدم ",
-                  ),
-                ),
-              ),
-            ),
-            Directionality(
-              textDirection: TextDirection.rtl,
-              child: TextFormField(
-                controller: widget.userEmailController,
-                textAlign: TextAlign.right,
-                validator: (value) {
-                  // usernameController.text == "admin"
-                  if (value == null || value.isEmpty) {
-                    return "برجاء ادخال الايميل بشكل صحيح ";
-                  }
-                },
-                decoration: InputDecoration(
-                  hintText: "الايميل",
-                  labelText: "برجاء ادخال الايميل ",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-              ),
-            ),
-            Directionality(
-              textDirection: TextDirection.rtl,
-              child: TextFormField(
-                controller: widget.userPassWordController,
-                textAlign: TextAlign.right,
-                validator: (value) {
-                  // usernameController.text == "admin"
-                  if (value == null ||
-                      value.isEmpty ||
-                      AppRegex.isPasswordValid(value)) {
-                    return "برجاء ادخال كلمة المرور بشكل صحيح";
-                  }
-                },
-                decoration: InputDecoration(
-                  hintText: "كلمة المرور ",
-                  labelText: "برجاء ادخال كلمة المرور ",
-                ),
-              ),
-            ),
-            Directionality(
-              textDirection: TextDirection.rtl,
-              child: DropdownSearch<String>(
-                // mode: Mode.form,
-                key: dropDownKey,
-                selectedItem: selectedGrade,
-                items: (filter, infiniteScrollProps) => [
-                  "الفرقة الأولى",
-                  "الفرقة الثانية",
-                  "الفرقة الثالثة",
-                  "الفرقة الرابعة",
-                ],
-                decoratorProps: DropDownDecoratorProps(
-                  decoration: InputDecoration(
-                    labelText: 'اختر الفرقة',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(
-                          30,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                popupProps: PopupProps.menu(
-                  constraints: BoxConstraints.tightFor(height: 270.h),
-                  showSelectedItems: true,
-                  showSearchBox: true,
-                  searchFieldProps: TextFieldProps(
-                    decoration: InputDecoration(
-                      hintText: "ابحث عن الفرقة",
-                      prefixIcon: Icon(Icons.search),
-                    ),
-                  ),
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    selectedGrade = value!;
-                    // نمسح الاختيار السابق إذا تغيرت الفرقة
-                    if (value != "الفرقة الثالثة" &&
-                        value != "الفرقة الرابعة") {
-                      selectedSpecialization = "اختر التخصص";
-                    }
-                  });
-                },
-              ),
-            ), // نمسح الاختيار السابق إذا تغيرت الفرقة
-            if (selectedGrade == "الفرقة الثالثة" ||
-                selectedGrade == "الفرقة الرابعة")
-              Directionality(
-                textDirection: TextDirection.rtl,
-                child: DropdownSearch<String>(
-                  // mode: Mode.dialog,
-                  selectedItem: selectedSpecialization,
-                  items: (filter, loadProps) => [
-                    "معلم ",
-                    " أخصائي",
-                  ],
-                  decoratorProps: DropDownDecoratorProps(
-                    decoration: InputDecoration(
-                      labelText: 'اختر التخصص',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            30,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  popupProps: PopupProps.menu(
-                    constraints: BoxConstraints.tightFor(height: 200.h),
-                    showSelectedItems: true,
-                    showSearchBox: true,
-                    searchFieldProps: TextFieldProps(
-                      decoration: InputDecoration(
-                        hintText: "ابحث عن التخصص",
-                        prefixIcon: Icon(Icons.search),
-                      ),
-                    ),
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedSpecialization = value!;
-                    });
-                  },
-                ),
-              ),
-            BlocBuilder<SginupCubit, SginupState>(
-              builder: (context, state) {
-                return ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.myBlue,
-                  ),
-                  onPressed: () async {
-                    if (widget.formKey.currentState!.validate()) {
-                      try {
-                        final userModel = UserModel(
-                          name: widget.usernameController.text,
-                          email: widget.userEmailController.text,
-                          passWord: widget.userPassWordController.text,
-                          specialization: selectedSpecialization,
-                          study_Group: selectedGrade,
-                          userId: "1",
-                        );
-                        context.read<SginupCubit>().sginUp(
-                              context: context,
-                              myUser: userModel,
-                              specialization: selectedSpecialization,
-                              study_Group: selectedGrade,
-                              email: widget.userEmailController.text,
-                              password: widget.userPassWordController.text,
-                              name: widget.usernameController.text,
-                            );
-                      } on Exception catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              "$e",
-                              style: getArabLightTextStyle(
-                                context: context,
-                                color: Colors.white,
-                                fontSize: 12,
-                              ),
-                            ),
-                            backgroundColor: Colors.red,
-                            behavior: SnackBarBehavior.floating,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            duration: Duration(seconds: 3),
-                            action: SnackBarAction(
-                              label: 'حسناً',
-                              textColor: Colors.white,
-                              onPressed: () {
-                                ScaffoldMessenger.of(context)
-                                    .hideCurrentSnackBar();
-                              },
-                            ),
-                          ),
-                        );
-                      }
-                    }
-                  },
-                  child: state is SginUpLoading
-                      ? CircularProgressIndicator(color: AppColors.mywhite)
-                      : Text(
-                          "انشاء حساب",
-                          style: getArabLightTextStyle(
-                            context: context,
-                            color: AppColors.mywhite,
-                          ),
-                        ),
-                );
-              },
+            Stack(
+              alignment: AlignmentDirectional.bottomCenter,
+              children: [
+                EduTrackContainer(),
+                const LinesImage(),
+                _buildForm(context),
+                const CenterImage(nameImage: AppImages.hand),
+              ],
             ),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildForm(BuildContext context) {
+    return BlocBuilder<SginupCubit, SginupState>(
+      builder: (context, state) {
+        return WhiteContainer(
+          myWidget: Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text("إنشاء حساب",
+                        style: getArabLightTextStyle(
+                            context: context,
+                            fontSize: 40,
+                            color: AppColors.myBrightTurquoise)),
+                    CircleAvatar(
+                        backgroundColor: AppColors.myBlue,
+                        radius: 50,
+                        child: Icon(Icons.person,
+                            size: 75, color: AppColors.mywhite)),
+                    const SizedBox(height: 10),
+                    _buildTextField(_usernameController, 'اسم المستخدم',
+                        AppRegex.hasMinLength, 'برجاء ادخال الاسم بشكل سليم'),
+                    _buildTextField(_emailController, 'الايميل',
+                        AppRegex.isEmailValid, 'برجاء ادخال الايميل بشكل صحيح'),
+                    _buildPasswordField(),
+                    _buildGradeDropdown(),
+                    if (selectedGrade == "الفرقة الثالثة" ||
+                        selectedGrade == "الفرقة الرابعة")
+                      _buildSpecializationDropdown(),
+                    const SizedBox(height: 12),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.myBlue),
+                      onPressed: state is SginUpLoading ? null : _submit,
+                      child: state is SginUpLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : Text("إنشاء حساب",
+                              style: getArabLightTextStyle(
+                                  context: context, color: Colors.white)),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildTextField(TextEditingController controller, String label,
+      bool Function(String) validator, String errorMessage) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: TextFormField(
+          controller: controller,
+          textAlign: TextAlign.right,
+          validator: (value) =>
+              value == null || value.isEmpty || !validator(value)
+                  ? errorMessage
+                  : null,
+          decoration: InputDecoration(
+              labelText: label,
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(15))),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPasswordField() {
+    final password = _passwordController.text;
+    final passwordCriteria = <Map<String, dynamic>>[
+      {
+        'label': 'حرف كبير (A-Z)',
+        'isMet': AppRegex.hasUpperCase(password),
+      },
+      {
+        'label': 'حرف صغير (a-z)',
+        'isMet': AppRegex.hasLowerCase(password),
+      },
+      {
+        'label': 'رقم (0-9)',
+        'isMet': AppRegex.hasNumber(password),
+      },
+      {
+        'label': 'رمز خاص (@, #, %, !, ...)',
+        'isMet': AppRegex.hasSpecialCharacter(password),
+      },
+      {
+        'label': 'الحد الأدنى 8 أحرف',
+        'isMet': password.length >= 8,
+      }
+    ];
+
+    final isPasswordValid = AppRegex.isPasswordValid(password);
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextFormField(
+              controller: _passwordController,
+              obscureText: _obscurePassword,
+              textAlign: TextAlign.right,
+              onChanged: (_) => setState(() {}),
+              validator: (value) =>
+                  value == null || value.isEmpty || !isPasswordValid
+                      ? 'برجاء ادخال كلمة المرور بشكل صحيح'
+                      : null,
+              decoration: InputDecoration(
+                labelText: 'كلمة المرور',
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                suffixIcon: IconButton(
+                  icon: Icon(_obscurePassword
+                      ? Icons.visibility
+                      : Icons.visibility_off),
+                  onPressed: () =>
+                      setState(() => _obscurePassword = !_obscurePassword),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            if (password.isNotEmpty && !isPasswordValid)
+              ...passwordCriteria.map((item) {
+                final bool met = item['isMet'];
+                final String label = item['label'];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 2.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        met ? Icons.check_circle : Icons.cancel,
+                        size: 18,
+                        color: met ? Colors.green : Colors.red,
+                      ),
+                      const SizedBox(width: 6),
+                      Expanded(
+                        child: Text(
+                          label,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: met ? Colors.green : Colors.red.shade700,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGradeDropdown() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: DropdownSearch<String>(
+          selectedItem: selectedGrade,
+          items: (filter, _) async => [
+            "الفرقة الأولى",
+            "الفرقة الثانية",
+            "الفرقة الثالثة",
+            "الفرقة الرابعة"
+          ],
+          onChanged: (value) => setState(() {
+            selectedGrade = value;
+            if (value != "الفرقة الثالثة" && value != "الفرقة الرابعة") {
+              selectedSpecialization = null;
+            }
+          }),
+          popupProps: PopupProps.menu(
+            showSelectedItems: true,
+            showSearchBox: true,
+            constraints: BoxConstraints.tightFor(height: 270.h),
+            searchFieldProps: TextFieldProps(
+              decoration: const InputDecoration(
+                  hintText: "ابحث عن الفرقة", prefixIcon: Icon(Icons.search)),
+            ),
+          ),
+          decoratorProps: DropDownDecoratorProps(
+            decoration: InputDecoration(
+              labelText: 'اختر الفرقة',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(
+                    30,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSpecializationDropdown() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: DropdownSearch<String>(
+          selectedItem: selectedSpecialization,
+          items: (filter, _) async => ["معلم", "أخصائي"],
+          onChanged: (value) => setState(() => selectedSpecialization = value),
+          popupProps: PopupProps.menu(
+            showSelectedItems: true,
+            showSearchBox: true,
+            constraints: BoxConstraints.tightFor(height: 200.h),
+            searchFieldProps: TextFieldProps(
+              decoration: const InputDecoration(
+                  hintText: "ابحث عن التخصص", prefixIcon: Icon(Icons.search)),
+            ),
+          ),
+          decoratorProps: DropDownDecoratorProps(
+            decoration: InputDecoration(
+              labelText: 'اختر التخصص',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(
+                    30,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _submit() {
+    if (_formKey.currentState?.validate() != true) return;
+    if (selectedGrade == null) {
+      _showError('رجاءً اختر الفرقة');
+      return;
+    }
+    if ((selectedGrade == "الفرقة الثالثة" ||
+            selectedGrade == "الفرقة الرابعة") &&
+        selectedSpecialization == null) {
+      _showError('رجاءً اختر التخصص');
+      return;
+    }
+
+    final user = UserModel(
+      name: _usernameController.text,
+      email: _emailController.text,
+      passWord: _passwordController.text,
+      specialization: selectedSpecialization ?? '',
+      study_Group: selectedGrade!,
+      userId: '',
+    );
+
+    context.read<SginupCubit>().sginUp(
+          context: context,
+          email: user.email,
+          password: user.passWord,
+          name: user.name,
+          study_Group: user.study_Group,
+          specialization: user.specialization,
+          myUser: user,
+        );
   }
 }

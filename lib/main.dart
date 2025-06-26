@@ -34,12 +34,12 @@ void main() async {
 
   tz_data.initializeTimeZones();
   await LocalUserData.init();
-  
+
   // تهيئة الإشعارات أولاً
   await NotifyServer().initNotification();
 
   userisLoggedin = await checkUserIsLoggedIn();
-  
+
   // تهيئة connectivity
   Connectivity().checkConnectivity();
 

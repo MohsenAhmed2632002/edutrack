@@ -185,28 +185,93 @@ class _LoginBodyState extends State<_LoginBody> {
   }
 
   Widget _buildPasswordField() {
+    final password = _passwordController.text;
+
+    // الشروط مع الرسالة ودالة التحقق
+    final passwordCriteria = <Map<String, dynamic>>[
+      {
+        'label': 'حرف كبير (A-Z)',
+        'isMet': AppRegex.hasUpperCase(password),
+      },
+      {
+        'label': 'حرف صغير (a-z)',
+        'isMet': AppRegex.hasLowerCase(password),
+      },
+      {
+        'label': 'رقم (0-9)',
+        'isMet': AppRegex.hasNumber(password),
+      },
+      {
+        'label': 'رمز خاص (@, #, %, !, ...)',
+        'isMet': AppRegex.hasSpecialCharacter(password),
+      },
+      {
+        'label': 'الحد الأدنى 8 أحرف',
+        'isMet': password.length >= 8,
+      },
+    ];
+
+    final isPasswordValid = AppRegex.isPasswordValid(password);
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Directionality(
         textDirection: TextDirection.rtl,
-        child: TextFormField(
-          controller: _passwordController,
-          obscureText: _obscurePassword,
-          textAlign: TextAlign.right,
-            validator: (value) =>
-    value == null || value.isEmpty || !AppRegex.isPasswordValid(value)
-        ? 'برجاء ادخال كلمة المرور بشكل صحيح'
-        : null,
-decoration: InputDecoration(
-            labelText: 'كلمة المرور',
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-            suffixIcon: IconButton(
-              icon: Icon(
-                  _obscurePassword ? Icons.visibility : Icons.visibility_off),
-              onPressed: () =>
-                  setState(() => _obscurePassword = !_obscurePassword),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextFormField(
+              controller: _passwordController,
+              obscureText: _obscurePassword,
+              textAlign: TextAlign.right,
+              onChanged: (_) => setState(() {}), // تحديث واجهة المستخدم
+              validator: (value) =>
+              value == null || value.isEmpty || !AppRegex.isPasswordValid(value)
+              ? 'برجاء ادخال كلمة المرور بشكل صحيح'
+              : null,
+              decoration: InputDecoration(
+                labelText: 'كلمة المرور',
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                suffixIcon: IconButton(
+                  icon: Icon(_obscurePassword
+                      ? Icons.visibility
+                      : Icons.visibility_off),
+                  onPressed: () =>
+                      setState(() => _obscurePassword = !_obscurePassword),
+                ),
+              ),
             ),
-          ),
+            const SizedBox(height: 8),
+            if (password.isNotEmpty && !isPasswordValid)
+              ...passwordCriteria.map((item) {
+                final bool met = item['isMet'];
+                final String label = item['label'];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 2.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        met ? Icons.check_circle : Icons.cancel,
+                        size: 18,
+                        color: met ? Colors.green : Colors.red,
+                      ),
+                      const SizedBox(width: 6),
+                      Expanded(
+                        child: Text(
+                          label,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: met ? Colors.green : Colors.red.shade700,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+          ],
         ),
       ),
     );

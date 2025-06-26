@@ -11,7 +11,9 @@ import 'package:edutrack/More/howtoget.dart';
 import 'package:edutrack/Sections/information.dart';
 import 'package:edutrack/Sections/sction.dart';
 import 'package:edutrack/sginup/UI/sginup.dart';
+import 'package:edutrack/sginup/cubit/sginup_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../splash_screen.dart';
 
@@ -40,8 +42,8 @@ class Routes {
 // SectionSchedulePage
 
   static const String LectureSchedulePage = "/LectureSchedulePage";
-  static const String SectionSchedulePage = "/  SectionSchedulePage";
-  static const String ProfileScreen = "/  ProfileScreen ";
+  static const String SectionSchedulePage = "/SectionSchedulePage";
+  static const String ProfileScreen = "/ProfileScreen ";
 }
 
 class RoutesGenerator {
@@ -57,12 +59,12 @@ class RoutesGenerator {
         );
       case Routes.SginUpRoute:
         return MaterialPageRoute(
-          builder: (context) => SginUpPage(),
+          builder: (context) => BlocProvider(
+            create: (_) => SginupCubit(),
+            child: const SginUpPage(),
+          ),
         );
-      // case Routes.CourseOverviewPageRoute:
-      // return MaterialPageRoute(
-      // builder: (context) => CourseOverviewPage(),
-      // );
+
       case Routes.HomePageRoute:
         return MaterialPageRoute(
           builder: (context) => HomePage(),
