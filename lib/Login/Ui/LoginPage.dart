@@ -193,11 +193,11 @@ class _LoginBodyState extends State<_LoginBody> {
           controller: _passwordController,
           obscureText: _obscurePassword,
           textAlign: TextAlign.right,
-          //         validator: (value) =>
-          // value == null || value.isEmpty || !AppRegex.isPasswordValid(value)
-          //     ? 'برجاء ادخال كلمة المرور بشكل صحيح'
-          //     : null,
-          decoration: InputDecoration(
+            validator: (value) =>
+    value == null || value.isEmpty || !AppRegex.isPasswordValid(value)
+        ? 'برجاء ادخال كلمة المرور بشكل صحيح'
+        : null,
+decoration: InputDecoration(
             labelText: 'كلمة المرور',
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
             suffixIcon: IconButton(
