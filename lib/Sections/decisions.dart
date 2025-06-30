@@ -101,6 +101,7 @@ class WhiteContainer extends StatelessWidget {
     return Positioned(
       left: 0,
       right: 0,
+      // bottom: 0,
       height: 600.h,
       child: Container(
         decoration: BoxDecoration(
@@ -245,7 +246,7 @@ class _BodyGraduationState extends State<BodyGraduation> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          SizedBox(
+          Container(
             height: 500.h,
             child: FutureBuilder<List<String>>(
               future: _futureSubjects,
@@ -282,16 +283,36 @@ class _BodyGraduationState extends State<BodyGraduation> {
                   itemBuilder: (context, index) {
                     return Card(
                       color: AppColors.myBlue,
-                      child: ListTile(
-                        leading: Icon(Icons.book_outlined, color: Colors.white),
-                        trailing: Text(
-                          subjects[index],
-                          style: getArabLightTextStyle12(
-                            context: context,
-                            color: AppColors.mywhite,
+                      child: Container(
+                        height: 50.h,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Icon(Icons.book_outlined, color: Colors.white),
+                              Text(
+                                subjects[index],
+                                style: getArabLightTextStyle12(
+                                  context: context,
+                                  color: AppColors.mywhite,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
+                      //  ListTile(
+                      //   leading: Icon(Icons.book_outlined, color: Colors.white),
+                      //   trailing: Text(
+                      //     subjects[index],
+                      //     style: getArabLightTextStyle12(
+                      //       context: context,
+                      //       color: AppColors.mywhite,
+                      //     ),
+                      //   ),
+                      // ),
                     );
                   },
                 );
@@ -337,7 +358,7 @@ class CenterImageDecisions extends StatelessWidget {
     return Positioned(
       left: 0,
       right: 0,
-      bottom: 500.h,
+      top: 0.h,
       child: Image.asset(
         nameImage,
         frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {

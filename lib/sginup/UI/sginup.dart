@@ -58,6 +58,18 @@ class _SginUpPageState extends State<SginUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        leading: IconButton(
+          color: AppColors.mywhite,
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(Icons.arrow_back_ios_new_rounded),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -189,10 +201,11 @@ class _SginUpPageState extends State<SginUpPage> {
               obscureText: _obscurePassword,
               textAlign: TextAlign.right,
               onChanged: (_) => setState(() {}),
-              validator: (value) =>
-                  value == null || value.isEmpty || !isPasswordValid
-                      ? 'برجاء ادخال كلمة المرور بشكل صحيح'
-                      : null,
+              validator: (value) => value == null ||
+                      value.isEmpty ||
+                      !AppRegex.isPasswordValid(value)
+                  ? 'برجاء ادخال كلمة المرور بشكل صحيح'
+                  : null,
               decoration: InputDecoration(
                 labelText: 'كلمة المرور',
                 border:

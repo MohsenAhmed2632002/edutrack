@@ -75,7 +75,7 @@ class SginupCubit extends Cubit<SginupState> {
       print("Signup error: ${e.toString()}");
       final errorMessage = 'حدث خطأ غير متوقع أثناء إنشاء الحساب';
       _showErrorSnackBar(context, errorMessage);
-      emit(SginUpFailed(errorMessage));
+      emit(SginUpFailed(errorMessage,),);
     }
   }
 

@@ -6,11 +6,13 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <!-- <uses-feature android:name="android.hardware.camera" android:required="true" /> -->
+
     <application
         android:label="Edu Track"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:usesCleartextTraffic="false"> <!-- خليها true لو هتستخدم HTTP -->
+        android:usesCleartextTraffic="true"> <!-- خليها true لو هتستخدم HTTP -->
 
         <!-- Main Activity -->
         <activity
