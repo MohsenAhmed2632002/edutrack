@@ -34,9 +34,6 @@ class _TasksState extends State<Tasks> {
     _loadNotifications();
   }
 
-  // ... (Keep your existing _saveNotifications, _loadNotifications,
-  // _rescheduleAllNotifications methods unchanged) ...
-
   Future<void> _saveNotifications() async {
     final prefs = await SharedPreferences.getInstance();
     final List<String> notificationsJson = notifications.map((notif) {

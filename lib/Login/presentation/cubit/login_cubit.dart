@@ -1,5 +1,6 @@
 // login_cubit.dart
 import 'package:bloc/bloc.dart';
+import 'package:edutrack/Login/domain/Use_Case/Login_UseCase.dart';
 import 'package:edutrack/core/Models/UserdataModel.dart';
 import 'package:edutrack/core/Routing/Routes.dart';
 import 'package:edutrack/core/Server/fire_store.dart';
@@ -13,12 +14,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit() : super(LoginInitial());
-
-  final FireBaseAuth _auth = FireBaseAuth();
-  final LocalUserData _localUserData = LocalUserData();
-  final FireSoterUser _fireSoterUser = FireSoterUser();
-
+  LoginCubit(this.loginUsecase) : super(LoginInitial());
+  final LoginUsecase loginUsecase;
   Future<void> loginUser({
     required String email,
     required String password,
@@ -29,37 +26,24 @@ class LoginCubit extends Cubit<LoginState> {
   }) async {
     emit(LoginLoading());
     try {
-      final userCredential = await _auth.signInWithEmailAndPassword(
+      final result = await loginUsecase.loginUserAndSaveDataUser(
         email: email,
         password: password,
+        name: name,
+        studyGroup: studyGroup,
+        specialization: specialization,
         context: context,
-        name: name,
-        specialization: specialization,
-        study_Group: studyGroup,
       );
 
-      final user = userCredential?.user;
-      if (user == null || user.uid.isEmpty) {
-        emit(const LoginFailed(error: 'فشل تسجيل الدخول: تأكد من الاتصال بالإنترنت أول مرة'));
-        return;
-      }
-
-      final userModel = UserModel(
-        name: name,
-        email: email,
-        userId: user.uid,
-        passWord: password,
-        study_Group: studyGroup,
-        specialization: specialization,
+      result.fold(
+        (failure) {
+          emit(LoginFailed(error: failure.message));
+        },
+        (userCredential) {
+          emit(LoginSuccess());
+          Navigator.pushReplacementNamed(context, Routes.HomePageRoute);
+        },
       );
-
-      await _fireSoterUser.updateUserInFireStore(userModel);
-      await _localUserData.setUserData(userModel);
-
-      _showSuccessSnackBar(context, name);
-
-      emit(LoginSuccess());
-      Navigator.pushReplacementNamed(context, Routes.HomePageRoute);
     } on FirebaseAuthException catch (e) {
       final errorMessage = _mapAuthErrorToMessage(e);
       emit(LoginFailed(error: 'فشل تسجيل الدخول: $errorMessage'));
@@ -67,33 +51,6 @@ class LoginCubit extends Cubit<LoginState> {
       print("Login error: ${e.toString()}");
       emit(const LoginFailed(error: 'حدث خطأ غير متوقع أثناء تسجيل الدخول'));
     }
-  }
-
-  void _showSuccessSnackBar(BuildContext context, String name) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Directionality(
-          textDirection: TextDirection.rtl,
-          child: Text(
-            "أهلاً $name\nتم تسجيل الدخول بنجاح",
-            style: getArabLightTextStyle(
-              context: context,
-              color: Colors.white,
-              fontSize: 12,
-            ),
-          ),
-        ),
-        backgroundColor: Colors.green,
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        duration: const Duration(seconds: 3),
-        action: SnackBarAction(
-          label: 'حسناً',
-          textColor: Colors.white,
-          onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
-        ),
-      ),
-    );
   }
 
   String _mapAuthErrorToMessage(FirebaseAuthException e) {

@@ -1,13 +1,18 @@
 // login_page.dart
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:edutrack/Login/data/Login_RepoImpl.dart';
+import 'package:edutrack/Login/domain/Use_Case/Login_UseCase.dart';
 import 'package:edutrack/Login/presentation/cubit/login_cubit.dart';
 import 'package:edutrack/core/Routing/Routes.dart';
 import 'package:edutrack/core/Routing/app_regex.dart';
+import 'package:edutrack/core/Server/fire_store.dart';
+import 'package:edutrack/core/Server/localuserdata.dart';
 import 'package:edutrack/core/Theming/Font.dart';
 import 'package:edutrack/core/Theming/app_colors.dart';
 import 'package:edutrack/core/Theming/app_string.dart';
 import 'package:edutrack/core/Theming/image.dart';
 import 'package:edutrack/core/Widgets/Shared_Widgets.dart';
+import 'package:edutrack/core/repo/fire_base_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,7 +23,15 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => LoginCubit(),
+      create: (_) => LoginCubit(
+        LoginUsecase(
+          LoginRepoimpl(
+            FireBaseAuth(),
+            LocalUserData(),
+            FireSoterUser(),
+          ),
+        ),
+      ),
       child: const _LoginBody(),
     );
   }
@@ -225,10 +238,11 @@ class _LoginBodyState extends State<_LoginBody> {
               obscureText: _obscurePassword,
               textAlign: TextAlign.right,
               onChanged: (_) => setState(() {}), // تحديث واجهة المستخدم
-              validator: (value) =>
-              value == null || value.isEmpty || !AppRegex.isPasswordValid(value)
-              ? 'برجاء ادخال كلمة المرور بشكل صحيح'
-              : null,
+              validator: (value) => value == null ||
+                      value.isEmpty ||
+                      !AppRegex.isPasswordValid(value)
+                  ? 'برجاء ادخال كلمة المرور بشكل صحيح'
+                  : null,
               decoration: InputDecoration(
                 labelText: 'كلمة المرور',
                 border:
