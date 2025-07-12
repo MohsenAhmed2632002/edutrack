@@ -1,6 +1,6 @@
 // ✅ SginUpPage محسّنة مثل LoginPage
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:edutrack/sginup/cubit/sginup_cubit.dart';
+import 'package:edutrack/sginup/Presentation/cubit/sginup_cubit.dart';
 import 'package:edutrack/core/Models/UserdataModel.dart';
 import 'package:edutrack/core/Routing/app_regex.dart';
 import 'package:edutrack/core/Theming/Font.dart';

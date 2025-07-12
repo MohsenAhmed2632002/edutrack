@@ -9,6 +9,32 @@ class FireBaseAuth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final LocalUserData _localUserData = LocalUserData();
   final FireSoterUser _firestoreUser = FireSoterUser();
+  
+  Future<UserCredential?> signInWithEmailAndPassword({
+    required String email,
+    required String password,
+    required BuildContext context,
+    required String name,
+    required String study_Group,
+    required String specialization,
+  }) async {
+    try {
+      final userCredential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      return userCredential;
+    } on FirebaseAuthException catch (e) {
+      showErrorSnackBar(context, e.code ?? 'حدث خطأ أثناء تسجيل الدخول');
+      return null;
+    }
+  }
+
+  Future setUser(UserModel userModel) async {
+    await _localUserData.setUserData(userModel);
+  }
+
   Future<UserCredential?> signUpWithEmailAndPassword({
     required String email,
     required String password,
@@ -37,9 +63,6 @@ class FireBaseAuth {
         specialization: specialization,
       );
 
-      await _firestoreUser.addUserToFireStore(userModel);
-      await setUser(userModel);
-
       return userCredential;
     } on FirebaseAuthException catch (e) {
       String errorMessage;
@@ -62,30 +85,5 @@ class FireBaseAuth {
       showErrorSnackBar(context, 'حدث خطأ غير متوقع');
       return null;
     }
-  }
-
-  Future<UserCredential?> signInWithEmailAndPassword({
-    required String email,
-    required String password,
-    required BuildContext context,
-    required String name,
-    required String study_Group,
-    required String specialization,
-  }) async {
-    try {
-      final userCredential = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
-      return userCredential;
-    } on FirebaseAuthException catch (e) {
-      showErrorSnackBar(context, e.code ?? 'حدث خطأ أثناء تسجيل الدخول');
-      return null;
-    }
-  }
-
-  Future setUser(UserModel userModel) async {
-    await _localUserData.setUserData(userModel);
   }
 }

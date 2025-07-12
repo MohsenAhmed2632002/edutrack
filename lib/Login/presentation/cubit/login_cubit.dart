@@ -1,12 +1,7 @@
 // login_cubit.dart
 import 'package:bloc/bloc.dart';
 import 'package:edutrack/Login/domain/Use_Case/Login_UseCase.dart';
-import 'package:edutrack/core/Models/UserdataModel.dart';
 import 'package:edutrack/core/Routing/Routes.dart';
-import 'package:edutrack/core/Server/fire_store.dart';
-import 'package:edutrack/core/Server/localuserdata.dart';
-import 'package:edutrack/core/Theming/Font.dart';
-import 'package:edutrack/core/repo/fire_base_auth.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';

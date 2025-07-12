@@ -14,8 +14,13 @@ import 'package:edutrack/Splash/Data/SplashRepoImpl.dart';
 import 'package:edutrack/Splash/Domain/splashRepo.dart';
 import 'package:edutrack/Splash/Domain/splash_UseCase.dart';
 import 'package:edutrack/Splash/Presentation/cubit/splash_cubit.dart';
-import 'package:edutrack/sginup/UI/sginup.dart';
-import 'package:edutrack/sginup/cubit/sginup_cubit.dart';
+import 'package:edutrack/core/Server/fire_store.dart';
+import 'package:edutrack/core/Server/localuserdata.dart';
+import 'package:edutrack/core/repo/fire_base_auth.dart';
+import 'package:edutrack/sginup/Data/sginup_repoImpl.dart';
+import 'package:edutrack/sginup/Domain/Sginup_Usecase.dart';
+import 'package:edutrack/sginup/Presentation/UI/sginup.dart';
+import 'package:edutrack/sginup/Presentation/cubit/sginup_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -71,7 +76,15 @@ class RoutesGenerator {
       case Routes.SginUpRoute:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
-            create: (_) => SginupCubit(),
+            create: (_) => SginupCubit(
+              SginupUsecase(
+                SginupRepoImpl(
+                  FireBaseAuth(),
+                  LocalUserData(),
+                  FireSoterUser(),
+                ),
+              ),
+            ),
             child: const SginUpPage(),
           ),
         );

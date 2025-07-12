@@ -1,10 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:edutrack/core/Models/UserdataModel.dart';
 import 'package:edutrack/core/Routing/Routes.dart';
-import 'package:edutrack/core/Server/fire_store.dart';
-import 'package:edutrack/core/Server/localuserdata.dart';
 import 'package:edutrack/core/Theming/Font.dart';
-import 'package:edutrack/core/repo/fire_base_auth.dart';
+import 'package:edutrack/sginup/Domain/Sginup_Usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,10 +10,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 part 'sginup_state.dart';
 
 class SginupCubit extends Cubit<SginupState> {
-  SginupCubit() : super(SginUpInitial());
-  final FireBaseAuth _auth = FireBaseAuth();
-  final LocalUserData _localUserData = LocalUserData();
-  final FireSoterUser _firestoreUser = FireSoterUser();
+  SginupCubit(this.sginupUsecase) : super(SginUpInitial());
+  final SginupUsecase sginupUsecase;
 
   Future<void> sginUp({
     required BuildContext context,
@@ -28,44 +24,31 @@ class SginupCubit extends Cubit<SginupState> {
   }) async {
     emit(SginUpLoading());
     try {
-      final userCredential = await _auth.signUpWithEmailAndPassword(
-        email: email,
-        password: password,
-        context: context,
-        name: name,
-        study_Group: study_Group,
-        specialization: specialization,
-      );
+      try {
+        final result = await sginupUsecase.sginUpUser(
+          email: email,
+          password: password,
+          name: name,
+          studyGroup: study_Group,
+          specialization: specialization,
+          context: context,
+        );
 
-      final updatedUser = UserModel(
-        name: myUser.name,
-        email: email,
-        userId: userCredential!.user!.uid,
-        passWord: password,
-        study_Group: myUser.study_Group,
-        specialization: myUser.specialization,
-      );
-
-      _firestoreUser.addUserToFireStore(updatedUser);
-      _localUserData.setUserData(updatedUser);
- print('User data to save: ${updatedUser.toJson()}'); // قبل الحفظ
-      print(
-          'Saved data: ${LocalUserData.prefs?.getString(LocalUserData.userDataKey)}'); // بعد الحفظ
-      // إظهار رسالة النجاح
-
-      _showSuccessSnackBar(context, name);
-      emit(SginUpSuccess());
-
-      // الانتقال إلى الصفحة التالية فقط عند النجاح
-      Navigator.pushReplacementNamed(
-        context,
-        Routes.HomePageRoute,
-      );
-      if (userCredential.user?.uid == null) {
-        _showErrorSnackBar(
-            context, 'فشل إنشاء الحساب: بيانات المستخدم غير صالحة');
-        emit(SginUpFailed('فشل إنشاء الحساب'));
-        return;
+        result.fold(
+          (failure) {
+            emit(SginUpFailed(failure.message));
+          },
+          (userCredential) {
+            emit(SginUpSuccess());
+            Navigator.pushReplacementNamed(context, Routes.HomePageRoute);
+          },
+        );
+      } on FirebaseAuthException catch (e) {
+        final errorMessage = _mapAuthErrorToMessage(e);
+        emit(SginUpFailed('فشل تسجيل الدخول: $errorMessage'));
+      } catch (e) {
+        print("Login error: ${e.toString()}");
+        emit(const SginUpFailed( 'حدث خطأ غير متوقع أثناء تسجيل الدخول'));
       }
     } on FirebaseAuthException catch (e) {
       final errorMessage = _mapAuthErrorToMessage(e);
@@ -75,7 +58,11 @@ class SginupCubit extends Cubit<SginupState> {
       print("Signup error: ${e.toString()}");
       final errorMessage = 'حدث خطأ غير متوقع أثناء إنشاء الحساب';
       _showErrorSnackBar(context, errorMessage);
-      emit(SginUpFailed(errorMessage,),);
+      emit(
+        SginUpFailed(
+          errorMessage,
+        ),
+      );
     }
   }
 
