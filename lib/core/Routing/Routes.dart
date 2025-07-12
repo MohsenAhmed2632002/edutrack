@@ -1,6 +1,6 @@
 import 'package:edutrack/Home/HomePage.dart';
 import 'package:edutrack/Home/ProfileScreen.dart';
-import 'package:edutrack/Login/Ui/LoginPage.dart';
+import 'package:edutrack/Login/presentation/Ui/LoginPage.dart';
 import 'package:edutrack/More/AskedQuestions.dart';
 import 'package:edutrack/More/website.dart';
 import 'package:edutrack/Sections/Lecture.dart';
@@ -10,12 +10,16 @@ import 'package:edutrack/Sections/gradpro.dart';
 import 'package:edutrack/More/howtoget.dart';
 import 'package:edutrack/Sections/information.dart';
 import 'package:edutrack/Sections/sction.dart';
+import 'package:edutrack/Splash/Data/SplashRepoImpl.dart';
+import 'package:edutrack/Splash/Domain/splashRepo.dart';
+import 'package:edutrack/Splash/Domain/splash_UseCase.dart';
+import 'package:edutrack/Splash/Presentation/cubit/splash_cubit.dart';
 import 'package:edutrack/sginup/UI/sginup.dart';
 import 'package:edutrack/sginup/cubit/sginup_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../splash_screen.dart';
+import '../../Splash/Presentation/splash_screen.dart';
 
 class Routes {
   // static const String CourseOverviewPageRoute = "/CourseOverviewPage";
@@ -51,7 +55,14 @@ class RoutesGenerator {
     switch (settings.name) {
       case Routes.splashRoute:
         return MaterialPageRoute(
-          builder: (context) => SplashView(),
+          builder: (context) => BlocProvider(
+            create: (context) => SplashCubit(
+              SplashUsecase(
+                MysplashRepo: SplashRepoImpl(),
+              ),
+            ),
+            child: SplashView(),
+          ),
         );
       case Routes.LoginPagRoute:
         return MaterialPageRoute(

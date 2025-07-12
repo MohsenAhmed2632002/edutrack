@@ -8,7 +8,7 @@ class LocalUserData {
   static SharedPreferences? prefs;
   static const String userDataKey = 'UserData';
   // تهيئة SharedPreferences
-  static Future<void> init() async {
+  static Future<void> initSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
   }
 

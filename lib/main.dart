@@ -33,27 +33,27 @@ void main() async {
   );
 
   tz_data.initializeTimeZones();
-  await LocalUserData.init();
+  await LocalUserData.initSharedPreferences();
 
   // تهيئة الإشعارات أولاً
   await NotifyServer().initNotification();
 
-  userisLoggedin = await checkUserIsLoggedIn();
+  // userisLoggedin = await checkUserIsLoggedIn();
 
   // تهيئة connectivity
-  Connectivity().checkConnectivity();
+  // Connectivity().checkConnectivity();
 
   runApp(const MyApp());
 }
 
-Future<bool> checkUserIsLoggedIn() async {
-  try {
-    UserModel? userData = await LocalUserData().getUserData();
-    return userData != null && userData.name.isNotEmpty;
-  } catch (e) {
-    return false;
-  }
-}
+// Future<bool> checkUserIsLoggedIn() async {
+//   try {
+//     UserModel userData = await LocalUserData().getUserData();
+//     return userData != null && userData.name.isNotEmpty;
+//   } catch (e) {
+//     return false;
+//   }
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
         textDirection: TextDirection.rtl,
         child: MaterialApp(
           theme: getMyTheme(
-            ColorScheme.fromSeed(seedColor: AppColors.myBlue),
+            ColorScheme.fromSeed(seedColor: AppColors.myBlue,),
             context,
           ),
           themeMode: ThemeMode.light,

@@ -7,7 +7,7 @@ import 'package:edutrack/core/Server/localuserdata.dart';
 
 class FireBaseAuth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final LocalUserData _localUserData = LocalUserData();
+  // final LocalUserData _localUserData = LocalUserData();
   final FireSoterUser _firestoreUser = FireSoterUser();
   Future<UserCredential?> signUpWithEmailAndPassword({
     required String email,
@@ -23,10 +23,10 @@ class FireBaseAuth {
         password: password,
       );
 
-      if (userCredential.user == null) {
-        showErrorSnackBar(context, 'فشل إنشاء الحساب: لا يوجد مستخدم');
-        return null;
-      }
+//       if (userCredential.user == null) {
+//         showErrorSnackBar(context, 'فشل إنشاء الحساب: لا يوجد مستخدم');
+//         return null;
+//       }
 
       final userModel = UserModel(
         name: name,
@@ -38,17 +38,30 @@ class FireBaseAuth {
       );
 
       await _firestoreUser.addUserToFireStore(userModel);
-      await setUser(userModel);
+      // await setUser(userModel);
 
       return userCredential;
     } on FirebaseAuthException catch (e) {
-      showErrorSnackBar(context, e.message ?? 'حدث خطأ أثناء التسجيل');
+      String errorMessage;
+      switch (e.code) {
+        case 'email-already-in-use':
+          errorMessage = 'البريد الإلكتروني مستخدم بالفعل';
+          break;
+        case 'user-not-found':
+          errorMessage = 'المستخدم غير موجود';
+          break;
+        case 'wrong-password':
+          errorMessage = 'كلمة المرور غير صحيحة';
+          break;
+        default:
+          errorMessage = 'حدث خطأ غير متوقع: ${e.message}';
+      }
+      showErrorSnackBar(context, errorMessage);
+      return null;
+    } catch (e) {
+      showErrorSnackBar(context, 'حدث خطأ غير متوقع');
       return null;
     }
-  }
-
-  Future setUser(UserModel userModel) async {
-    await _localUserData.setUserData(userModel);
   }
 
   Future<UserCredential?> signInWithEmailAndPassword({
@@ -65,16 +78,16 @@ class FireBaseAuth {
         password: password,
       );
 
-      if (userCredential.user == null) {
-        showErrorSnackBar(context, 'فشل تسجيل الدخول: لا يوجد مستخدم');
-        return null;
-      }
+      // if (userCredential.user == null) {
+      //   showErrorSnackBar(context, 'فشل تسجيل الدخول: لا يوجد مستخدم');
+      //   return null;
+      // }
 
-      final userDoc =
-          await _firestoreUser.getCurrentUser(userCredential.user!.uid);
-      final userModel =
-          UserModel.fromJson(userDoc.data() as Map<String, dynamic>);
-      await _localUserData.setUserData(userModel);
+      // final userDoc =
+          // await _firestoreUser.getCurrentUser(userCredential.user!.uid);
+      // final userModel =
+          // UserModel.fromJson(userDoc.data() as Map<String, dynamic>);
+      // await _localUserData.setUserData(userModel);
 
       return userCredential;
     } on FirebaseAuthException catch (e) {
@@ -82,4 +95,8 @@ class FireBaseAuth {
       return null;
     }
   }
+
+  // Future setUser(UserModel userModel) async {
+    // await _localUserData.setUserData(userModel);
+  // }
 }

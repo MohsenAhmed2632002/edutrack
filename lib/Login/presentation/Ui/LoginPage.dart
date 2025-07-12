@@ -1,6 +1,6 @@
 // login_page.dart
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:edutrack/Login/cubit/login_cubit.dart';
+import 'package:edutrack/Login/presentation/cubit/login_cubit.dart';
 import 'package:edutrack/core/Routing/Routes.dart';
 import 'package:edutrack/core/Routing/app_regex.dart';
 import 'package:edutrack/core/Theming/Font.dart';

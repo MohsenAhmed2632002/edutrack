@@ -1,9 +1,11 @@
+import 'package:edutrack/Splash/Presentation/cubit/splash_cubit.dart';
 import 'package:edutrack/core/Theming/image.dart';
 import 'package:edutrack/main.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'core/Routing/Routes.dart';
+import '../../core/Routing/Routes.dart';
 
 class SplashView extends StatefulWidget {
   SplashView._intarnal();
@@ -24,7 +26,7 @@ class _SplashViewState extends State<SplashView> {
         print("Splash View userisLoggedin: ${userisLoggedin}");
         return Navigator.pushReplacementNamed(
           context,
-          await checkUserIsLoggedIn()
+          await BlocProvider.of<SplashCubit>(context).ifUserLoggedBeFore()
               ? Routes.HomePageRoute
               : Routes.LoginPagRoute,
         );
