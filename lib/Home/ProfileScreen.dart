@@ -1,4 +1,5 @@
 import 'package:edutrack/core/Routing/Routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:edutrack/core/Server/localuserdata.dart';
 import 'package:edutrack/core/Theming/Font.dart';
@@ -92,28 +93,28 @@ class MyData extends StatelessWidget {
               ),
               SizedBox(height: 20.h),
               FadeInRight(
-                child: InfoTile(title: 'الاسم', value: user.name ?? ''),
+                child: InfoTile(title: 'الاسم', value: user.name),
               ),
               FadeInLeft(
                 child: InfoTile(
-                    title: 'البريد الإلكتروني', value: user.email ?? ''),
+                    title: 'البريد الإلكتروني', value: user.email ),
               ),
               FadeInRight(
                 child: InfoTile(
-                    title: 'المجموعة الدراسية', value: user.study_Group ?? ''),
+                    title: 'المجموعة الدراسية', value: user.study_Group ),
               ),
               FadeInLeft(
                 child: InfoTile(
-                    title: 'التخصص', value: user.specialization ?? 'لا يوجد'),
+                    title: 'التخصص', value: user.specialization ),
               ),
               FadeInRight(
                 child:
-                    InfoTile(title: 'رقم المستخدم', value: user.userId ?? ''),
+                    InfoTile(title: 'رقم المستخدم', value: user.userId ),
               ),
               // لو تبغى تضيف مثلاً كلمة المرور المحفوظة مع تحذير ⚠️ (مش منصوح بإظهاره)
               FadeInLeft(
                 child:
-                    InfoTile(title: 'كلمة المرور', value: user.passWord ?? ''),
+                    InfoTile(title: 'كلمة المرور', value: user.passWord ),
               ),
 
               FadeInUp(
@@ -123,7 +124,7 @@ class MyData extends StatelessWidget {
                   ),
                   onPressed: () async {
                     await FlutterLocalNotificationsPlugin().cancelAll();
-
+                    await FirebaseAuth.instance.signOut();
                     await _localUserData.deleteUser().then(
                           (value) => Navigator.pushReplacementNamed(
                             context,

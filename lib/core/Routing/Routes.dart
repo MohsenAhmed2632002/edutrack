@@ -1,30 +1,30 @@
 import 'package:edutrack/Home/HomePage.dart';
 import 'package:edutrack/Home/ProfileScreen.dart';
-import 'package:edutrack/Login/presentation/Ui/LoginPage.dart';
+import 'package:edutrack/features/Login/presentation/Ui/LoginPage.dart';
 import 'package:edutrack/More/AskedQuestions.dart';
 import 'package:edutrack/More/website.dart';
-import 'package:edutrack/Sections/Lecture.dart';
-import 'package:edutrack/Sections/decisions.dart';
-import 'package:edutrack/Sections/fieldEducation.dart';
-import 'package:edutrack/Sections/gradpro.dart';
+import 'package:edutrack/features/Lecture/presentation/pages/Lecture.dart';
+import 'package:edutrack/features/Sections/decisions.dart';
+import 'package:edutrack/features/Sections/fieldEducation.dart';
+import 'package:edutrack/features/Sections/gradpro.dart';
 import 'package:edutrack/More/howtoget.dart';
-import 'package:edutrack/Sections/information.dart';
-import 'package:edutrack/Sections/sction.dart';
-import 'package:edutrack/Splash/Data/SplashRepoImpl.dart';
-import 'package:edutrack/Splash/Domain/splashRepo.dart';
-import 'package:edutrack/Splash/Domain/splash_UseCase.dart';
-import 'package:edutrack/Splash/Presentation/cubit/splash_cubit.dart';
+import 'package:edutrack/features/Sections/information.dart';
+import 'package:edutrack/features/Sction/presentation/pages/sction.dart';
+import 'package:edutrack/features/Splash/Data/SplashRepoImpl.dart';
+import 'package:edutrack/features/Splash/Domain/splashRepo.dart';
+import 'package:edutrack/features/Splash/Domain/splash_UseCase.dart';
+import 'package:edutrack/features/Splash/Presentation/cubit/splash_cubit.dart';
 import 'package:edutrack/core/Server/fire_store.dart';
 import 'package:edutrack/core/Server/localuserdata.dart';
 import 'package:edutrack/core/repo/fire_base_auth.dart';
-import 'package:edutrack/sginup/Data/sginup_repoImpl.dart';
-import 'package:edutrack/sginup/Domain/Sginup_Usecase.dart';
-import 'package:edutrack/sginup/Presentation/UI/sginup.dart';
-import 'package:edutrack/sginup/Presentation/cubit/sginup_cubit.dart';
+import 'package:edutrack/features/sginup/Data/sginup_repoImpl.dart';
+import 'package:edutrack/features/sginup/Domain/Sginup_Usecase.dart';
+import 'package:edutrack/features/sginup/Presentation/UI/sginup.dart';
+import 'package:edutrack/features/sginup/Presentation/cubit/sginup_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../Splash/Presentation/splash_screen.dart';
+import '../../features/Splash/Presentation/splash_screen.dart';
 
 class Routes {
   // static const String CourseOverviewPageRoute = "/CourseOverviewPage";
