@@ -23,8 +23,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // ✅ تهيئة Hive هنا
-  await Hive.initFlutter();
-
+  await Hive.initFlutter(); 
+  await Hive.openBox('lecturesBox');
   Hive.registerAdapter(LectureModelAdapter());
   Hive.registerAdapter(SectionModelAdapter());
 

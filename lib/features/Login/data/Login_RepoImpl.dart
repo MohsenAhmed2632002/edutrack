@@ -6,7 +6,7 @@ import 'package:edutrack/core/Server/fire_store.dart';
 import 'package:edutrack/core/Server/localuserdata.dart';
 import 'package:edutrack/core/Theming/Font.dart';
 import 'package:edutrack/core/Widgets/Shared_Widgets.dart';
-import 'package:edutrack/core/repo/fire_base_auth.dart';
+import 'package:edutrack/core/Server/fire_base_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

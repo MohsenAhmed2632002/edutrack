@@ -41,6 +41,7 @@ class _SectionSchedulePageState extends State<SectionSchedulePage> {
   String searchText = '';
 
   @override
+
   void initState() {
     super.initState();
     _preparePage();

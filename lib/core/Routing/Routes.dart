@@ -11,12 +11,11 @@ import 'package:edutrack/More/howtoget.dart';
 import 'package:edutrack/features/Sections/information.dart';
 import 'package:edutrack/features/Sction/presentation/pages/sction.dart';
 import 'package:edutrack/features/Splash/Data/SplashRepoImpl.dart';
-import 'package:edutrack/features/Splash/Domain/splashRepo.dart';
 import 'package:edutrack/features/Splash/Domain/splash_UseCase.dart';
 import 'package:edutrack/features/Splash/Presentation/cubit/splash_cubit.dart';
 import 'package:edutrack/core/Server/fire_store.dart';
 import 'package:edutrack/core/Server/localuserdata.dart';
-import 'package:edutrack/core/repo/fire_base_auth.dart';
+import 'package:edutrack/core/Server/fire_base_auth.dart';
 import 'package:edutrack/features/sginup/Data/sginup_repoImpl.dart';
 import 'package:edutrack/features/sginup/Domain/Sginup_Usecase.dart';
 import 'package:edutrack/features/sginup/Presentation/UI/sginup.dart';
@@ -149,15 +148,3 @@ class RoutesGenerator {
   }
 }
 
-// class ErorPage extends StatelessWidget {
-//   const ErorPage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Center(
-//         child: Text("erorr page"),
-//       ),
-//     );
-//   }
-// }

@@ -12,7 +12,7 @@ import 'package:edutrack/core/Theming/app_colors.dart';
 import 'package:edutrack/core/Theming/app_string.dart';
 import 'package:edutrack/core/Theming/image.dart';
 import 'package:edutrack/core/Widgets/Shared_Widgets.dart';
-import 'package:edutrack/core/repo/fire_base_auth.dart';
+import 'package:edutrack/core/Server/fire_base_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

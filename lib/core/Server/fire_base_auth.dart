@@ -1,14 +1,9 @@
-import 'package:edutrack/core/Models/UserdataModel.dart';
-import 'package:edutrack/core/Server/fire_store.dart';
 import 'package:edutrack/core/Widgets/Shared_Widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:edutrack/core/Server/localuserdata.dart';
 
 class FireBaseAuth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final LocalUserData _localUserData = LocalUserData();
-  final FireSoterUser _firestoreUser = FireSoterUser();
   
   Future<UserCredential?> signInWithEmailAndPassword({
     required String email,
@@ -26,14 +21,11 @@ class FireBaseAuth {
 
       return userCredential;
     } on FirebaseAuthException catch (e) {
-      showErrorSnackBar(context, e.code ?? 'حدث خطأ أثناء تسجيل الدخول');
+      showErrorSnackBar(context, e.message ?? 'حدث خطأ أثناء تسجيل الدخول');
       return null;
     }
   }
 
-  Future setUser(UserModel userModel) async {
-    await _localUserData.setUserData(userModel);
-  }
 
   Future<UserCredential?> signUpWithEmailAndPassword({
     required String email,
@@ -49,19 +41,6 @@ class FireBaseAuth {
         password: password,
       );
 
-//       if (userCredential.user == null) {
-//         showErrorSnackBar(context, 'فشل إنشاء الحساب: لا يوجد مستخدم');
-//         return null;
-//       }
-
-      final userModel = UserModel(
-        name: name,
-        email: email,
-        userId: userCredential.user!.uid,
-        passWord: password,
-        study_Group: study_Group,
-        specialization: specialization,
-      );
 
       return userCredential;
     } on FirebaseAuthException catch (e) {
