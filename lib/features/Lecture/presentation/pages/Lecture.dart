@@ -139,40 +139,41 @@ class _LectureView extends StatelessWidget {
       ),
     );
   }
-Widget _buildDaysSelector(BuildContext context) {
-  return BlocBuilder<LectureCubit, LectureState>(
-    builder: (context, state) {
-      // نأخذ دائمًا Cubit الحالي
-      final cubit = context.read<LectureCubit>();
-      return SizedBox(
-        height: 50.h,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: cubit.days.length,
-          itemBuilder: (context, index) {
-            final day = cubit.days[index];
-            final isSelected = cubit.selectedDay == day;
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.w),
-              child: ChoiceChip(
-                label: Text(
-                  day,
-                  style: TextStyle(
-                    color: isSelected ? AppColors.myBlue : AppColors.mywhite,
+
+  Widget _buildDaysSelector(BuildContext context) {
+    return BlocBuilder<LectureCubit, LectureState>(
+      builder: (context, state) {
+        // نأخذ دائمًا Cubit الحالي
+        final cubit = context.read<LectureCubit>();
+        return SizedBox(
+          height: 50.h,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: cubit.days.length,
+            itemBuilder: (context, index) {
+              final day = cubit.days[index];
+              final isSelected = cubit.selectedDay == day;
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4.w),
+                child: ChoiceChip(
+                  label: Text(
+                    day,
+                    style: TextStyle(
+                      color: isSelected ? AppColors.myBlue : AppColors.mywhite,
+                    ),
                   ),
+                  selected: isSelected,
+                  selectedColor: Colors.white,
+                  backgroundColor: AppColors.myBlue,
+                  onSelected: (_) => cubit.changeDay(day),
                 ),
-                selected: isSelected,
-                selectedColor: Colors.white,
-                backgroundColor: AppColors.myBlue,
-                onSelected: (_) => cubit.changeDay(day),
-              ),
-            );
-          },
-        ),
-      );
-    },
-  );
-}
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
 
   Widget _buildLecturesContent(BuildContext context) {
     return BlocBuilder<LectureCubit, LectureState>(
@@ -238,30 +239,24 @@ Widget _buildDaysSelector(BuildContext context) {
             margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
             child: ExpansionTile(
               textColor: AppColors.myBlue,
-              title: Text(
-                lecture.subject,
-                style: getArabLightTextStyle12(
-                    color: AppColors.myBlue, context: context),
-              ),
-              collapsedBackgroundColor: AppColors.mywhite,
+              title: Text(lecture.subject,
+                  style: getArabLightTextStyle12(
+                      color: AppColors.myBlue, context: context)),
               children: [
                 ListTile(
                   trailing: Text(
-                    'الوقت: ${lecture.timeFrom} - ${lecture.timeTo}\nالتاريخ: ${lecture.date}',
-                    style: const TextStyle(color: AppColors.myBlue),
-                  ),
+                      'الوقت: ${lecture.timeFrom} - ${lecture.timeTo}\nالتاريخ: ${lecture.date}',
+                      style: const TextStyle(color: AppColors.myBlue)),
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('المحاضر: ${lecture.doctor}',
                           style: const TextStyle(color: AppColors.myBlue)),
-                      Text('المادة: ${lecture.subject}',
-                          style: const TextStyle(color: AppColors.myBlue)),
                       Text('المكان: ${lecture.location}',
                           style: const TextStyle(color: AppColors.myBlue)),
                     ],
                   ),
-                ),
+                )
               ],
             ),
           );

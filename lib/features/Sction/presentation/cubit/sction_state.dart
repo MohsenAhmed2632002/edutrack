@@ -1,10 +1,19 @@
-part of 'sction_cubit.dart';
+// section_state.dart
 
-abstract class SctionState extends Equatable {
-  const SctionState();
+import 'package:edutrack/core/Models/section_model.dart';
 
-  @override
-  List<Object> get props => [];
+abstract class SectionState {}
+
+class SectionInitial extends SectionState {}
+
+class SectionLoading extends SectionState {}
+
+class SectionLoaded extends SectionState {
+  final List<SectionModel> sections;
+  SectionLoaded(this.sections);
 }
 
-class SctionInitial extends SctionState {}
+class SectionError extends SectionState {
+  final String message;
+  SectionError(this.message);
+}
