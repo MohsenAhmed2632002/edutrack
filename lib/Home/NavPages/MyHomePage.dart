@@ -25,7 +25,7 @@ class MyHomePage extends StatelessWidget {
         final payload = jsonDecode(notification.payload!);
         final day = payload['day'];
         final time = payload['time'];
-        final classTime = getNextDateTime(day, time);
+        final classTime = NotificationScheduler.getNextDateTime(day, time);
         if (classTime.isBefore(DateTime.now())) {
           await _notificationsPlugin.cancel(notification.id);
         }
@@ -49,7 +49,7 @@ class MyHomePage extends StatelessWidget {
 
     try {
       final pending = await _notificationsPlugin.pendingNotificationRequests();
-      final tomorrowDay = getTomorrowDay();
+      final tomorrowDay = NotificationScheduler.getTomorrowDay(); // التصحيح هنا
 
       final tomorrowNotifications = pending.where((n) {
         if (n.payload == null) return false;
@@ -643,36 +643,3 @@ class HorizontalContainer extends StatelessWidget {
     );
   }
 }
-
-// class TheTextFormField extends Stat  elessWidget {
-//   const TheTextFormField({
-//     super.key,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(10.0),
-//       child: TextFormField(
-//         textAlign: TextAlign.right,
-//         // validator: (value) {},
-//         decoration: InputDecoration(
-//           prefixIcon: Icon(
-//             Icons.search,
-//           ),
-//           border: OutlineInputBorder(
-//             borderRadius: BorderRadius.all(
-//               Radius.circular(
-//                 50,
-//               ),
-//             ),
-//           ),
-//           label: Text(
-//             "بحث ",
-//           ),
-//           hintText: "بحث",
-//         ),
-//       ),
-//     );
-//   }
-// }

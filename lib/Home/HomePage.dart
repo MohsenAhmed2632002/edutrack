@@ -7,6 +7,7 @@ import 'package:edutrack/Home/NavPages/Nots.dart';
 import 'package:edutrack/Home/NavPages/aboutas.dart';
 import 'package:edutrack/Home/NavPages/tasks.dart';
 import 'package:edutrack/core/Server/notification_scheduler.dart';
+import 'package:edutrack/core/Server/work_Manger_service.dart';
 import 'package:edutrack/core/Theming/app_colors.dart';
 import 'package:edutrack/core/Theming/image.dart';
 import 'package:flutter/material.dart';
@@ -21,16 +22,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentIndex = 4;
-@override
-void initState() {
-  super.initState();
-  scheduleAllClassesNotifications(context);
-  Timer.periodic(const Duration(hours: 1), (_) {
-    if (DateTime.now().hour == 0) { // عند منتصف الليل
-      scheduleAllClassesNotifications(context);
-    }
-  });
-}
+
+  @override
+  void initState() {
+    super.initState();
+    // جدولة أولية عند فتح التطبيق
+    NotificationScheduler.scheduleTomorrowsClasses();
+
+    // إعادة جدولة العمل اليومي عند منتصف الليل
+    Timer.periodic(const Duration(minutes: 5), (timer) {
+      if (DateTime.now().hour == 0 && DateTime.now().minute < 5) {
+        WorkManagerService().rescheduleDailyTask();
+      }
+    });
+  }
 
   List pages = [
     AboutAs(),
@@ -50,7 +55,6 @@ void initState() {
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.white,
           type: BottomNavigationBarType.fixed,
-        
         ),
         child: FadeInUp(
           child: Container(

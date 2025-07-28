@@ -4,6 +4,7 @@ import 'package:edutrack/core/Models/lecture_model.dart';
 import 'package:edutrack/core/Models/section_model.dart';
 import 'package:edutrack/core/Server/NotifyServer.dart';
 import 'package:edutrack/core/Server/localuserdata.dart';
+import 'package:edutrack/core/Server/work_Manger_service.dart';
 import 'package:edutrack/core/Theming/theming.dart';
 import 'package:edutrack/core/Theming/app_colors.dart';
 import 'package:edutrack/firebase_options.dart';
@@ -22,38 +23,25 @@ final FlutterLocalNotificationsPlugin notificationsPlugin =
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // ✅ تهيئة Hive هنا
-  await Hive.initFlutter(); 
-  await Hive.openBox('lecturesBox');
-  Hive.registerAdapter(LectureModelAdapter());
-  Hive.registerAdapter(SectionModelAdapter());
+  tz_data.initializeTimeZones();
 
+  await LocalUserData.initSharedPreferences();
+  await NotifyServer().initNotification();
+  
+  // تهيئة Workmanager
+  final workManager = WorkManagerService();
+  await workManager.initialize();
+  await workManager.registerDailyTask();
+  await Hive.initFlutter();
+  await Hive.openBox('lecturesBox');
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  tz_data.initializeTimeZones();
-  await LocalUserData.initSharedPreferences();
-
-  // تهيئة الإشعارات أولاً
-  await NotifyServer().initNotification();
-
-  // userisLoggedin = await checkUserIsLoggedIn();
-
-  // تهيئة connectivity
-  // Connectivity().checkConnectivity();
+   Hive.registerAdapter(LectureModelAdapter());
+   Hive.registerAdapter(SectionModelAdapter());
 
   runApp(const MyApp());
 }
-
-// Future<bool> checkUserIsLoggedIn() async {
-//   try {
-//     UserModel userData = await LocalUserData().getUserData();
-//     return userData != null && userData.name.isNotEmpty;
-//   } catch (e) {
-//     return false;
-//   }
-// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -66,7 +54,9 @@ class MyApp extends StatelessWidget {
         textDirection: TextDirection.rtl,
         child: MaterialApp(
           theme: getMyTheme(
-            ColorScheme.fromSeed(seedColor: AppColors.myBlue,),
+            ColorScheme.fromSeed(
+              seedColor: AppColors.myBlue,
+            ),
             context,
           ),
           themeMode: ThemeMode.light,
